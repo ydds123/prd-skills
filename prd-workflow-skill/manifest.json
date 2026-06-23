@@ -1,0 +1,46 @@
+{
+  "name": "prd-workflow",
+  "version": "0.1.0",
+  "updated_at": "2026-06-19",
+  "status": "active",
+  "maturity_tier": "production",
+  "lifecycle_stage": "production",
+  "context_budget_tier": "library",
+  "owner": "local",
+  "review_cadence": "quarterly",
+  "target_platforms": [
+    "openai",
+    "claude",
+    "generic",
+    "agent-skills-compatible"
+  ],
+  "source_materials": [
+    "../prd-definition-quality-standard.md",
+    "../prd-workflow-skill-repository-design.md",
+    "../create-prd-skill/SKILL.md",
+    "../check-prd-skill/SKILL.md"
+  ],
+  "factory_components": [
+    "references",
+    "evals",
+    "agents"
+  ],
+  "quality_gates": [
+    "writable-state",
+    "decision-confirmation",
+    "phase-1-confirmation",
+    "review-blocking",
+    "final-output",
+    "skill-update"
+  ],
+  "outputs": [
+    "background understanding card",
+    "decision ledger",
+    "writable-state report",
+    "PRD phase 1",
+    "PRD phase 2",
+    "review report",
+    "revision summary",
+    "retrospective patch proposal"
+  ]
+}

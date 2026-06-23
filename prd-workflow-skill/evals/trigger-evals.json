@@ -1,0 +1,54 @@
+{
+  "name": "prd-workflow-trigger-evals",
+  "version": "0.1.0",
+  "positive": [
+    {
+      "input": "帮我把这个新需求走一遍 PRD 工作流，先做写前对齐和决策账本。",
+      "route": "prd-workflow",
+      "why": "End-to-end workflow with alignment and decision ledger."
+    },
+    {
+      "input": "这份需求先别直接写 PRD，帮我判断能不能写，缺哪些关键决策。",
+      "route": "prd-workflow",
+      "why": "Writable-state gate and decision exposure."
+    },
+    {
+      "input": "把这次 PRD 写偏的问题复盘一下，看应该改 skill、context、template 还是 gate。",
+      "route": "prd-workflow",
+      "why": "Retrospective improvement proposal."
+    },
+    {
+      "input": "我想建立一个 PRD 写作、审核、修订闭环，不要一句话直接生成。",
+      "route": "prd-workflow",
+      "why": "Controlled workflow request."
+    }
+  ],
+  "negative": [
+    {
+      "input": "帮我直接写一个 CRM 的 PRD 初稿。",
+      "preferred_route": "create-prd",
+      "why": "One-shot drafting request should use a dedicated PRD writer if available."
+    },
+    {
+      "input": "帮我审一下这份 PRD 有什么问题。",
+      "preferred_route": "check-prd",
+      "why": "Standalone review should use a dedicated reviewer if available."
+    },
+    {
+      "input": "帮我画这个后台页面原型。",
+      "preferred_route": "prototype/page-design",
+      "why": "Prototype design is not PRD workflow orchestration."
+    },
+    {
+      "input": "PRD 是什么？",
+      "preferred_route": "normal-answer",
+      "why": "Pure concept explanation does not need the workflow."
+    }
+  ],
+  "near_neighbors": [
+    "create-prd",
+    "check-prd",
+    "build-prototype",
+    "product-concept-explanation"
+  ]
+}

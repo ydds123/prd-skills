@@ -1,0 +1,76 @@
+# CHANGELOG
+
+## v2.3.0（2026-05-17）
+
+### 社区扩展分支
+
+- 新增社区扩展分支 [`community/c-end-product`](https://github.com/pmYangKun/check-prd-skill/tree/community/c-end-product)，由 [@s2dongman](https://github.com/s2dongman)（申悦）贡献，把 B 端 14 维度 PRD 审查框架全面改造为 C 端版本（产品定型、维度 01-14、AI 条件维度、R1-R12 重大风险清单、P0-P3 问题参考表、快速诊断流程、最终判断 10 问），含 `dist/check-cprd-universal-prompt.md`（1421 行）
+- README 社区贡献章节重写为四分支并列（main / complexity-aware / 飞书 CLI 协作版 / c-end-product），补充 C 端版的详细改造点和切换命令
+- 修正飞书 CLI 协作版分支链接（中文 + 括号 URL-encode）
+
+## v2.2.1（2026-04-06）
+
+### 目录结构整理
+
+- 将根目录 `install.sh` / `install.ps1` 移入 `scripts/`，与 create-prd 目录结构对齐
+- 更新安装脚本内的路径引用
+- 更新 README 中安装命令和仓库结构说明
+
+## v2.2.0（2026-04-06）
+
+### README 全面重写
+
+- 重写开头，突出痛点和价值主张："写PRD的人很多，能系统审PRD的人很少"
+- 强化方法论权威性说明（豆瓣8.6分、重印13次、上百家企业验证）
+- 14个检查维度展开为表格，每个维度说明检查内容
+- 新增"区分产品类型，针对性审查"章节——商业化产品与企业自研系统自动调整检查重点
+- 新增与 create-prd 的闭环说明
+- 整体结构重组，突出快速开始路径
+
+## v2.1.0（2026-04-02）
+
+### README 重写
+
+- 新增"快速开始"章节，突出 `dist/check-prd-universal-prompt.md` 的使用方式
+- 明确标注适用于 ChatGPT、Gemini、DeepSeek、Kimi、通义千问等任意大模型，无需安装任何工具
+- Claude Code 安装说明降为二级内容，避免非 Claude 用户被劝退
+
+## v2.0.0（2026-03-29）
+
+重构为标准现代 Claude skill 目录。
+
+### 结构升级
+
+- 使用根级 `SKILL.md` 作为唯一入口
+- 将 14 个维度与 2 个附录迁入 `references/`
+- 删除旧的平铺式 skill 入口设计
+
+### 工程化能力
+
+- 新增 `scripts/build.py` 生成通用 Prompt 与 `.skill` 包
+- 新增 `scripts/validate.py` 做结构和生成物校验
+- 新增 `scripts/install_skill.py`，以整个目录安装到 `~/.claude/skills/check-prd`
+- 新增基础任务 eval 与触发 eval 资产
+
+### 分发变化
+
+- `dist/check-prd-universal-prompt.md` 改为生成物
+- 安装方式从“复制多份 Markdown 到全局 skills 目录”改为“安装整个 skill 目录”
+
+## v1.0.0（2026-03-28）
+
+首次发布。
+
+### 包含维度
+
+- 14个检查维度（01-业务分析 至 14-运营方案）
+- 2个附录（重大风险项清单 + 检查报告模板）
+
+### 核心特性
+
+- 逐维度即时输出机制：每个维度检查完立即输出详细分析，防止上下文压力导致分析质量下降
+- 组件级交互设计分析（维度09新增9.6节）：对PRD中每个界面、弹窗、表单逐一评估
+- 企业架构层检查（维度06新增6.5-6.9节）：适用于0-1新系统设计的应用规划、数据架构、集成治理检查
+- 运营方案独立为维度14：需求收集、功能推广、用户培训、效果评估、数据埋点、数据迁移
+- 产品定型机制：第零步根据商业属性×功能类型动态调整适用维度
+- 检查深度标准：强制引用PRD原文定位问题、给出可执行改进示例、推断隐性问题
