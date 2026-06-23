@@ -1,128 +1,35 @@
-# PRD Skills — B端产品经理 PRD 工程化工具集
+# PRD Skills Workspace
 
-为 B端产品经理和产品团队提供的三套 PRD 工程化 Skill，覆盖 **撰写 → 审查 → 工作流编排** 全链路。
+This repository is a working context package for PRD-related agent skills.
 
-三套 Skill 可独立使用，也可按 `prd-workflow` 编排一键串联。
+Current status: framework-first, not complete.
 
----
+The main active skill is `prd-workflow-skill`, which defines a gated PRD workflow for:
 
-## 目录结构
+- write-before alignment
+- task folder creation
+- background understanding
+- decision ledger
+- writable-state checking
+- draft v0
+- full PRD v1
+- independent review
+- revision and retrospective improvement
 
-```
-prd-skills/
-├── create-prd-skill/      # PRD 撰写 Skill（14章 + 附录 + dist）
-├── check-prd-skill/       # PRD 审查 Skill（14维度 + 附录 + dist）
-├── prd-workflow-skill/    # PRD 工作流 Skill（编排 create-prd + check-prd）
-└── README.md
-```
+The surrounding files are kept as external context for future enrichment. They are intended to help refine `prd-workflow-skill` over time rather than represent a finished production skill set.
 
----
+## Key Files
 
-## 1. create-prd-skill — PRD 撰写
+| Path | Purpose |
+|---|---|
+| `prd-workflow-skill/` | Current PRD workflow skill package |
+| `prd-definition-quality-standard.md` | Source material for PRD quality standards |
+| `prd-workflow-skill-repository-design.md` | Source material for the skill repository design |
+| `create-prd-skill/` | Earlier PRD creation skill reference |
+| `check-prd-skill/` | Earlier PRD review/checking skill reference |
+| `SkillOpt/` | External reference material for skill optimization ideas |
 
-根据业务上下文生成结构化 B端 PRD 文档（含初始内容）。
+## Boundary
 
-**核心能力：**
+This repository is public by design, but it should not contain private project PRDs, credentials, customer data, or internal implementation details.
 
-- 14 个标准章节：项目背景 → 基本信息 → 商业论证 → 产品目标 → 产品概述 → 功能范围 → 风险与假设 → 术语定义 → 功能需求 → 埋点需求 → 权限设计 → 运营支撑 → 待定事项
-- 产品属性自动定型（商业属性 + 功能类型）
-- 附录：产品定型参考、自查清单
-- 输出 `dist/create-prd.skill` 可分发的 skill 包
-
-**触发词：** 写 PRD、需求文档、产品方案、系统设计文档
-
----
-
-## 2. check-prd-skill — PRD 审查
-
-对 B端 PRD / 需求文档进行 14 维度严格质量审查。
-
-**14 审查维度：**
-
-| # | 维度 | 说明 |
-|---|------|------|
-| 01 | 商业价值 | 是否阐明商业目标与 ROI |
-| 02 | 产品定型 | 产品类型与范围是否一致 |
-| 03 | 定位与竞品 | 是否有清晰的市场定位 |
-| 04 | 用户场景 | 场景描述是否完整可执行 |
-| 05 | 文档结构 | 章节结构是否规范 |
-| 06 | 技术架构 | 架构描述是否清晰 |
-| 07 | 数据模型 | 数据设计是否合理 |
-| 08 | 业务流程 | 流程是否闭环 |
-| 09 | 交互体验 | UX 描述是否可落地 |
-| 10 | 商业闭环 | 商业模式是否成立 |
-| 11 | MVP 边界 | 最小可行范围是否明确 |
-| 12 | 异常处理 | 异常场景是否覆盖 |
-| 13 | AI 评审 | AI 相关功能审查（如适用）|
-| 14 | 运营支撑 | 运营需求是否覆盖 |
-
-**附录：** 一票否决项、审查指南
-
-**触发词：** 审查 PRD、看看这个方案、检查需求文档
-
----
-
-## 3. prd-workflow-skill — PRD 工作流编排
-
-将 `create-prd` 和 `check-prd` 编排为端到端工作流，确保每个 PRD 都经过严格的 **写前对齐 → 两阶段撰写 → 独立审查 → 修订闭环 → 流程复盘**。
-
-**工作流阶段：**
-
-```
-需求输入 → 可写性判断 → 决策账本 → Phase 1 撰写 → Phase 2 撰写 → 质量审查 → 修订 → 复盘改进
-```
-
-**关键机制：**
-
-- **可写性门禁（Writable Gate）：** 判断需求是否具备足够上下文可进入撰写
-- **决策账本（Decision Ledger）：** 记录过程中的隐性决策，可追溯
-- **双阶段撰写：** Phase 1 出框架 → Phase 2 填内容
-- **质量门禁（Quality Gate）：** 独立审查，不通过则退回
-- **修订闭环：** 从审查反馈到修订的完整闭环
-- **流程复盘（Retrospective）：** 识别重复问题，提出流程改进
-
-**包含：**
-
-- `SKILL.md` — 工作流编排逻辑
-- `manifest.json` — 技能元数据
-- `agents/interface.yaml` — Agent 间接口定义
-- `references/` — 质量标准、门禁规则、输出契约等 6 个参考文档
-
----
-
-## 使用方式
-
-### 独立使用
-
-```bash
-# 撰写 PRD
-/create-prd 我们要做一个企业采购管理系统...
-
-# 审查 PRD
-/check-prd path/to/prd.md
-```
-
-### 工作流串联
-
-```bash
-# 一键启动端到端工作流
-/prd-workflow 我们要做一个企业采购管理系统...
-```
-
-三套 Skill 均兼容 Claude Code、Codex、OpenCode 等主流 AI Coding Agent。
-
----
-
-## 适用场景
-
-- B端 SaaS 产品需求文档撰写
-- 企业自研系统方案设计
-- 需求文档质量审查与改进
-- 产品团队 PRD 规范落地
-- AI Agent 驱动的产品管理流程
-
----
-
-## 版本信息
-
-详细的版本历史见各子目录中的 `CHANGELOG.md`。
