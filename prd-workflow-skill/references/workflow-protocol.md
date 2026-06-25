@@ -122,7 +122,7 @@ Write:
 
 **After Fill Details completes (or after each revision round ends):**
 
-1. Update `09-run-log.md` Node 完成记录 for Node 3: which checklist modules were loaded, how many blocking items were addressed vs. skipped.
+1. Update `09-run-log.md` Node 完成记录 for Node 3: which checklist items were applied (by complexity and condition filters), how many gate items were addressed vs. skipped.
 2. If any content was revised in response to feedback, append to 修订记录: round number, trigger, scope, root cause classification (缺知识/缺方法/缺模板/缺门禁/缺案例/偶发), and which checklist module was involved.
 3. If a revision reveals a systemic gap (something the writer "shouldn't have missed" on first pass), append to 痛点日志: what was missed, why it was missed on the first pass, which checklist module covers it, and severity.
 
@@ -153,7 +153,7 @@ Goal: catch problems the writer missed, with a separate role that has no ego in 
 Required actions:
 
 - **subtract first**: before checking completeness, ask of every feature: "if we skip this, what breaks?" If the answer is "the user can still manage, just less conveniently," flag it as potential over-design.
-- **operational completeness sweep**: for each checklist module loaded, check every `level: "blocking"` item against the PRD. A blocking item that is neither addressed nor marked "不适用" is a P1 gap.
+- **operational completeness sweep**: for each applicable checklist item (filtered by `complexity` and `condition`), check against the PRD using `question`, `pass_criteria`, and `failure_signal`. A gate item (`hierarchy: "gate"`) that is neither addressed nor marked "不适用" is a P0 gap. An extended item (`hierarchy: "extended"`) that is not addressed is a P1 gap unless the condition is not met.
 - check clear boundary, explicit judgment, no guessing, and accurate information
 - classify findings as P0/P1/P2/P3
 - produce minimum fix set

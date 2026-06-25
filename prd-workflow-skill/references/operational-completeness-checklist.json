@@ -201,7 +201,7 @@
       "suggested_format": "默认值表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/rule-table.md"
     },
     {
       "id": "C13",
@@ -217,7 +217,7 @@
       "suggested_format": "操作控制表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/rule-table.md"
     },
     {
       "id": "C14",
@@ -233,7 +233,7 @@
       "suggested_format": "数据来源表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/data-caliber-table.md"
     },
     {
       "id": "C15",
@@ -249,7 +249,7 @@
       "suggested_format": "统计口径表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/data-caliber-table.md"
     },
     {
       "id": "C16",
@@ -297,7 +297,7 @@
       "suggested_format": "待确认事项表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/risk-acceptance-table.md"
     },
     {
       "id": "C19",
@@ -473,7 +473,7 @@
       "suggested_format": "字段总表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/field-rule-table.md"
     },
     {
       "id": "C30",
@@ -489,7 +489,7 @@
       "suggested_format": "表格字段总览",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/field-rule-table.md"
     },
     {
       "id": "C31",
@@ -601,7 +601,7 @@
       "suggested_format": "交互状态表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/rule-table.md"
     },
     {
       "id": "C38",
@@ -681,7 +681,7 @@
       "suggested_format": "加载状态表",
       "priority": "P2",
       "complexity": "L2-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/rule-table.md"
     },
     {
       "id": "C43",
@@ -729,7 +729,7 @@
       "suggested_format": "统计口径表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/data-caliber-table.md"
     },
     {
       "id": "C46",
@@ -745,7 +745,7 @@
       "suggested_format": "单位精度表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/data-caliber-table.md"
     },
     {
       "id": "C47",
@@ -937,7 +937,7 @@
       "suggested_format": "重复处理表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/rule-table.md"
     },
     {
       "id": "C59",
@@ -953,7 +953,7 @@
       "suggested_format": "冲突处理表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/rule-table.md"
     },
     {
       "id": "C60",
@@ -969,7 +969,7 @@
       "suggested_format": "权限异常表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": ""
+      "template_ref": "05_context/writing-standards/rule-table.md"
     },
     {
       "id": "C61",
