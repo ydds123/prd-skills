@@ -79,7 +79,7 @@ A separate agent role reviews the full PRD. The reviewer explicitly switches con
 
 → Human decides which fixes to apply.
 
-After fixes are applied, the agent produces a revised PRD, revision summary, unresolved items, and accepted risks. The PRD is final when: no unmarked assumptions, no invented capabilities, no future plans mixed into scope, no unresolved P0, no unaccepted P1.
+After fixes are applied, the agent runs a Content Consistency Sweep (Node 4.5) to verify the fix did not create cross-section contradictions or stale references — sweeping only the fix's blast radius across 10 consistency dimensions — then produces a revised PRD, revision summary, unresolved items, accepted risks, and sweep report. The PRD is final when: no unmarked assumptions, no invented capabilities, no future plans mixed into scope, no unresolved P0, no unaccepted P1, and no P0 consistency contradictions.
 
 ### Retrospect (On Demand)
 

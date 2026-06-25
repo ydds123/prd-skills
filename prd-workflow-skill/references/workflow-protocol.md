@@ -182,6 +182,28 @@ This replaces the per-module counting threshold from V2.0. The gate is now pass/
 
 **Revision** (inline, not separate stage): Apply only confirmed review feedback. Outputs: revised PRD or patch-style section updates, revision summary, unresolved items, accepted risks, and whether the document can proceed.
 
+**Content Consistency Sweep** (Node 4.5, executed after applying confirmed fixes and before Final-output check):
+
+Goal: verify that the fix did not create cross-section contradictions, stale references, or unsynchronized sections. This is NOT a re-run of the full V3.3 checklist — it is a targeted sweep focused on the fix's blast radius.
+
+Trigger: executed after ANY content fix, unless the only changes are typos, formatting, or layout that do not affect cross-references.
+
+Method:
+
+1. Determine the fix's blast radius: which sections were modified, which objects/roles/states/rules were changed.
+2. Use the blast-radius table in `05_context/writing-standards/content-consistency-sweep.md` to select which of the 10 consistency dimensions to sweep. Do NOT run all 10 — only those affected by the blast radius.
+3. For each selected dimension, check per the dimension's criteria.
+4. Classify each finding: `can-auto-fix` (PRD-internal evidence exists, no new product facts) / `needs-pm-confirm` (involves scope/permission/state/default/data decisions) / `forbidden` (would fabricate unconfirmed facts).
+5. Apply auto-fixes immediately. Do not accumulate auto-fixes into a new revision round — they are applied inline within the sweep.
+6. Accumulate needs-confirm items (max 3 presented at once).
+7. Output: consistency sweep report (table) + auto-fix patches applied + PM confirmation items (max 3) + sweep conclusion.
+
+Gate: a P0 consistency issue (contradiction that would cause R&D to build the wrong thing) blocks final output. P1 issues default to auto-fix or PM confirmation. P2 (terminology drift, stale reference) auto-fix.
+
+See `05_context/writing-standards/content-consistency-sweep.md` for the full 10-dimension checklist, auto-fix boundary rules, output format, and real example.
+
+**After sweep completes:** Update `09-run-log.md` 运行时间线 with sweep execution, and 修订记录 for any auto-fix patches applied.
+
 **Final-output check** (inline): No unmarked assumptions, no invented system capabilities, no unverified data presented as fact, no future plans mixed into current scope, no technical or visual detail unless requested, no unresolved P0, no unaccepted P1.
 
 **After review completes:** Update `09-run-log.md` Node 完成记录 for Node 4: checklist modules swept, blocking items found, P0/P1 counts.
