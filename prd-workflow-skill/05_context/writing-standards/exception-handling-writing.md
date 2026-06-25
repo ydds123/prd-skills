@@ -1,59 +1,61 @@
-# Exception Handling Writing
+# 异常规则表
 
 > Belongs to: `05_context/writing-standards/`  
-> Governed by: `prd-definition-quality-standard.md` §6.2 "异常情况"  
-> Evidence: first PRD run — v1.0 lacked exception handling for all features; 6 features needed retroactive addition in v1.1  
-> Version: v1.0.0
+> Source: PRD 需求自查清单 V3.3 · Sheet 07  
+> Version: v2.0.0 — replaces v1.0.0 (upgraded to V3.3 9-column format)
 
----
+适用场景：空态、失败态、重复态、冲突态、权限不足、上下游异常、状态不可逆。
 
-Every core feature must include an exception handling table. If the feature genuinely has no possible exception states, state "本功能无特殊异常" — do not omit the table. Silence is indistinguishable from an omission.
+必须回答：出岔子时，系统怎么处理，用户看到什么，数据怎么变化，能不能恢复。
 
-## Table Structure
+## 空白模板
 
 ```
-触发条件 | 处理逻辑 | 引导提示 | 恢复机制
+异常类型 | 触发场景 | 系统处理 | 用户提示 | 数据状态 | 是否可重试/恢复 | 责任人 | 验收点 | 备注
 ```
 
-| Column | Content |
-|--------|---------|
-| 触发条件 | The specific scenario that triggers the exception (e.g. "分组名称为空", "网络异常", "查询无结果") |
-| 处理逻辑 | What the system does (e.g. "阻断保存", "保留页面并提供重试入口", "展示空列表状态") |
-| 引导提示 | The exact message shown to the user (e.g. "请输入分组名称", "消息加载失败，请重试") |
-| 恢复机制 | What the user can do to recover (e.g. "用户补充分组名称后重新保存", "用户点击重试或刷新") |
+| 列名 | 含义 |
+|------|------|
+| 异常类型 | 空态 / 失败态 / 重复态 / 冲突态 / 权限不足 / 上下游异常 / 状态不可逆 |
+| 触发场景 | 什么情况下触发这个异常 |
+| 系统处理 | 系统执行什么操作 |
+| 用户提示 | 展示给用户的文案 |
+| 数据状态 | 异常发生后数据处于什么状态（是否已写入、是否保留输入内容） |
+| 是否可重试/恢复 | 可重试 / 不可重试 / 不涉及 / 管理员恢复 |
+| 责任人 | 谁来处理这个异常 |
+| 验收点 | 如何验证这个异常处理正确 |
+| 备注 | 关联的校验规则、兜底策略 |
 
-## Coverage Dimensions
+## 示例
 
-For each core feature, check these dimensions:
+| 异常类型 | 触发场景 | 系统处理 | 用户提示 | 数据状态 | 是否可重试/恢复 | 责任人 | 验收点 | 备注 |
+|---------|---------|---------|---------|---------|---------------|--------|--------|------|
+| 空态 | 列表无数据 | 展示空态，不展示表格数据 | 暂无数据 | 无变化 | 不涉及 | 无 | 无数据时页面不报错 | 可提供新增入口 |
+| 保存失败 | 用户点击保存后接口返回失败 | 保留用户已输入内容 | 保存失败，请稍后重试 | 不写入新数据 | 可重试 | 用户 | 保存失败后输入内容不丢失 | 不关闭弹窗 |
+| 重复提交 | 用户连续点击提交 | 第二次点击被禁用或拦截 | 正在提交，请勿重复操作 | 只生成一条记录 | 不涉及 | 系统 | 不产生重复数据 | 可通过 loading 防重复 |
+| 权限不足 | 无权限用户访问编辑入口 | 不展示入口，或点击后提示无权限 | 暂无操作权限 | 无变化 | 不可重试 | 管理员配置权限 | 无权限用户不能绕过入口操作 | B 端高频必写 |
 
-| Dimension | Trigger examples | Must cover? |
-|-----------|-----------------|-------------|
-| 空态 (empty) | No data, no results, blank field | Always |
-| 失败态 (failure) | Submit fails, load fails, save fails | Always (if the feature has a submit/load/save) |
-| 校验失败 (validation) | Required field empty, format invalid, duplicate name | Always (if the feature has input) |
-| 网络异常 (network) | Request timeout, no response, partial failure | Always |
-| 权限不足 (permission) | User lacks view/edit/delete permission | If the feature has role-based access |
-| 并发冲突 (concurrency) | Data modified by another user, state already changed | If the feature edits shared data |
-| 依赖缺失 (dependency) | Required config not set, upstream data unavailable | If the feature has dependencies |
-| 数据边界 (boundary) | Over-length text, max items exceeded, numeric overflow | If the feature has input with constraints |
+## 不合格写法
 
-## Coverage Rule
+| 问题写法 | 为什么不合格 |
+|---------|-------------|
+| 异常时提示错误 | 没写什么异常、什么提示、数据是否保留 |
+| 无权限不可操作 | 没写入口是否展示，绕过入口访问怎么办 |
+| 保存失败可重试 | 没写失败后数据是否保留 |
 
-**Do not pad.** If a dimension does not apply to this feature, skip it. But check all eight before concluding. The most common error is skipping 网络异常 because "the system will always be online" — no system is always online.
+## 八维覆盖率检查
 
-## User-Facing vs System-Only Exceptions
+对每个核心功能，至少检查这八个维度是否需要写异常处理：
 
-| Exception type | 引导提示 shows? | 恢复机制 shows? |
-|---------------|----------------|----------------|
-| User-correctable (empty field, duplicate name) | Yes — tell the user what to fix | Yes — tell the user how to proceed |
-| System-only (config sync failed, background job timeout) | No frontend prompt | Log and notify admin/ops; user retries are automatic on next action |
-| Silent (template disabled, no matching template) | No frontend prompt | Log for troubleshooting; user experience is unaffected |
+| 维度 | 触发示例 | 必查？ |
+|------|---------|--------|
+| 空态 | 无数据、无结果、字段为空 | Always |
+| 失败态 | 提交失败、加载失败、保存失败 | 有 submit/load/save 则必查 |
+| 重复态 | 重复提交、重复选择、重复配置 | 有提交/选择/配置则必查 |
+| 冲突态 | 数据被他人修改、状态已变化 | 编辑共享数据则必查 |
+| 权限不足 | 无权限访问、无权限操作 | 有角色权限则必查 |
+| 上下游异常 | 依赖系统无响应、数据未同步 | 有外部依赖则必查 |
+| 状态不可逆 | 删除、撤回、关闭、终止后能否恢复 | 有不可逆操作则必查 |
+| 网络异常 | 请求超时、无响应、部分失败 | Always |
 
-## Anti-patterns
-
-| Don't | Why | Do instead |
-|-------|-----|------------|
-| Omit the exception table entirely | R&D implements only the happy path, QA discovers gaps in production | Write the table; if truly no exceptions, write "本功能无特殊异常" |
-| Use vague prompts | "操作失败" tells the user nothing — they don't know if they should retry, change input, or contact support | Write the exact prompt: "分组名称已存在，请修改后保存" |
-| Skip the 恢复机制 column | The user knows something went wrong but has no path forward | Every exception row must answer: "and then what?" |
-| Treat network errors as "won't happen" | WiFi drops, VPN disconnects, load balancer fails — these are normal, not exceptional | Cover network exceptions for every feature that makes a request |
+如果某个维度确实不适用，在 PRD 中明确写"本功能无此异常"——沉默等同于遗漏。

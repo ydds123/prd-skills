@@ -97,11 +97,11 @@ Goal: expand the accepted frame into a complete PRD body.
 
 1. Verify `09-run-log.md` exists in the task folder. If not, create it from the template at `05_context/run-log.md`. Append a Node 3 start entry to 运行时间线.
 2. Read `09-run-log.md` — particularly 痛点日志 — to avoid repeating mistakes from prior runs.
-3. Load `references/operational-completeness-checklist.json`.
-4. Match the PRD's feature types against `load_map.mappings` to identify which checklist modules to load.
-5. For each matched module, load its `items` array filtered by `level: "blocking"`. These are the questions that R&D cannot work without answers to.
-6. As each functional section is expanded, cross-reference the injected items — every blocking item must either be written into the PRD or explicitly marked "不适用" with a reason.
-7. Do not dump the checklist into the PRD. Use it as a silent writing guide. The output the reader sees is the filled-out PRD, not a questionnaire.
+3. Load `references/operational-completeness-checklist.json` (V3.3).
+4. Identify which checklist items apply: filter by `complexity` (L1-L4 matches the PRD's complexity level) and `condition` (domain-specific conditions like "has multi-role" or "has delete action").
+5. For each applicable item, use `question`, `pass_criteria`, and `failure_signal` as the writing guide. The `suggested_format` field tells you which table template to use (see `05_context/writing-standards/`).
+6. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
+7. Do not dump the checklist into the PRD. Use it as a silent writing guide.
 
 Write:
 
@@ -148,7 +148,7 @@ Goal: catch problems the writer missed, with a separate role that has no ego in 
 **Review materials (load before starting):**
 1. Read `09-run-log.md` in the task folder — focus on 痛点日志 and 修订记录. These tell you what the writer already knows they missed and why. Cross-check: did the writer actually fix those gaps, or just acknowledge them?
 2. `references/prd-quality-standard.md` — the four criteria and blocking severity rules
-3. `references/operational-completeness-checklist.json` — load the `gate_rules.node4_review` thresholds and the checklist modules matching the PRD's feature types via `load_map.mappings`
+3. `references/operational-completeness-checklist.json` (V3.3) — for each checklist item, review against the PRD using `question` (what to check), `pass_criteria` (what passing looks like), and `failure_signal` (what failing looks like). Filter items by `hierarchy` (gate items are mandatory, extended are applicable-by-condition, advisory are suggested). Gate items found missing = P0; extended items found missing = P1 unless condition is not met.
 
 Required actions:
 
@@ -159,11 +159,18 @@ Required actions:
 - produce minimum fix set
 - say whether the PRD can enter review or final output
 
-**Review gate** (inline): 
-- P0 always blocks final output.
-- P1 blocks by default unless the PM explicitly accepts risk and the PRD records the accepted risk, reason, owner, and follow-up condition.
-- P2 and P3 do not block.
-- **Checklist threshold**: ≥ `gate_rules.node4_review.blocking_threshold.per_module.max_blocking_miss` blocking items missed in a single module → mark that module P0. ≥ `gate_rules.node4_review.blocking_threshold.total.max_p1` total P1 accumulated → reject the PRD.
+**Review gate** (V3.3 rules, see `references/operational-completeness-checklist.json` §gate_rules):
+- **P0 always blocks** final output and review entry. Any single P0 = the PRD cannot proceed.
+- **P1 blocks by default** unless the PM explicitly accepts the risk and records it in a 风险接受表 (reason, owner, follow-up action, deadline). See `05_context/writing-standards/risk-acceptance-table.md`.
+- **P2 and P3 do not block.**
+- **V3.3 review conclusion logic:**
+  - P0阻塞 > 0 → 不可进入评审
+  - P1风险 > 0 (unaccepted) → 默认不建议进入评审
+  - 待检查项 > 0 → 检查未完成
+  - 待补充项 > 0 → 需补充
+  - All clear → 可进入评审
+
+This replaces the per-module counting threshold from V2.0. The gate is now pass/fail based on whether ANY P0 or unaccepted P1 exists — not on how many are missing from a single module.
 
 **Minimum output:** Even if the PRD appears flawless, the reviewer must produce at least one concrete observation per applicable checklist module — either a finding, or an explicit statement of why no finding exists for that module. A review that marks everything "pass" without evidence is a failed review.
 

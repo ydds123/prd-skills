@@ -1,415 +1,1296 @@
 {
   "meta": {
-    "name": "operational-completeness-checklist",
-    "version": "1.0.0",
-    "source": "需求自查清单V2.0",
-    "belongs_to": "prd-workflow-skill/references",
-    "governed_by": "prd-definition-quality-standard.md §5.3 不留猜疑",
-    "consumed_by": ["Node 3: Fill Details", "Node 4: Review"],
-    "levels": {
-      "blocking": { "key": "blocking", "label": "阻断项", "symbol": "🔴", "rule": "研发没有此信息无法开工，遗漏即 P1" },
-      "advisory": { "key": "advisory", "label": "建议项", "symbol": "🟡", "rule": "影响体验或运维效率，累积 >5 提示" },
-      "contextual": { "key": "contextual", "label": "上下文项", "symbol": "🔵", "rule": "依赖具体业务场景，不适用需在 PRD 中说明" }
+    "version": "3.3",
+    "source": "PRD需求自查清单 V3.3",
+    "governed_by": "prd-definition-quality-standard.md",
+    "total_items": 66,
+    "hierarchies": {
+      "gate": 21,
+      "extended": 39,
+      "advisory": 6
     }
   },
-  "domains": {
-    "frontend": {
-      "label": "前端信息交互清单",
-      "description": "覆盖框架、路径、网络、数据、返回、列表、刷新、Tab、App交互、版本兼容等领域",
-      "modules": {
-        "framework": {
-          "label": "框架",
-          "items": [
-            { "id": "F01", "text": "功能框架、功能点是否完成", "level": "blocking", "applies": "always" },
-            { "id": "F02", "text": "流程是否清晰完整", "level": "blocking", "applies": "has_flow" },
-            { "id": "F03", "text": "页面布局是否清晰完整", "level": "blocking", "applies": "has_page" }
-          ]
-        },
-        "navigation": {
-          "label": "路径",
-          "items": [
-            { "id": "F04", "text": "功能入口和出口", "level": "blocking", "applies": "has_page" },
-            { "id": "F05", "text": "前进：下一步操作跳转，是否带入数据", "level": "blocking", "applies": "has_step_flow" },
-            { "id": "F06", "text": "返回：是否可返回，返回到哪，数据是否保存", "level": "blocking", "applies": "has_page_jump" },
-            { "id": "F07", "text": "退出：关闭程序、放到后台、再回来的显示和处理", "level": "advisory", "applies": "app" },
-            { "id": "F08", "text": "流程结束后怎么引导", "level": "advisory", "applies": "has_flow" }
-          ]
-        },
-        "network": {
-          "label": "网络",
-          "items": [
-            { "id": "F09", "text": "WiFi和非WiFi显示策略，是否有省流量模式", "level": "advisory", "applies": "app" },
-            { "id": "F10", "text": "网络不好时的文案和提示", "level": "blocking", "applies": "always" },
-            { "id": "F11", "text": "网络异常显示、文案和提示", "level": "blocking", "applies": "always" }
-          ]
-        },
-        "data_state": {
-          "label": "数据状态",
-          "items": [
-            { "id": "F12", "text": "数据为空的提示方式和文案", "level": "blocking", "applies": "has_list_or_detail" },
-            { "id": "F13", "text": "数据加载中的提示方式和文案", "level": "blocking", "applies": "has_async" },
-            { "id": "F14", "text": "数据获取失败的提示方式和文案", "level": "blocking", "applies": "has_async" },
-            { "id": "F15", "text": "数据边界值是多少", "level": "advisory", "applies": "has_numeric_input" },
-            { "id": "F16", "text": "输入达到边界值的处理方式", "level": "blocking", "applies": "has_input" }
-          ]
-        },
-        "back": {
-          "label": "返回",
-          "items": [
-            { "id": "F17", "text": "点击返回回到哪", "level": "blocking", "applies": "has_page_jump" },
-            { "id": "F18", "text": "点击返回是否弹窗提示放弃当前页操作", "level": "blocking", "applies": "has_form_edit" }
-          ]
-        },
-        "list": {
-          "label": "列表",
-          "items": [
-            { "id": "F19", "text": "分页策略：自动加载OR手动加载，数据加载条数，数据加载完的提示", "level": "blocking", "applies": "has_list" },
-            { "id": "F20", "text": "位置记忆：离开后再次进入是否记住上次浏览位置", "level": "advisory", "applies": "has_long_list" },
-            { "id": "F21", "text": "排序规则：是否提供排序维度选择", "level": "advisory", "applies": "has_list" },
-            { "id": "F22", "text": "刷新策略：下拉刷新、自动刷新，刷新的触发条件", "level": "blocking", "applies": "has_list" },
-            { "id": "F23", "text": "返回顶部：是否支持快速回到列表顶部", "level": "advisory", "applies": "has_long_list" }
-          ]
-        },
-        "refresh": {
-          "label": "刷新",
-          "items": [
-            { "id": "F24", "text": "刷新方式：下拉刷新、点击刷新、自动刷新", "level": "blocking", "applies": "has_list_or_detail" },
-            { "id": "F25", "text": "刷新过程：原内容保持还是清空、正在加载状态反馈", "level": "blocking", "applies": "has_refresh" },
-            { "id": "F26", "text": "刷新频率：定时刷新、前后台切换、刷新超时策略", "level": "advisory", "applies": "has_realtime" }
-          ]
-        },
-        "tab": {
-          "label": "Tab",
-          "items": [
-            { "id": "F27", "text": "默认：默认选中哪个Tab，Tab图没加载出来的默认显示", "level": "blocking", "applies": "has_tab" },
-            { "id": "F28", "text": "切换：是否支持滑动切换", "level": "advisory", "applies": "has_tab" },
-            { "id": "F29", "text": "记忆：离开后再次进入是否记住上次浏览Tab", "level": "advisory", "applies": "has_tab" },
-            { "id": "F30", "text": "刷新：点击Tab是否支持刷新", "level": "advisory", "applies": "has_tab_and_list" }
-          ]
-        },
-        "app_webview": {
-          "label": "APP与WebView交互",
-          "items": [
-            { "id": "F31", "text": "用原生页面还是H5页面", "level": "blocking", "applies": "hybrid_app" },
-            { "id": "F32", "text": "进入WebView前是否需要登录", "level": "blocking", "applies": "has_webview" },
-            { "id": "F33", "text": "WebView是否带入App登录状态", "level": "blocking", "applies": "has_webview" },
-            { "id": "F34", "text": "WebView登录是否需要调用App登录页面", "level": "advisory", "applies": "has_webview" }
-          ]
-        },
-        "app_version": {
-          "label": "APP版本",
-          "items": [
-            { "id": "F35", "text": "兼容性处理：需求是否兼容老版本，如何兼容", "level": "blocking", "applies": "app" },
-            { "id": "F36", "text": "无法兼容老版本时，如何处理减小影响范围", "level": "advisory", "applies": "app_breaking_change" }
-          ]
-        },
-        "app_other": {
-          "label": "APP其他",
-          "items": [
-            { "id": "F37", "text": "是否支持横竖屏切换", "level": "advisory", "applies": "app" },
-            { "id": "F38", "text": "是否需要屏幕常亮显示", "level": "advisory", "applies": "app_specific" },
-            { "id": "F39", "text": "多屏幕适配如何解决", "level": "advisory", "applies": "app" },
-            { "id": "F40", "text": "Android和iOS是否要做区分处理", "level": "blocking", "applies": "app_platform_diff" }
-          ]
-        }
-      }
+  "items": [
+    {
+      "id": "C01",
+      "hierarchy": "gate",
+      "domain": "需求定义与复杂度判断",
+      "module": "真实问题",
+      "item": "真实问题是否明确",
+      "condition": "所有需求",
+      "question": "是否写清楚解决谁的什么问题，而不是只复述一个功能方案？",
+      "pass_criteria": "能明确用户/角色、现状问题、痛点后果、为什么现在要做；读者能复述需求的业务价值。",
+      "failure_signal": "只写“新增某功能”“优化某页面”“支持某配置”，没有说明真实问题。",
+      "suggested_location": "为什么做 / 背景与真实问题",
+      "suggested_format": "SCQA说明 / 问题定义表",
+      "priority": "P0",
+      "complexity": "L1-L4",
+      "template_ref": ""
     },
-    "backend": {
-      "label": "后台系统清单",
-      "description": "覆盖权限安全 + 增删改查显算传异八大操作维度",
-      "modules": {
-        "auth_security": {
-          "label": "权限和安全",
-          "tags": ["权限", "安全"],
-          "items": [
-            { "id": "B01", "text": "是否要做权限系统", "level": "blocking", "applies": "multi_role" },
-            { "id": "B02", "text": "权限控制是页面级还是数据级", "level": "blocking", "applies": "has_permission" },
-            { "id": "B03", "text": "登录是否需要二次验证", "level": "advisory", "applies": "security_sensitive" },
-            { "id": "B04", "text": "外网是否限制访问", "level": "blocking", "applies": "has_external_access" },
-            { "id": "B05", "text": "白名单还是VPN解决外网访问", "level": "blocking", "applies": "has_external_access" },
-            { "id": "B06", "text": "数据是否不能全量查询", "level": "blocking", "applies": "has_sensitive_data" },
-            { "id": "B07", "text": "信息是否要掩码", "level": "blocking", "applies": "has_sensitive_fields" },
-            { "id": "B08", "text": "导出信息是否不包含敏感信息", "level": "blocking", "applies": "has_export" },
-            { "id": "B09", "text": "是否有记录每次的操作人", "level": "blocking", "applies": "has_crud" },
-            { "id": "B10", "text": "是否要记录每次操作的设备号", "level": "advisory", "applies": "high_audit" }
-          ]
-        },
-        "create": {
-          "label": "增",
-          "tags": ["新增", "创建", "添加", "表单"],
-          "items": [
-            { "id": "B11", "text": "点击增加后的信息提示", "level": "blocking", "applies": "has_create" },
-            { "id": "B12", "text": "增加的内容信息是否必填", "level": "blocking", "applies": "has_create" },
-            { "id": "B13", "text": "增加条件是什么", "level": "blocking", "applies": "has_create" },
-            { "id": "B14", "text": "增加是否有限制条件（字数、字符限制、格式）", "level": "blocking", "applies": "has_input_fields" },
-            { "id": "B15", "text": "哪些情况不允许增加", "level": "blocking", "applies": "has_create" },
-            { "id": "B16", "text": "增加过程中输入参数有哪些", "level": "blocking", "applies": "has_create_form" },
-            { "id": "B17", "text": "支持批量增加吗", "level": "advisory", "applies": "has_create" },
-            { "id": "B18", "text": "操作提示", "level": "blocking", "applies": "has_create" },
-            { "id": "B19", "text": "增加是否进入到编辑状态", "level": "advisory", "applies": "has_create" },
-            { "id": "B20", "text": "编辑状态是否支持删除", "level": "advisory", "applies": "create_then_edit" },
-            { "id": "B21", "text": "点击确认提交后，提交后返回，返回到哪里", "level": "blocking", "applies": "has_create_form" },
-            { "id": "B22", "text": "支持连续添加吗，应该如何设置", "level": "advisory", "applies": "has_create" },
-            { "id": "B23", "text": "增加类型支持：文本、图片、视频、GIF", "level": "advisory", "applies": "has_media" },
-            { "id": "B24", "text": "关联数据梳理", "level": "blocking", "applies": "create_with_relations" }
-          ]
-        },
-        "delete": {
-          "label": "删",
-          "tags": ["删除", "移除", "批量删除"],
-          "items": [
-            { "id": "B25", "text": "点击删除后是否需要二次确认", "level": "blocking", "applies": "has_delete" },
-            { "id": "B26", "text": "删除条件是什么", "level": "blocking", "applies": "has_delete" },
-            { "id": "B27", "text": "删除后是否可以快速撤销", "level": "advisory", "applies": "has_delete" },
-            { "id": "B28", "text": "删除到一半就停止（例如断网），被删除内容怎么处理", "level": "blocking", "applies": "has_delete" },
-            { "id": "B29", "text": "删除后是否进入回收站，是否支持恢复", "level": "blocking", "applies": "has_delete" },
-            { "id": "B30", "text": "是否支持批量删除，如何操作，如何提示", "level": "blocking", "applies": "has_list" },
-            { "id": "B31", "text": "在增加过程中是否支持删除", "level": "advisory", "applies": "create_and_delete" },
-            { "id": "B32", "text": "考虑是否有关联数据", "level": "blocking", "applies": "delete_with_relations" },
-            { "id": "B33", "text": "删除数据采用逻辑删还是物理删", "level": "blocking", "applies": "has_delete" }
-          ]
-        },
-        "update": {
-          "label": "改",
-          "tags": ["编辑", "修改", "更新", "批量修改"],
-          "items": [
-            { "id": "B34", "text": "改的条件是什么", "level": "blocking", "applies": "has_edit" },
-            { "id": "B35", "text": "修改的限制条件是什么", "level": "blocking", "applies": "has_edit" },
-            { "id": "B36", "text": "哪些参数可以修改，哪些参数不可修改", "level": "blocking", "applies": "has_edit" },
-            { "id": "B37", "text": "是否支持批量修改", "level": "advisory", "applies": "has_list" },
-            { "id": "B38", "text": "修改过程中如何取消修改", "level": "blocking", "applies": "has_edit_form" },
-            { "id": "B39", "text": "修改后支持撤销吗", "level": "advisory", "applies": "critical_edit" },
-            { "id": "B40", "text": "修改提交有二次确认吗", "level": "blocking", "applies": "critical_edit" },
-            { "id": "B41", "text": "修改是否涉及数据转移", "level": "advisory", "applies": "ownership_change" }
-          ]
-        },
-        "query": {
-          "label": "查",
-          "tags": ["查询", "搜索", "筛选", "列表"],
-          "items": [
-            { "id": "B42", "text": "查询的入口在哪里", "level": "blocking", "applies": "has_query" },
-            { "id": "B43", "text": "查询异常情况怎样显示", "level": "blocking", "applies": "has_query" },
-            { "id": "B44", "text": "查询对象是什么", "level": "blocking", "applies": "has_query" },
-            { "id": "B45", "text": "哪些字段支持查", "level": "blocking", "applies": "has_query" },
-            { "id": "B46", "text": "查询条件：按权限？按类别？按时间？", "level": "blocking", "applies": "has_query" },
-            { "id": "B47", "text": "查询方式：搜索、筛选", "level": "blocking", "applies": "has_query" },
-            { "id": "B48", "text": "搜索条件：ID、用户名、手机号等", "level": "blocking", "applies": "has_search" },
-            { "id": "B49", "text": "匹配方式：精准匹配、模糊匹配等", "level": "blocking", "applies": "has_search" },
-            { "id": "B50", "text": "查询结果：有屏蔽要求吗？对查询结果可以进行哪些操作？", "level": "blocking", "applies": "has_query_result" },
-            { "id": "B51", "text": "查找结果展示：如何展示，如何排序，没找到怎么办，如何显示", "level": "blocking", "applies": "has_query" },
-            { "id": "B52", "text": "打开结果展示方式：新标签页、当前页、弹窗、详情页，是否可以继续点击跳转", "level": "blocking", "applies": "has_query_result" }
-          ]
-        },
-        "display": {
-          "label": "显",
-          "tags": ["展示", "显示", "渲染", "列表字段"],
-          "items": [
-            { "id": "B53", "text": "敏感数据如何显示，如何配置（隐藏、权限设置）", "level": "blocking", "applies": "has_sensitive_data" },
-            { "id": "B54", "text": "显示内容的优先级（必要字段、重要字段、排版、呈现方式）", "level": "advisory", "applies": "has_page" },
-            { "id": "B55", "text": "显示的层级关系（父子级嵌套关系）", "level": "advisory", "applies": "has_nested_data" },
-            { "id": "B56", "text": "功能操作前、操作方式、操作过程展示、操作结果展示", "level": "blocking", "applies": "has_action_buttons" },
-            { "id": "B57", "text": "数据绘制交互：请求前、请求中、绘制、绘制完成（有数据、失败）、数据缓存、请求及重试机制", "level": "blocking", "applies": "has_async" },
-            { "id": "B58", "text": "页面默认选中焦点、选中项、默认值", "level": "blocking", "applies": "has_form_or_list" },
-            { "id": "B59", "text": "页面显示元素交互状态有哪些（常态、鼠标悬停、点击、选中、禁用）", "level": "advisory", "applies": "has_interactive_elements" },
-            { "id": "B60", "text": "显示的顺序：按创建时间、修改时间、类别", "level": "blocking", "applies": "has_list" },
-            { "id": "B61", "text": "列表显示样式、一页显示数量、分页显示数量、响应式布局", "level": "blocking", "applies": "has_list" },
-            { "id": "B62", "text": "列表是否支持快捷操作：筛选、排序、搜索", "level": "advisory", "applies": "has_list" },
-            { "id": "B63", "text": "显示的元素数量范围，文本过多如何显示", "level": "blocking", "applies": "has_list_or_text" },
-            { "id": "B64", "text": "内容为空怎么显示", "level": "blocking", "applies": "has_data_display" },
-            { "id": "B65", "text": "哪些错误、错误提示显示方式和内容", "level": "blocking", "applies": "always" },
-            { "id": "B66", "text": "哪些内容是固定的，哪些内容是服务端返回的", "level": "blocking", "applies": "has_list_or_detail" }
-          ]
-        },
-        "compute": {
-          "label": "算",
-          "tags": ["计算", "统计", "公式", "数值"],
-          "items": [
-            { "id": "B67", "text": "多久算一次", "level": "blocking", "applies": "has_computation" },
-            { "id": "B68", "text": "哪些数据参与计算", "level": "blocking", "applies": "has_computation" },
-            { "id": "B69", "text": "参数的限制", "level": "blocking", "applies": "has_compute_params" },
-            { "id": "B70", "text": "数据变化的规则：实时更新、自动拉取、推送、隔天更新等", "level": "blocking", "applies": "has_dynamic_data" },
-            { "id": "B71", "text": "需要什么哪些条件", "level": "blocking", "applies": "has_computation" },
-            { "id": "B72", "text": "哪些信息需要默认保存、自动填充", "level": "advisory", "applies": "has_form" },
-            { "id": "B73", "text": "需要什么统计", "level": "advisory", "applies": "has_statistics" },
-            { "id": "B74", "text": "数量变化规则", "level": "advisory", "applies": "has_numeric_display" }
-          ]
-        },
-        "transfer": {
-          "label": "传",
-          "tags": ["上传", "导入", "导出", "文件", "传输"],
-          "items": [
-            { "id": "B75", "text": "传输内容格式支持：文本、图片、视频、数据等", "level": "blocking", "applies": "has_upload_or_import" },
-            { "id": "B76", "text": "哪些需要传，哪些不需要传", "level": "blocking", "applies": "has_upload_or_import" },
-            { "id": "B77", "text": "手动传还是自动传", "level": "blocking", "applies": "has_upload_or_import" },
-            { "id": "B78", "text": "传输的内容", "level": "blocking", "applies": "has_upload_or_import" },
-            { "id": "B79", "text": "传输的方向", "level": "blocking", "applies": "has_upload_or_import" },
-            { "id": "B80", "text": "上传文件是否有格式限制、大小限制", "level": "blocking", "applies": "has_file_upload" },
-            { "id": "B81", "text": "上传文件是否要显示格式信息、格式提示", "level": "blocking", "applies": "has_file_upload" },
-            { "id": "B82", "text": "上传文件后是否显示文件名，怎样显示", "level": "blocking", "applies": "has_file_upload" },
-            { "id": "B83", "text": "上传后是否允许重复上传、覆盖上传、取消上传", "level": "blocking", "applies": "has_file_upload" },
-            { "id": "B84", "text": "是否可以批量上传，批量上传后如何显示", "level": "blocking", "applies": "has_file_upload" },
-            { "id": "B85", "text": "上传后是否可以删除、批量删除，如何删除", "level": "blocking", "applies": "has_file_upload" }
-          ]
-        },
-        "exception": {
-          "label": "异",
-          "tags": ["异常", "错误", "边界", "超时", "兜底"],
-          "items": [
-            { "id": "B86", "text": "数据的异常边界", "level": "blocking", "applies": "has_data_io" },
-            { "id": "B87", "text": "异常处理：为空、字符超长、超时等", "level": "blocking", "applies": "always" },
-            { "id": "B88", "text": "网络异常数据如何处理，如何提示用户，下一步如何操作", "level": "blocking", "applies": "always" },
-            { "id": "B89", "text": "账号异常情况（登录、注册、更换设备、账号是否互斥）", "level": "blocking", "applies": "has_auth" },
-            { "id": "B90", "text": "中断、失败、超出限制如何处理", "level": "blocking", "applies": "always" },
-            { "id": "B91", "text": "业务关联的边缘场景如何处理", "level": "blocking", "applies": "has_biz_flow" },
-            { "id": "B92", "text": "敏感词、内容违规", "level": "advisory", "applies": "has_ugc" },
-            { "id": "B93", "text": "无法获取数据（无响应）", "level": "blocking", "applies": "has_async" },
-            { "id": "B94", "text": "加载时间过长（页面多久超时，超时后提示方式）", "level": "blocking", "applies": "has_async" },
-            { "id": "B95", "text": "状态码提示（404、403、5XX等）", "level": "blocking", "applies": "always" }
-          ]
-        }
-      }
+    {
+      "id": "C02",
+      "hierarchy": "gate",
+      "domain": "需求定义与复杂度判断",
+      "module": "本期目标",
+      "item": "本期目标与成功标准",
+      "condition": "所有需求",
+      "question": "是否写清本期做到什么程度算有效？",
+      "pass_criteria": "有可判断的目标或成功标准，能说明做完后业务或流程会发生什么变化。",
+      "failure_signal": "只写“提升效率”“优化体验”“完善管理”，没有可验证结果。",
+      "suggested_location": "为什么做 / 产品目标与成功标准",
+      "suggested_format": "目标表 / 成功标准表",
+      "priority": "P0",
+      "complexity": "L1-L4",
+      "template_ref": ""
     },
-    "business": {
-      "label": "业务规则清单",
-      "description": "覆盖合规合同、注册登录、数据统计、支付、用户/订单/商品/运营中心等领域",
-      "modules": {
-        "compliance": {
-          "label": "合规和合同",
-          "tags": ["合规", "合同", "法律"],
-          "items": [
-            { "id": "R01", "text": "是否是新业务", "level": "advisory", "applies": "new_project" },
-            { "id": "R02", "text": "公司主体是否明确", "level": "blocking", "applies": "multi_entity" },
-            { "id": "R03", "text": "是否有合规性的考虑", "level": "blocking", "applies": "regulated_industry" },
-            { "id": "R04", "text": "用户操作过程中是否需要合同", "level": "advisory", "applies": "legal_ops" },
-            { "id": "R05", "text": "几方合同？合同内容是什么？", "level": "blocking", "applies": "needs_contract" },
-            { "id": "R06", "text": "通过什么方式签署", "level": "blocking", "applies": "needs_contract" },
-            { "id": "R07", "text": "用户签订合同需存储", "level": "blocking", "applies": "needs_contract" }
-          ]
-        },
-        "auth": {
-          "label": "注册登录",
-          "tags": ["注册", "登录", "鉴权"],
-          "items": [
-            { "id": "R08", "text": "是否需要注册/登录", "level": "blocking", "applies": "new_system_or_endpoint" },
-            { "id": "R09", "text": "是否需要定制化注册/登录页", "level": "advisory", "applies": "has_brand" },
-            { "id": "R10", "text": "是否需要统计注册/登录来源", "level": "advisory", "applies": "has_ops" },
-            { "id": "R11", "text": "是否可免密登录", "level": "advisory", "applies": "app" }
-          ]
-        },
-        "data_tracking": {
-          "label": "数据和数据统计",
-          "tags": ["埋点", "日志", "数据统计"],
-          "items": [
-            { "id": "R12", "text": "需要记录哪些业务数据", "level": "blocking", "applies": "has_data_gen" },
-            { "id": "R13", "text": "对于业务数据，数据表需要记录哪些字段", "level": "blocking", "applies": "has_data_gen" },
-            { "id": "R14", "text": "需要记录哪些用户行为数据", "level": "advisory", "applies": "has_ops" },
-            { "id": "R15", "text": "用户行为数据是否可通过三方网站完成", "level": "advisory", "applies": "has_ops" },
-            { "id": "R16", "text": "是否需要前后台打log或埋点", "level": "blocking", "applies": "has_core_flow" }
-          ]
-        },
-        "payment": {
-          "label": "支付中心",
-          "tags": ["支付", "结算", "扣款"],
-          "note": "仅适用于涉及支付/结算的业务场景",
-          "items": [
-            { "id": "R17", "text": "用哪个支付通道", "level": "blocking", "applies": "has_payment" },
-            { "id": "R18", "text": "是否启动自动划扣", "level": "blocking", "applies": "has_deduction" },
-            { "id": "R19", "text": "支付成功页后返回哪里", "level": "blocking", "applies": "has_payment" },
-            { "id": "R20", "text": "结算主体是谁", "level": "blocking", "applies": "has_settlement" },
-            { "id": "R21", "text": "结算方式是什么", "level": "blocking", "applies": "has_settlement" },
-            { "id": "R22", "text": "如何进行结算操作", "level": "blocking", "applies": "has_settlement" },
-            { "id": "R23", "text": "需要提供哪些结算数据", "level": "blocking", "applies": "has_settlement" },
-            { "id": "R24", "text": "数据表需要记录哪些数据", "level": "blocking", "applies": "has_payment" },
-            { "id": "R25", "text": "财务是否有其他要求，怎么满足", "level": "advisory", "applies": "has_payment" }
-          ]
-        },
-        "user_center": {
-          "label": "用户中心",
-          "note": "领域待扩展",
-          "items": [
-            { "id": "R26", "text": "待补充：用户中心相关自查项", "level": "advisory", "applies": "has_user_center" }
-          ]
-        },
-        "order_center": {
-          "label": "订单中心",
-          "note": "领域待扩展",
-          "items": [
-            { "id": "R27", "text": "待补充：订单中心相关自查项", "level": "advisory", "applies": "has_order_center" }
-          ]
-        },
-        "product_mgmt": {
-          "label": "商品管理",
-          "note": "领域待扩展",
-          "items": [
-            { "id": "R28", "text": "待补充：商品管理相关自查项", "level": "advisory", "applies": "has_product_mgmt" }
-          ]
-        },
-        "ops_center": {
-          "label": "运营中心",
-          "note": "领域待扩展",
-          "items": [
-            { "id": "R29", "text": "待补充：运营中心相关自查项", "level": "advisory", "applies": "has_ops_center" }
-          ]
-        }
-      }
+    {
+      "id": "C03",
+      "hierarchy": "gate",
+      "domain": "需求定义与复杂度判断",
+      "module": "适用端范围",
+      "item": "需求涉及端范围",
+      "condition": "涉及多个端或入口时必查",
+      "question": "是否写清需求适用哪些端，哪些端不适用？",
+      "pass_criteria": "平台、PC、APP、小程序、公众号、管理后台等范围明确，端之间差异明确。",
+      "failure_signal": "只写“系统支持”，但不知道在哪些端支持。",
+      "suggested_location": "是什么 / 需求范围",
+      "suggested_format": "范围表",
+      "priority": "P0",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C04",
+      "hierarchy": "gate",
+      "domain": "边界清晰检查",
+      "module": "本期范围",
+      "item": "本期做什么",
+      "condition": "所有需求",
+      "question": "本期具体包含哪些功能、场景、角色、数据？",
+      "pass_criteria": "功能边界、角色边界、场景边界、数据边界可被研发和测试直接识别。",
+      "failure_signal": "只写功能点，不写边界；读者仍会问“这个本期做不做”。",
+      "suggested_location": "为什么做 / 范围与优先级",
+      "suggested_format": "范围表",
+      "priority": "P0",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C05",
+      "hierarchy": "gate",
+      "domain": "边界清晰检查",
+      "module": "非目标",
+      "item": "本期不做什么",
+      "condition": "L2及以上需求；存在范围误解风险时必查",
+      "question": "哪些容易被误认为本期要做的内容已被明确排除？",
+      "pass_criteria": "有非目标表，且排除项明确；后续规划与本期范围分离。",
+      "failure_signal": "后续想法混入本期；没有说明暂不覆盖的角色、数据或场景。",
+      "suggested_location": "为什么做 / 本期不做",
+      "suggested_format": "非目标表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C06",
+      "hierarchy": "gate",
+      "domain": "边界清晰检查",
+      "module": "角色边界",
+      "item": "角色与职责边界",
+      "condition": "多角色、B端、审批、配置、维护类需求",
+      "question": "谁使用、谁配置、谁审批、谁维护、谁处理异常？",
+      "pass_criteria": "角色名称、职责、参与环节清楚；角色之间不重叠、不混用。",
+      "failure_signal": "使用“相关人员”“管理员”等泛称，未定义具体角色。",
+      "suggested_location": "是什么 / 角色与权限",
+      "suggested_format": "角色职责表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C07",
+      "hierarchy": "gate",
+      "domain": "边界清晰检查",
+      "module": "权限边界",
+      "item": "角色权限矩阵",
+      "condition": "存在查看、新增、编辑、删除、审批、配置等权限差异时必查",
+      "question": "不同角色能看什么、做什么、不能做什么？",
+      "pass_criteria": "有角色权限矩阵，覆盖页面入口、数据范围、操作按钮和异常无权限反馈。",
+      "failure_signal": "只写“有权限的人可操作”，没有权限来源和限制。",
+      "suggested_location": "是什么 / 角色权限矩阵",
+      "suggested_format": "权限矩阵",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C08",
+      "hierarchy": "gate",
+      "domain": "不留猜疑检查",
+      "module": "主流程",
+      "item": "主流程闭环",
+      "condition": "L2及以上需求",
+      "question": "主流程能否从入口、操作、系统处理、结果反馈一直走到结束？",
+      "pass_criteria": "有入口、触发条件、操作步骤、系统处理、结果反馈、结束状态；流程可执行。",
+      "failure_signal": "流程只写到“提交/保存”，未写提交后发生什么。",
+      "suggested_location": "是什么 / 主流程",
+      "suggested_format": "流程图 + 步骤表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C09",
+      "hierarchy": "gate",
+      "domain": "不留猜疑检查",
+      "module": "分支流程",
+      "item": "分支、逆向与退出路径",
+      "condition": "存在审批、撤回、驳回、取消、删除、关闭、终止等动作时必查",
+      "question": "逆向流程、退出流程、失败流程是否写清？",
+      "pass_criteria": "撤回、驳回、取消、失败、关闭、超时等路径有触发条件、结果和状态变化。",
+      "failure_signal": "只有正向流程；用户取消、失败、撤回后结果不明。",
+      "suggested_location": "是什么 / 流程与状态变化",
+      "suggested_format": "流程图 + 规则表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C10",
+      "hierarchy": "gate",
+      "domain": "不留猜疑检查",
+      "module": "状态机",
+      "item": "状态及状态变更",
+      "condition": "存在启停、审批、发布、关闭、驳回、作废、流转等状态变化时必查",
+      "question": "所有状态、触发动作、操作角色、前置状态、目标状态是否完整？",
+      "pass_criteria": "状态机图或状态流转表覆盖主流程、逆向流程、异常流程；每个状态均有可执行动作和下一状态。",
+      "failure_signal": "只列“待审批、已审批、已驳回”等状态名称，没写触发条件和可操作动作。",
+      "suggested_location": "是什么 / 状态机模型",
+      "suggested_format": "状态机图 + 状态流转表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C11",
+      "hierarchy": "gate",
+      "domain": "判断显性检查",
+      "module": "核心规则",
+      "item": "核心业务规则",
+      "condition": "L2及以上需求",
+      "question": "什么条件下允许、禁止、触发、关闭、变更？",
+      "pass_criteria": "每个核心功能都有规则、触发条件、限制条件、默认处理和责任方。",
+      "failure_signal": "只写“支持配置”“支持审批”“支持查询”，无条件、规则和结果。",
+      "suggested_location": "是什么 / 功能规则",
+      "suggested_format": "业务规则表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C12",
+      "hierarchy": "gate",
+      "domain": "判断显性检查",
+      "module": "默认规则",
+      "item": "关键默认值",
+      "condition": "存在默认筛选、默认排序、默认状态、默认开关、默认人员时必查",
+      "question": "用户不操作时，系统默认怎么处理？",
+      "pass_criteria": "默认值、默认状态、默认排序、默认筛选、默认开关均明确；默认来源清楚。",
+      "failure_signal": "默认值交给研发猜；只在原型里出现但PRD不写。",
+      "suggested_location": "是什么 / 默认规则",
+      "suggested_format": "默认值表",
+      "priority": "P0",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C13",
+      "hierarchy": "gate",
+      "domain": "判断显性检查",
+      "module": "操作控制",
+      "item": "按钮与操作控制",
+      "condition": "有按钮、菜单、批量操作、行内操作时必查",
+      "question": "不同角色、不同状态下按钮是否可见、可点、禁用？",
+      "pass_criteria": "有操作控制表，覆盖显示条件、可点条件、禁用原因、点击结果。",
+      "failure_signal": "只画按钮，不写状态限制；测试不知道哪些情况下按钮应禁用。",
+      "suggested_location": "是什么 / 操作规则",
+      "suggested_format": "操作控制表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C14",
+      "hierarchy": "gate",
+      "domain": "信息准确检查",
+      "module": "数据来源",
+      "item": "数据来源与更新时间",
+      "condition": "涉及业务数据、列表、统计、报表、外部系统时必查",
+      "question": "数据从哪里来？什么时候更新？是否同步或延迟？",
+      "pass_criteria": "数据来源、更新时间、同步方式、数据延迟、异常兜底明确。",
+      "failure_signal": "写了“展示数据”，但没有说明来源、口径或更新时间。",
+      "suggested_location": "是什么 / 数据说明",
+      "suggested_format": "数据来源表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C15",
+      "hierarchy": "gate",
+      "domain": "信息准确检查",
+      "module": "统计口径",
+      "item": "指标与统计口径",
+      "condition": "涉及指标、报表、看板、排名、百分比时必查",
+      "question": "指标怎么算？统计范围、时间范围、筛选条件是什么？",
+      "pass_criteria": "有指标定义、计算口径、单位、时间范围、过滤条件和边界说明。",
+      "failure_signal": "数字有了，算法没有；报表口径和列表口径可能不一致。",
+      "suggested_location": "是什么 / 数据口径",
+      "suggested_format": "统计口径表",
+      "priority": "P1",
+      "complexity": "L3-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C16",
+      "hierarchy": "gate",
+      "domain": "判断显性检查",
+      "module": "异常兜底",
+      "item": "空态、失败、重复、冲突、权限不足",
+      "condition": "L2及以上需求",
+      "question": "空态、失败、重复、冲突、权限不足等情况怎么处理？",
+      "pass_criteria": "核心异常均有触发条件、系统处理、用户提示、是否可重试/恢复说明。",
+      "failure_signal": "只有正常流程；失败、无数据、无权限、重复提交均未定义。",
+      "suggested_location": "怎么玩 / 异常与兜底",
+      "suggested_format": "异常规则表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A94｜异常规则表模板；07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C17",
+      "hierarchy": "gate",
+      "domain": "不留猜疑检查",
+      "module": "结果反馈",
+      "item": "操作结果反馈",
+      "condition": "有提交、保存、审批、删除、启停、批量处理等动作时必查",
+      "question": "成功、失败、处理中分别如何反馈？页面和数据如何变化？",
+      "pass_criteria": "明确点击前、中、后的页面状态、提示、刷新、跳转、数据变化。",
+      "failure_signal": "点完以后发生什么没写；成功后是否关闭弹窗、是否刷新列表不明。",
+      "suggested_location": "怎么玩 / 交互反馈",
+      "suggested_format": "反馈规则表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C18",
+      "hierarchy": "gate",
+      "domain": "信息准确检查",
+      "module": "待确认事项",
+      "item": "假设与待确认项",
+      "condition": "存在未确认规则、数据、依赖、范围、外部接口时必查",
+      "question": "未确认内容是否明确标记，而不是写成确定事实？",
+      "pass_criteria": "有待确认事项表，说明影响范围、负责人、确认时点；不影响核心判断的才允许挂起。",
+      "failure_signal": "把假设写成事实；未确认内容直接进入开发依据。",
+      "suggested_location": "附录 / 待确认事项",
+      "suggested_format": "待确认事项表",
+      "priority": "P0",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C19",
+      "hierarchy": "gate",
+      "domain": "不留猜疑检查",
+      "module": "验收标准",
+      "item": "可验证验收",
+      "condition": "所有需求",
+      "question": "怎么判断做完且做对？",
+      "pass_criteria": "验收项可测试、可观察、可判断；覆盖主流程、核心规则、异常、权限和数据。",
+      "failure_signal": "只写“功能正常即可”“符合需求即可”。",
+      "suggested_location": "怎么玩 / 验收标准",
+      "suggested_format": "验收标准表",
+      "priority": "P0",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A116｜验收标准表模板"
+    },
+    {
+      "id": "C20",
+      "hierarchy": "gate",
+      "domain": "不留猜疑检查",
+      "module": "研发自测",
+      "item": "最小自测用例",
+      "condition": "L2及以上需求",
+      "question": "研发交付前至少跑哪些自测用例？",
+      "pass_criteria": "主流程、异常、权限、数据边界有最小用例；可用于交付前冒烟检查。",
+      "failure_signal": "只有测试阶段才发现主流程不通。",
+      "suggested_location": "怎么玩 / 研发自测用例",
+      "suggested_format": "自测用例表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A135｜自测用例表模板"
+    },
+    {
+      "id": "C21",
+      "hierarchy": "gate",
+      "domain": "阻塞问题与评审结论",
+      "module": "评审结论",
+      "item": "P0/P1阻塞判断",
+      "condition": "所有需求",
+      "question": "是否存在未处理的P0/P1问题？是否可进入评审？",
+      "pass_criteria": "P0清零；P1已修正或记录风险接受；评审结论明确。",
+      "failure_signal": "带着P0进入评审；P1未说明是否接受风险。",
+      "suggested_location": "评审结论 / 阻塞项清单",
+      "suggested_format": "评审结论卡",
+      "priority": "P0",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C22",
+      "hierarchy": "extended",
+      "domain": "页面、表单与数据展示检查",
+      "module": "文本输入",
+      "item": "文本输入规则",
+      "condition": "有文本框、名称、标题、备注、说明等字段",
+      "question": "是否写清长度、格式、特殊字符、空格、重复规则？",
+      "pass_criteria": "字段长度、格式、字符限制、空格处理、重复处理和提示文案明确。",
+      "failure_signal": "只写“输入名称/备注”，没有长度和格式限制。",
+      "suggested_location": "是什么 / 表单字段规则",
+      "suggested_format": "字段规则表",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A34｜字段规则表模板；07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C23",
+      "hierarchy": "extended",
+      "domain": "页面、表单与数据展示检查",
+      "module": "必填校验",
+      "item": "必填项与校验时机",
+      "condition": "有新增、编辑、提交、审批表单",
+      "question": "哪些字段必填？何时校验？失败提示什么？",
+      "pass_criteria": "必填字段、校验时机、失败提示、是否支持暂存明确。",
+      "failure_signal": "表单字段很多，但哪些必填不清；保存和提交校验不区分。",
+      "suggested_location": "是什么 / 表单校验",
+      "suggested_format": "校验规则表",
+      "priority": "P0",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A54｜校验规则表模板；07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C24",
+      "hierarchy": "extended",
+      "domain": "页面、表单与数据展示检查",
+      "module": "重复校验",
+      "item": "重复数据校验",
+      "condition": "名称、编码、模板、配置、规则等可能重复",
+      "question": "按哪个字段查重？查重范围是什么？重复后怎么处理？",
+      "pass_criteria": "查重字段、查重范围、大小写/空格处理、重复提示、是否允许覆盖明确。",
+      "failure_signal": "只写“名称不可重复”，没有说明按组织、模块还是全局查重。",
+      "suggested_location": "是什么 / 表单校验",
+      "suggested_format": "校验规则表",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A54｜校验规则表模板；07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C25",
+      "hierarchy": "extended",
+      "domain": "页面、表单与数据展示检查",
+      "module": "文件上传",
+      "item": "文件/图片上传规则",
+      "condition": "有文件、图片、附件、导入模板上传",
+      "question": "支持什么格式、大小、数量？失败后如何处理？",
+      "pass_criteria": "格式、大小、数量、失败处理、删除重传、预览/下载规则明确。",
+      "failure_signal": "只写“支持上传附件”。",
+      "suggested_location": "是什么 / 上传规则",
+      "suggested_format": "上传规则表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C26",
+      "hierarchy": "extended",
+      "domain": "页面、表单与数据展示检查",
+      "module": "时间控件",
+      "item": "时间精度与范围",
+      "condition": "有日期、时间、周期、有效期、截止时间",
+      "question": "时间精确到年/月/日/时/分/秒？默认值和可选范围是什么？",
+      "pass_criteria": "时间精度、默认值、可选范围、跨天/跨月/跨年、开始结束校验明确。",
+      "failure_signal": "时间精度不明；开始时间可晚于结束时间。",
+      "suggested_location": "是什么 / 字段规则",
+      "suggested_format": "字段规则表",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A34｜字段规则表模板；07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C27",
+      "hierarchy": "extended",
+      "domain": "页面、表单与数据展示检查",
+      "module": "选择控件",
+      "item": "单选/复选/下拉规则",
+      "condition": "有单选、复选、下拉、标签选择、弹窗选择",
+      "question": "默认值、是否可清空、选项来源、禁用项、排序规则是什么？",
+      "pass_criteria": "默认值、选项来源、是否支持搜索/多选/清空、禁用项和回显规则明确。",
+      "failure_signal": "只写“选择类型”，选项从哪来不明。",
+      "suggested_location": "是什么 / 控件规则",
+      "suggested_format": "控件规则表",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C28",
+      "hierarchy": "extended",
+      "domain": "页面、表单与数据展示检查",
+      "module": "多组数据",
+      "item": "多行/多组/多标签数量控制",
+      "condition": "支持添加多行、多组、多标签、多附件",
+      "question": "最多能添加几组？能否删除、排序、重复？超出怎么提示？",
+      "pass_criteria": "最大数量、最小数量、删除规则、排序规则、重复规则、超限提示明确。",
+      "failure_signal": "能无限添加但没说明上限；重复选择后结果不明。",
+      "suggested_location": "是什么 / 数量规则",
+      "suggested_format": "数量规则表",
+      "priority": "P2",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C29",
+      "hierarchy": "extended",
+      "domain": "页面、表单与数据展示检查",
+      "module": "字段状态",
+      "item": "字段可编辑/只读/禁用",
+      "condition": "有自动带出、系统生成、只读、禁用、输出字段",
+      "question": "哪些字段可编辑、只读、禁用、自动生成、仅展示？",
+      "pass_criteria": "每个字段的输入/输出/禁用/只读状态明确，并说明状态变化条件。",
+      "failure_signal": "字段展示了，但不知道能不能改。",
+      "suggested_location": "是什么 / 表单字段总览",
+      "suggested_format": "字段总表",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C30",
+      "hierarchy": "extended",
+      "domain": "列表查询与数据展示检查",
+      "module": "列表字段",
+      "item": "列表字段总览",
+      "condition": "有列表或表格",
+      "question": "字段名、含义、来源、展示规则、空值展示是否明确？",
+      "pass_criteria": "一个表格说明字段名、字段含义、来源、展示规则、空值规则、是否排序/筛选。",
+      "failure_signal": "字段散写在段落里，研发和测试难以核对。",
+      "suggested_location": "是什么 / 列表字段总览",
+      "suggested_format": "表格字段总览",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C31",
+      "hierarchy": "extended",
+      "domain": "列表查询与数据展示检查",
+      "module": "默认排序",
+      "item": "列表默认排序",
+      "condition": "有列表、记录、日志、模板库",
+      "question": "默认按哪个字段排序？升序还是降序？空值如何处理？",
+      "pass_criteria": "默认排序字段、排序方向、空值排序、同值次序明确。",
+      "failure_signal": "列表顺序不明；不同端排序不一致。",
+      "suggested_location": "是什么 / 列表规则",
+      "suggested_format": "排序规则表",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C32",
+      "hierarchy": "extended",
+      "domain": "列表查询与数据展示检查",
+      "module": "超长展示",
+      "item": "长文本展示规则",
+      "condition": "有名称、标题、备注、正文、地址等长文本",
+      "question": "超过多少字符省略？是否悬浮、展开或进入详情？",
+      "pass_criteria": "截断长度、展示方式、悬浮/展开/详情入口、移动端适配明确。",
+      "failure_signal": "超长后页面怎么展示不明；重要信息被截断无法查看。",
+      "suggested_location": "是什么 / 展示规则",
+      "suggested_format": "展示规则表",
+      "priority": "P2",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C33",
+      "hierarchy": "extended",
+      "domain": "列表查询与数据展示检查",
+      "module": "查询条件",
+      "item": "查询默认值与重置",
+      "condition": "有筛选区、搜索框、标签筛选",
+      "question": "默认查询什么？重置后回到什么状态？精准还是模糊？",
+      "pass_criteria": "查询类型、默认值、重置规则、空查询、查询按钮触发方式明确。",
+      "failure_signal": "筛选项有了，但查询逻辑不清。",
+      "suggested_location": "是什么 / 查询规则",
+      "suggested_format": "查询规则表",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C34",
+      "hierarchy": "extended",
+      "domain": "列表查询与数据展示检查",
+      "module": "查询联动",
+      "item": "查询条件联动/互斥",
+      "condition": "筛选条件之间有关联、层级、互斥或冲突",
+      "question": "条件之间如何联动？冲突时哪个条件优先？",
+      "pass_criteria": "父子联动、互斥关系、冲突优先级、清空规则明确。",
+      "failure_signal": "公共时间范围和报表自身时间范围互相打架。",
+      "suggested_location": "是什么 / 查询规则",
+      "suggested_format": "查询条件联动表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C35",
+      "hierarchy": "extended",
+      "domain": "列表查询与数据展示检查",
+      "module": "分页加载",
+      "item": "分页/加载更多/滚动加载",
+      "condition": "列表数据可能较多",
+      "question": "是否分页？每页多少条？空态和加载失败怎么处理？",
+      "pass_criteria": "分页方式、每页数量、总数展示、加载更多、空态、失败重试明确。",
+      "failure_signal": "数据量大但没有分页说明。",
+      "suggested_location": "是什么 / 展示规则",
+      "suggested_format": "分页规则表",
+      "priority": "P2",
+      "complexity": "L1-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C36",
+      "hierarchy": "extended",
+      "domain": "列表查询与数据展示检查",
+      "module": "数据权限",
+      "item": "列表数据权限",
+      "condition": "多组织、多部门、多角色、多租户或数据隔离场景",
+      "question": "不同角色能看到哪些数据？数据权限是否与按钮权限分离？",
+      "pass_criteria": "数据范围、组织范围、部门范围、本人/本部门/全部规则明确。",
+      "failure_signal": "只控制按钮，不控制数据；低权限用户看到不该看的数据。",
+      "suggested_location": "是什么 / 数据权限",
+      "suggested_format": "数据权限矩阵",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C37",
+      "hierarchy": "extended",
+      "domain": "操作交互与反馈检查",
+      "module": "点击状态",
+      "item": "点击前、中、后状态",
+      "condition": "有保存、提交、审批、删除、批量处理等操作",
+      "question": "点击前、中、后页面状态分别是什么？是否防重复点击？",
+      "pass_criteria": "点击前可用条件、点击中loading、防重复提交、点击后反馈与数据变化明确。",
+      "failure_signal": "只写“点击保存”，没写保存中和保存后。",
+      "suggested_location": "怎么玩 / 交互反馈",
+      "suggested_format": "交互状态表",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C38",
+      "hierarchy": "extended",
+      "domain": "操作交互与反馈检查",
+      "module": "二次确认",
+      "item": "高风险操作确认",
+      "condition": "有删除、撤回、终止、启用、停用、覆盖、批量操作",
+      "question": "是否需要确认？确认文案、确认后结果、取消后结果是什么？",
+      "pass_criteria": "触发动作、确认文案、主按钮/次按钮、确认结果、取消结果明确。",
+      "failure_signal": "只写“弹窗确认”，没有确认后状态和取消后结果。",
+      "suggested_location": "怎么玩 / 操作确认",
+      "suggested_format": "二次确认规则表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C39",
+      "hierarchy": "extended",
+      "domain": "操作交互与反馈检查",
+      "module": "弹窗规则",
+      "item": "弹窗行为与数据保留",
+      "condition": "有新增、编辑、详情、选择、确认弹窗",
+      "question": "弹窗打开、关闭、取消、提交失败、数据保留规则是否明确？",
+      "pass_criteria": "打开条件、关闭方式、取消行为、提交成功/失败、是否保留输入、是否刷新列表明确。",
+      "failure_signal": "只写“弹出编辑框”；关闭后数据是否保留不明。",
+      "suggested_location": "怎么玩 / 页面交互规则",
+      "suggested_format": "弹窗行为规则表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C40",
+      "hierarchy": "extended",
+      "domain": "操作交互与反馈检查",
+      "module": "页面跳转",
+      "item": "页面流转与返回",
+      "condition": "有跨页面跳转、详情页、编辑页、外链跳转",
+      "question": "从哪里跳到哪里？是否带参数？返回后是否刷新？",
+      "pass_criteria": "来源页、目标页、携带参数、返回路径、刷新规则、权限拦截明确。",
+      "failure_signal": "跳过去了，但回来怎么办不明。",
+      "suggested_location": "怎么玩 / 页面流转",
+      "suggested_format": "页面流转图",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C41",
+      "hierarchy": "extended",
+      "domain": "操作交互与反馈检查",
+      "module": "提示位置",
+      "item": "提示文案位置",
+      "condition": "有校验、成功、失败、权限、空态提示",
+      "question": "提示展示在Toast、字段下方、弹窗内、页面顶部还是空态区域？",
+      "pass_criteria": "提示类型、展示位置、展示时机、关闭方式、是否阻塞操作明确。",
+      "failure_signal": "文案有了，但展示位置不明。",
+      "suggested_location": "怎么玩 / 文案与反馈",
+      "suggested_format": "提示文案表",
+      "priority": "P2",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C42",
+      "hierarchy": "extended",
+      "domain": "操作交互与反馈检查",
+      "module": "加载等待",
+      "item": "加载中、请求中、等待响应",
+      "condition": "有接口请求、保存、提交、批量处理、图表加载",
+      "question": "加载中、处理中、超时、失败重试分别如何提示？",
+      "pass_criteria": "加载状态、超时时间、失败重试、取消操作、重复点击拦截明确。",
+      "failure_signal": "用户等待时页面无状态；批量操作期间可重复点击。",
+      "suggested_location": "怎么玩 / 交互反馈",
+      "suggested_format": "加载状态表",
+      "priority": "P2",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C43",
+      "hierarchy": "extended",
+      "domain": "报表图表与统计检查",
+      "module": "公共筛选",
+      "item": "公共查询条件与图表关系",
+      "condition": "有多个报表、图表、看板卡片",
+      "question": "公共筛选条件是否影响每个图表？图表自身筛选是否与公共条件冲突？",
+      "pass_criteria": "公共筛选、单图筛选、优先级、冲突处理、重置规则明确。",
+      "failure_signal": "公共查询月份，报表自身查询年度，口径冲突。",
+      "suggested_location": "是什么 / 报表筛选规则",
+      "suggested_format": "筛选规则表",
+      "priority": "P1",
+      "complexity": "L3-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C44",
+      "hierarchy": "extended",
+      "domain": "报表图表与统计检查",
+      "module": "默认查询范围",
+      "item": "图表默认查询",
+      "condition": "有图表、看板、统计卡片",
+      "question": "首次进入默认查本日、本月、近30天、年度还是全部？",
+      "pass_criteria": "默认时间范围、默认维度、默认排序、空态明确。",
+      "failure_signal": "打开页面查什么不明；不同图表默认范围不一致。",
+      "suggested_location": "是什么 / 报表规则",
+      "suggested_format": "默认值说明",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C45",
+      "hierarchy": "extended",
+      "domain": "报表图表与统计检查",
+      "module": "图表口径",
+      "item": "图表数据来源与计算口径",
+      "condition": "有统计指标、趋势图、漏斗图、排名图",
+      "question": "明细来源、汇总来源、计算公式、更新时间是什么？",
+      "pass_criteria": "指标定义、公式、数据源、统计粒度、更新频率、边界条件明确。",
+      "failure_signal": "指标名清楚，算法不清。",
+      "suggested_location": "是什么 / 统计口径",
+      "suggested_format": "统计口径表",
+      "priority": "P1",
+      "complexity": "L3-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C46",
+      "hierarchy": "extended",
+      "domain": "报表图表与统计检查",
+      "module": "单位精度",
+      "item": "单位、小数位和取整规则",
+      "condition": "有金额、比例、次数、时长、面积、重量等数据",
+      "question": "单位是什么？保留几位小数？如何四舍五入？",
+      "pass_criteria": "单位、精度、小数位、百分比、取整规则、空值规则明确。",
+      "failure_signal": "同一指标单位混用；保留位数不一致。",
+      "suggested_location": "是什么 / 数据口径",
+      "suggested_format": "单位精度表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C47",
+      "hierarchy": "extended",
+      "domain": "报表图表与统计检查",
+      "module": "极值空值",
+      "item": "图表极值与空值展示",
+      "condition": "图表可能无数据、全0、极大值或极小值",
+      "question": "0、空、极大值、极小值、异常值怎么展示？",
+      "pass_criteria": "空态、0值、极值压缩、异常值提示、是否截断或缩放明确。",
+      "failure_signal": "图表被异常值压扁；无数据时显示空白。",
+      "suggested_location": "是什么 / 图表规则",
+      "suggested_format": "图表展示规则表",
+      "priority": "P2",
+      "complexity": "L3-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C48",
+      "hierarchy": "extended",
+      "domain": "报表图表与统计检查",
+      "module": "图表动效",
+      "item": "图表动效是否承载业务状态",
+      "condition": "动效用于表达加载、刷新、状态变化时",
+      "question": "动效代表什么状态？是否影响用户判断？",
+      "pass_criteria": "仅当动效承载业务状态时写清含义和触发条件；纯视觉动效不进入PRD强门禁。",
+      "failure_signal": "把纯装饰动效写成PRD强要求。",
+      "suggested_location": "怎么玩 / 图表交互",
+      "suggested_format": "图表动效说明",
+      "priority": "P3",
+      "complexity": "L3-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C49",
+      "hierarchy": "extended",
+      "domain": "初始化历史与测试检查",
+      "module": "初始化数据",
+      "item": "初始化配置/字典/模板",
+      "condition": "新功能依赖默认配置、字典、模板、分组或规则",
+      "question": "是否需要初始化数据？初始化内容是什么？谁维护？",
+      "pass_criteria": "初始化内容、创建时机、默认启用状态、维护角色、变更规则明确。",
+      "failure_signal": "上线后没有默认数据，功能不可用。",
+      "suggested_location": "怎么玩 / 初始化规则",
+      "suggested_format": "初始化规则表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C50",
+      "hierarchy": "extended",
+      "domain": "初始化历史与测试检查",
+      "module": "历史数据",
+      "item": "历史数据处理",
+      "condition": "新功能影响老数据或老状态",
+      "question": "老数据是否迁移、补字段、状态映射、兼容旧逻辑？",
+      "pass_criteria": "迁移范围、状态映射、字段补齐、失败处理、回滚方案明确。",
+      "failure_signal": "老数据进入新流程后状态异常。",
+      "suggested_location": "怎么玩 / 历史数据处理",
+      "suggested_format": "历史数据处理方案",
+      "priority": "P1",
+      "complexity": "L3-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C51",
+      "hierarchy": "extended",
+      "domain": "初始化历史与测试检查",
+      "module": "存量配置",
+      "item": "存量配置影响",
+      "condition": "修改已有规则、模板、配置、权限、字典",
+      "question": "新规则是否影响存量配置？是否需要转换？",
+      "pass_criteria": "存量配置是否生效、是否需要升级、是否兼容旧规则、用户是否感知明确。",
+      "failure_signal": "新老规则混跑但未说明。",
+      "suggested_location": "怎么玩 / 兼容规则",
+      "suggested_format": "存量影响表",
+      "priority": "P1",
+      "complexity": "L3-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C52",
+      "hierarchy": "extended",
+      "domain": "初始化历史与测试检查",
+      "module": "上下游兼容",
+      "item": "上下游模块影响",
+      "condition": "涉及其他模块读取、写入、同步、统计或触发",
+      "question": "本功能变更是否影响上下游？失败后怎么兜底？",
+      "pass_criteria": "上游来源、下游消费、同步时机、失败处理、影响范围明确。",
+      "failure_signal": "本功能改了，下游报表或消息规则错了。",
+      "suggested_location": "是什么 / 上下游影响",
+      "suggested_format": "影响范围表",
+      "priority": "P1",
+      "complexity": "L3-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C53",
+      "hierarchy": "extended",
+      "domain": "信息准确检查",
+      "module": "术语一致",
+      "item": "术语与对象命名统一",
+      "condition": "所有需求",
+      "question": "同一对象是否全篇使用同一名称？",
+      "pass_criteria": "核心对象、状态、角色、字段、按钮名称统一；必要时提供术语表。",
+      "failure_signal": "模板、方案、配置、规则混用，读者不确定是否同一对象。",
+      "suggested_location": "附录 / 术语表",
+      "suggested_format": "术语表",
+      "priority": "P2",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C54",
+      "hierarchy": "extended",
+      "domain": "信息准确检查",
+      "module": "能力边界",
+      "item": "系统能力/AI能力边界",
+      "condition": "涉及现有系统能力、外部能力、AI能力或未来规划",
+      "question": "本期已支持、暂不支持、未来规划是否区分？",
+      "pass_criteria": "能力边界清楚；不把未来规划写成本期能力；AI低置信度和人工兜底明确。",
+      "failure_signal": "把未来可做写成当前已支持。",
+      "suggested_location": "为什么做 / 能力边界",
+      "suggested_format": "能力边界表",
+      "priority": "P1",
+      "complexity": "L3-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C55",
+      "hierarchy": "extended",
+      "domain": "信息准确检查",
+      "module": "不越界",
+      "item": "不写技术实现和设计参数",
+      "condition": "所有PRD",
+      "question": "是否避免写数据库表、接口字段、代码逻辑、色号、像素、字号？",
+      "pass_criteria": "只定义产品行为、业务规则、数据口径、验收标准；技术和视觉细节留给对应文档。",
+      "failure_signal": "PRD直接规定数据库结构、接口字段或视觉像素，且影响研发/设计判断空间。",
+      "suggested_location": "全篇检查",
+      "suggested_format": "越界检查表",
+      "priority": "P1",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C56",
+      "hierarchy": "extended",
+      "domain": "异常验收与测试检查",
+      "module": "空态",
+      "item": "无数据处理",
+      "condition": "列表、图表、详情、搜索结果可能无数据",
+      "question": "没有数据时展示什么？用户能做什么？",
+      "pass_criteria": "空态文案、可操作入口、是否可创建/重试/清空筛选明确。",
+      "failure_signal": "无数据时页面空白或误以为加载失败。",
+      "suggested_location": "怎么玩 / 异常与空态",
+      "suggested_format": "空态规则表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C57",
+      "hierarchy": "extended",
+      "domain": "异常验收与测试检查",
+      "module": "失败态",
+      "item": "保存/提交/加载失败",
+      "condition": "有请求、保存、提交、导入、同步、计算",
+      "question": "失败时是否保留数据？是否允许重试？提示什么？",
+      "pass_criteria": "失败原因、提示文案、数据保留、重试、回滚、日志或人工处理明确。",
+      "failure_signal": "提交失败后输入丢失；失败原因无提示。",
+      "suggested_location": "怎么玩 / 异常与兜底",
+      "suggested_format": "失败态规则表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A14｜规则表模板"
+    },
+    {
+      "id": "C58",
+      "hierarchy": "extended",
+      "domain": "异常验收与测试检查",
+      "module": "重复态",
+      "item": "重复提交/重复配置/重复选择",
+      "condition": "可能发生重复提交、重复选择、重复配置",
+      "question": "重复时拦截、覆盖、合并还是提示？",
+      "pass_criteria": "重复判断标准、处理方式、提示文案、是否允许覆盖明确。",
+      "failure_signal": "同一数据被重复选中或重复生成。",
+      "suggested_location": "怎么玩 / 异常与兜底",
+      "suggested_format": "重复处理表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C59",
+      "hierarchy": "extended",
+      "domain": "异常验收与测试检查",
+      "module": "冲突态",
+      "item": "多人编辑/状态变化/数据已更新",
+      "condition": "多人协作、审批流、状态流转、长时间编辑",
+      "question": "数据被别人修改或状态已变化后，当前用户继续操作怎么办？",
+      "pass_criteria": "冲突检测、提示、刷新、覆盖、撤销或重新提交规则明确。",
+      "failure_signal": "用户提交时数据已被别人改过，但系统未处理。",
+      "suggested_location": "怎么玩 / 异常与兜底",
+      "suggested_format": "冲突处理表",
+      "priority": "P1",
+      "complexity": "L3-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C60",
+      "hierarchy": "extended",
+      "domain": "异常验收与测试检查",
+      "module": "权限不足",
+      "item": "无权限访问或操作",
+      "condition": "有角色权限、数据权限、页面入口控制",
+      "question": "无权限时入口是否展示？点击后如何提示？",
+      "pass_criteria": "入口可见规则、按钮禁用/隐藏、越权访问提示、数据脱敏或隔离明确。",
+      "failure_signal": "低权限用户看到入口，点击后报错不清。",
+      "suggested_location": "怎么玩 / 权限异常",
+      "suggested_format": "权限异常表",
+      "priority": "P0",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C61",
+      "hierarchy": "advisory",
+      "domain": "组织表达优化",
+      "module": "章节顺序",
+      "item": "先结论后依据",
+      "condition": "所有PRD",
+      "question": "章节是否先给结论，再给依据和细节？",
+      "pass_criteria": "每节先给判断，后列事实、规则、例子；读者能快速定位结论。",
+      "failure_signal": "背景铺太长，核心结论埋在段落深处。",
+      "suggested_location": "全篇结构",
+      "suggested_format": "金字塔结构",
+      "priority": "P2",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C62",
+      "hierarchy": "advisory",
+      "domain": "组织表达优化",
+      "module": "表格优先",
+      "item": "规则、字段、权限尽量表格化",
+      "condition": "字段、规则、权限、验收较多时",
+      "question": "能用表格说清的内容是否避免长段落？",
+      "pass_criteria": "字段、权限、规则、验收用表格表达，减少重复描述。",
+      "failure_signal": "一个字段一段说明，内容重复且难对齐。",
+      "suggested_location": "全篇结构",
+      "suggested_format": "表格",
+      "priority": "P3",
+      "complexity": "L1-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C63",
+      "hierarchy": "advisory",
+      "domain": "组织表达优化",
+      "module": "图形优先",
+      "item": "流程、状态、关系图形化",
+      "condition": "有流程、状态机、关联关系时",
+      "question": "流程、状态、上下游是否用图表达？",
+      "pass_criteria": "主流程用流程图，状态用状态机图，关联关系用关系图。",
+      "failure_signal": "复杂流程全靠文字堆叠。",
+      "suggested_location": "全篇结构",
+      "suggested_format": "流程图 / 状态机图 / 关系图",
+      "priority": "P3",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C64",
+      "hierarchy": "advisory",
+      "domain": "组织表达优化",
+      "module": "示例补充",
+      "item": "复杂规则正反例",
+      "condition": "规则复杂、容易误解或有边界条件",
+      "question": "是否至少给出一个正例和一个反例？",
+      "pass_criteria": "复杂规则有正例、反例或边界样例，帮助研发测试理解。",
+      "failure_signal": "规则写了，但测试不知道边界怎么验。",
+      "suggested_location": "规则章节",
+      "suggested_format": "示例表",
+      "priority": "P2",
+      "complexity": "L2-L4",
+      "template_ref": ""
+    },
+    {
+      "id": "C65",
+      "hierarchy": "advisory",
+      "domain": "阻塞问题与评审结论",
+      "module": "风险接受",
+      "item": "P1风险接受记录",
+      "condition": "存在P1但PM决定暂不修正时",
+      "question": "是否记录风险接受原因、责任人和后续处理方式？",
+      "pass_criteria": "风险接受项有原因、影响范围、责任人、接受时间和后续动作。",
+      "failure_signal": "口头说“先这样”，文档没有记录。",
+      "suggested_location": "评审结论 / 风险接受项",
+      "suggested_format": "风险接受表",
+      "priority": "P1",
+      "complexity": "L2-L4",
+      "template_ref": "07_表格模板示例!A154｜风险接受表模板"
+    },
+    {
+      "id": "C66",
+      "hierarchy": "advisory",
+      "domain": "组织表达优化",
+      "module": "版本留痕",
+      "item": "版本与变更记录",
+      "condition": "多人协作、评审多轮、上线后回溯",
+      "question": "是否记录版本、变更点、变更原因和确认人？",
+      "pass_criteria": "变更记录可追溯，重要判断变化有原因和确认人。",
+      "failure_signal": "三个月后不知道为什么这么定。",
+      "suggested_location": "文档首页 / 变更记录",
+      "suggested_format": "变更记录表",
+      "priority": "P2",
+      "complexity": "L2-L4",
+      "template_ref": ""
     }
-  },
+  ],
   "load_map": {
-    "description": "按功能类型映射需要加载的模块。Agent 在 Fill Details 或 Review 阶段使用此映射渐进式加载。",
-    "mappings": {
-      "create_form_or_modal": {
-        "label": "新增表单/弹窗",
-        "load": ["backend.create", "backend.transfer"]
-      },
-      "edit_form_or_modal": {
-        "label": "编辑表单/弹窗",
-        "load": ["backend.update"]
-      },
-      "delete_action": {
-        "label": "删除操作",
-        "load": ["backend.delete"]
-      },
-      "list_page": {
-        "label": "列表页",
-        "load": ["frontend.list", "frontend.refresh", "backend.query", "backend.display"]
-      },
-      "detail_page": {
-        "label": "详情页",
-        "load": ["backend.display"]
-      },
-      "approval_or_state_flow": {
-        "label": "审批/状态流转",
-        "load": ["backend.exception", "business.compliance"]
-      },
-      "file_upload": {
-        "label": "文件上传",
-        "load": ["backend.transfer"]
-      },
-      "computation_or_stats": {
-        "label": "计算/统计",
-        "load": ["backend.compute"]
-      },
-      "permission_or_security": {
-        "label": "权限/安全",
-        "load": ["backend.auth_security"]
-      },
-      "app_feature": {
-        "label": "App端功能",
-        "load": ["frontend.framework", "frontend.navigation", "frontend.network", "frontend.data_state", "frontend.back", "frontend.list", "frontend.refresh", "frontend.tab", "frontend.app_webview", "frontend.app_version", "frontend.app_other"]
-      },
-      "delete_group": {
-        "label": "删除分组/组织关系",
-        "load": ["backend.delete"]
-      }
+    "boundary": {
+      "domains": [
+        "边界清晰检查"
+      ],
+      "gate_count": 4,
+      "extended_count": 0,
+      "advisory_count": 0,
+      "item_ids": [
+        "C04",
+        "C05",
+        "C06",
+        "C07"
+      ]
+    },
+    "judgment": {
+      "domains": [
+        "需求定义与复杂度判断",
+        "判断显性检查"
+      ],
+      "gate_count": 7,
+      "extended_count": 0,
+      "advisory_count": 0,
+      "item_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C11",
+        "C12",
+        "C13",
+        "C16"
+      ]
+    },
+    "guesswork": {
+      "domains": [
+        "不留猜疑检查",
+        "操作交互与反馈检查"
+      ],
+      "gate_count": 6,
+      "extended_count": 6,
+      "advisory_count": 0,
+      "item_ids": [
+        "C08",
+        "C09",
+        "C10",
+        "C17",
+        "C19",
+        "C20",
+        "C37",
+        "C38",
+        "C39",
+        "C40",
+        "C41",
+        "C42"
+      ]
+    },
+    "accuracy": {
+      "domains": [
+        "信息准确检查",
+        "阻塞问题与评审结论"
+      ],
+      "gate_count": 4,
+      "extended_count": 3,
+      "advisory_count": 1,
+      "item_ids": [
+        "C14",
+        "C15",
+        "C18",
+        "C21",
+        "C53",
+        "C54",
+        "C55",
+        "C65"
+      ]
+    },
+    "page_form": {
+      "domains": [
+        "页面、表单与数据展示检查"
+      ],
+      "gate_count": 0,
+      "extended_count": 8,
+      "advisory_count": 0,
+      "item_ids": [
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C26",
+        "C27",
+        "C28",
+        "C29"
+      ]
+    },
+    "list_query": {
+      "domains": [
+        "列表查询与数据展示检查"
+      ],
+      "gate_count": 0,
+      "extended_count": 7,
+      "advisory_count": 0,
+      "item_ids": [
+        "C30",
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C35",
+        "C36"
+      ]
+    },
+    "report_chart": {
+      "domains": [
+        "报表图表与统计检查"
+      ],
+      "gate_count": 0,
+      "extended_count": 6,
+      "advisory_count": 0,
+      "item_ids": [
+        "C43",
+        "C44",
+        "C45",
+        "C46",
+        "C47",
+        "C48"
+      ]
+    },
+    "exception_test": {
+      "domains": [
+        "异常验收与测试检查"
+      ],
+      "gate_count": 0,
+      "extended_count": 5,
+      "advisory_count": 0,
+      "item_ids": [
+        "C56",
+        "C57",
+        "C58",
+        "C59",
+        "C60"
+      ]
+    },
+    "init_history": {
+      "domains": [
+        "初始化历史与测试检查"
+      ],
+      "gate_count": 0,
+      "extended_count": 4,
+      "advisory_count": 0,
+      "item_ids": [
+        "C49",
+        "C50",
+        "C51",
+        "C52"
+      ]
+    },
+    "expression": {
+      "domains": [
+        "组织表达优化"
+      ],
+      "gate_count": 0,
+      "extended_count": 0,
+      "advisory_count": 5,
+      "item_ids": [
+        "C61",
+        "C62",
+        "C63",
+        "C64",
+        "C66"
+      ]
     }
   },
   "gate_rules": {
-    "node4_review": {
-      "blocking_threshold": {
-        "per_module": { "max_blocking_miss": 3, "exceed_action": "mark_module_p0" },
-        "total": { "max_p1": 5, "exceed_action": "reject" }
+    "review_conclusion": {
+      "logic": "V3.3 review conclusion formula",
+      "rules": [
+        {
+          "condition": "P0_block > 0",
+          "conclusion": "不可进入评审",
+          "action": "block"
+        },
+        {
+          "condition": "P1_risk_unaccepted > 0",
+          "conclusion": "默认不建议进入评审",
+          "action": "block_unless_accepted"
+        },
+        {
+          "condition": "pending_check > 0",
+          "conclusion": "检查未完成",
+          "action": "warn"
+        },
+        {
+          "condition": "pending_supplement > 0",
+          "conclusion": "需补充",
+          "action": "warn"
+        },
+        {
+          "condition": "all_clear",
+          "conclusion": "可进入评审",
+          "action": "pass"
+        }
+      ]
+    },
+    "priority_rules": {
+      "P0": {
+        "severity": "致命问题",
+        "behavior": "必须阻塞",
+        "fix_rule": "必须修正，不能仅标记风险接受"
       },
-      "output_format": "操作完整度检查表 + 阻断遗漏详情"
+      "P1": {
+        "severity": "高风险问题",
+        "behavior": "默认阻塞",
+        "fix_rule": "优先修正；如PM接受风险须记录原因、责任人、后续动作"
+      },
+      "P2": {
+        "severity": "质量问题",
+        "behavior": "不默认阻塞",
+        "fix_rule": "建议评审前修正；反复出现时进入模板/Skill迭代"
+      },
+      "P3": {
+        "severity": "优化建议",
+        "behavior": "不阻塞",
+        "fix_rule": "不影响交付时处理"
+      }
     }
   }
 }
