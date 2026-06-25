@@ -2,7 +2,7 @@
   "meta": {
     "name": "operational-completeness-checklist",
     "version": "1.0.0",
-    "source": "浙能需求自查清单V2.0",
+    "source": "需求自查清单V2.0",
     "belongs_to": "prd-workflow-skill/references",
     "governed_by": "prd-definition-quality-standard.md §5.3 不留猜疑",
     "consumed_by": ["Node 3: Fill Details", "Node 4: Review"],
