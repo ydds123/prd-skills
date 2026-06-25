@@ -2,7 +2,7 @@
   "meta": {
     "version": "3.3",
     "source": "PRD需求自查清单 V3.3",
-    "governed_by": "prd-definition-quality-standard.md",
+    "governed_by": "references/prd-quality-standard.md",
     "total_items": 66,
     "hierarchies": {
       "gate": 21,
@@ -153,7 +153,7 @@
       "suggested_format": "流程图 + 规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C10",
@@ -185,7 +185,7 @@
       "suggested_format": "业务规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C12",
@@ -201,7 +201,7 @@
       "suggested_format": "默认值表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": "05_context/writing-standards/rule-table.md"
+      "template_ref": "rule-table"
     },
     {
       "id": "C13",
@@ -217,7 +217,7 @@
       "suggested_format": "操作控制表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "05_context/writing-standards/rule-table.md"
+      "template_ref": "rule-table"
     },
     {
       "id": "C14",
@@ -233,7 +233,7 @@
       "suggested_format": "数据来源表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "05_context/writing-standards/data-caliber-table.md"
+      "template_ref": "data-caliber-table"
     },
     {
       "id": "C15",
@@ -249,7 +249,7 @@
       "suggested_format": "统计口径表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": "05_context/writing-standards/data-caliber-table.md"
+      "template_ref": "data-caliber-table"
     },
     {
       "id": "C16",
@@ -265,7 +265,7 @@
       "suggested_format": "异常规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A94｜异常规则表模板；07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C17",
@@ -281,7 +281,7 @@
       "suggested_format": "反馈规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C18",
@@ -297,7 +297,7 @@
       "suggested_format": "待确认事项表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": "05_context/writing-standards/risk-acceptance-table.md"
+      "template_ref": "risk-acceptance-table"
     },
     {
       "id": "C19",
@@ -313,7 +313,7 @@
       "suggested_format": "验收标准表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A116｜验收标准表模板"
+      "template_ref": "验收标准表模板"
     },
     {
       "id": "C20",
@@ -329,7 +329,7 @@
       "suggested_format": "自测用例表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A135｜自测用例表模板"
+      "template_ref": "自测用例表模板"
     },
     {
       "id": "C21",
@@ -361,7 +361,7 @@
       "suggested_format": "字段规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A34｜字段规则表模板；07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C23",
@@ -377,7 +377,7 @@
       "suggested_format": "校验规则表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A54｜校验规则表模板；07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C24",
@@ -393,7 +393,7 @@
       "suggested_format": "校验规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A54｜校验规则表模板；07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C25",
@@ -409,7 +409,7 @@
       "suggested_format": "上传规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C26",
@@ -425,7 +425,7 @@
       "suggested_format": "字段规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A34｜字段规则表模板；07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C27",
@@ -441,7 +441,7 @@
       "suggested_format": "控件规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C28",
@@ -457,7 +457,7 @@
       "suggested_format": "数量规则表",
       "priority": "P2",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C29",
@@ -473,7 +473,7 @@
       "suggested_format": "字段总表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "05_context/writing-standards/field-rule-table.md"
+      "template_ref": "field-rule-table"
     },
     {
       "id": "C30",
@@ -489,7 +489,7 @@
       "suggested_format": "表格字段总览",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "05_context/writing-standards/field-rule-table.md"
+      "template_ref": "field-rule-table"
     },
     {
       "id": "C31",
@@ -505,7 +505,7 @@
       "suggested_format": "排序规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C32",
@@ -521,7 +521,7 @@
       "suggested_format": "展示规则表",
       "priority": "P2",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C33",
@@ -537,7 +537,7 @@
       "suggested_format": "查询规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C34",
@@ -569,7 +569,7 @@
       "suggested_format": "分页规则表",
       "priority": "P2",
       "complexity": "L1-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C36",
@@ -601,7 +601,7 @@
       "suggested_format": "交互状态表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "05_context/writing-standards/rule-table.md"
+      "template_ref": "rule-table"
     },
     {
       "id": "C38",
@@ -617,7 +617,7 @@
       "suggested_format": "二次确认规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C39",
@@ -633,7 +633,7 @@
       "suggested_format": "弹窗行为规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C40",
@@ -681,7 +681,7 @@
       "suggested_format": "加载状态表",
       "priority": "P2",
       "complexity": "L2-L4",
-      "template_ref": "05_context/writing-standards/rule-table.md"
+      "template_ref": "rule-table"
     },
     {
       "id": "C43",
@@ -697,7 +697,7 @@
       "suggested_format": "筛选规则表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C44",
@@ -729,7 +729,7 @@
       "suggested_format": "统计口径表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": "05_context/writing-standards/data-caliber-table.md"
+      "template_ref": "data-caliber-table"
     },
     {
       "id": "C46",
@@ -745,7 +745,7 @@
       "suggested_format": "单位精度表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "05_context/writing-standards/data-caliber-table.md"
+      "template_ref": "data-caliber-table"
     },
     {
       "id": "C47",
@@ -761,7 +761,7 @@
       "suggested_format": "图表展示规则表",
       "priority": "P2",
       "complexity": "L3-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C48",
@@ -793,7 +793,7 @@
       "suggested_format": "初始化规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C50",
@@ -905,7 +905,7 @@
       "suggested_format": "空态规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C57",
@@ -921,7 +921,7 @@
       "suggested_format": "失败态规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A14｜规则表模板"
+      "template_ref": "规则表模板"
     },
     {
       "id": "C58",
@@ -937,7 +937,7 @@
       "suggested_format": "重复处理表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "05_context/writing-standards/rule-table.md"
+      "template_ref": "rule-table"
     },
     {
       "id": "C59",
@@ -953,7 +953,7 @@
       "suggested_format": "冲突处理表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": "05_context/writing-standards/rule-table.md"
+      "template_ref": "rule-table"
     },
     {
       "id": "C60",
@@ -969,7 +969,7 @@
       "suggested_format": "权限异常表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "05_context/writing-standards/rule-table.md"
+      "template_ref": "rule-table"
     },
     {
       "id": "C61",
@@ -1049,7 +1049,7 @@
       "suggested_format": "风险接受表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "07_表格模板示例!A154｜风险接受表模板"
+      "template_ref": "风险接受表模板"
     },
     {
       "id": "C66",

@@ -148,12 +148,16 @@ Goal: catch problems the writer missed, with a separate role that has no ego in 
 **Review materials (load before starting):**
 1. Read `09-run-log.md` in the task folder — focus on 痛点日志 and 修订记录. These tell you what the writer already knows they missed and why. Cross-check: did the writer actually fix those gaps, or just acknowledge them?
 2. `references/prd-quality-standard.md` — the four criteria and blocking severity rules
-3. `references/operational-completeness-checklist.json` (V3.3) — for each checklist item, review against the PRD using `question` (what to check), `pass_criteria` (what passing looks like), and `failure_signal` (what failing looks like). Filter items by `hierarchy` (gate items are mandatory, extended are applicable-by-condition, advisory are suggested). Gate items found missing = P0; extended items found missing = P1 unless condition is not met.
+3. `references/operational-completeness-checklist.json` (V3.3) — for each checklist item, review against the PRD using `question` (what to check), `pass_criteria` (what passing looks like), and `failure_signal` (what failing looks like). Items are filtered by `hierarchy` (gate = must check, extended = applicable-by-condition, advisory = suggested). When an applicable item is missing: **the severity follows `priority`, not `hierarchy`**. A gate item with priority P1 is P1. An extended item with priority P0 is P0. Only when `priority` is empty does `hierarchy` provide the fallback: gate → P0, extended → P1, advisory → P3.
 
 Required actions:
 
 - **subtract first**: before checking completeness, ask of every feature: "if we skip this, what breaks?" If the answer is "the user can still manage, just less conveniently," flag it as potential over-design.
-- **operational completeness sweep**: for each applicable checklist item (filtered by `complexity` and `condition`), check against the PRD using `question`, `pass_criteria`, and `failure_signal`. A gate item (`hierarchy: "gate"`) that is neither addressed nor marked "不适用" is a P0 gap. An extended item (`hierarchy: "extended"`) that is not addressed is a P1 gap unless the condition is not met.
+- **operational completeness sweep**: for each applicable checklist item (filtered by `complexity` and `condition`), check against the PRD using `question`, `pass_criteria`, and `failure_signal`. When an applicable item is missing:
+  - **Severity follows `priority`**: the item's `priority` field (P0/P1/P2/P3) determines the finding severity.
+  - **`hierarchy` determines obligation**: gate = must check and address (or mark 不适用); extended = check if condition is met; advisory = suggested but not required.
+  - **Fallback when `priority` is empty**: gate → P0, extended → P1, advisory → P3.
+  - Example: C56 (空态处理) is `hierarchy: "extended", priority: "P0"` → missing = P0 block, not P1.
 - check clear boundary, explicit judgment, no guessing, and accurate information
 - classify findings as P0/P1/P2/P3
 - produce minimum fix set
