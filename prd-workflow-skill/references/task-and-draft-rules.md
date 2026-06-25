@@ -40,6 +40,8 @@ YYYY-MM-DD-{PRD名称}/
 ├─ 05-完整PRDv1.md
 ├─ 06-审核报告.md
 ├─ 07-修订记录.md
+├─ 08-复盘建议.md
+├─ 09-run-log.md
 └─ assets/
 ```
 
@@ -54,9 +56,11 @@ YYYY-MM-DD-{PRD名称}/
 | `05-完整PRDv1.md` | Full PRD expanded from accepted draft frame | After draft frame is accepted |
 | `06-审核报告.md` | Independent review report | After review |
 | `07-修订记录.md` | Revision summary, unresolved items, accepted risks | After revision |
+| `08-复盘建议.md` | Skill retrospective patch proposals | After retrospect |
+| `09-run-log.md` | Cross-node running timeline, decision append, revision root causes, pain point log | Always — created at Boot from `05_context/run-log.md` template |
 | `assets/` | Screenshots, exported diagrams, source images | Only when assets exist |
 
-Do not create empty stage files just to look complete. A task folder should show the true workflow state.
+Do not create empty stage files just to look complete. A task folder should show the true workflow state. **Exception**: `09-run-log.md` is always created at Boot because it is written to throughout all subsequent nodes.
 
 Task artifacts are user-facing files, so use Chinese filenames by default. Keep English filenames mainly for machine-facing skill package files such as `SKILL.md`, `manifest.json`, `agents/interface.yaml`, `evals/*.json`, and code scripts.
 

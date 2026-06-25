@@ -26,19 +26,16 @@
     "agents"
   ],
   "quality_gates": [
-    "writable-state",
-    "decision-confirmation",
-    "phase-1-confirmation",
-    "review-blocking",
-    "final-output",
-    "skill-update"
+    "alignment",
+    "draft-confirmation",
+    "review-blocking"
   ],
   "outputs": [
     "background understanding card",
     "decision ledger",
-    "writable-state report",
-    "PRD phase 1",
-    "PRD phase 2",
+    "writable-state judgment",
+    "PRD draft v0",
+    "PRD complete v1",
     "review report",
     "revision summary",
     "retrospective patch proposal"

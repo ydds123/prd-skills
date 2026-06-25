@@ -27,6 +27,8 @@ YYYY-MM-DD-{prd-name}/
 ├─ 05-完整PRDv1.md
 ├─ 06-审核报告.md
 ├─ 07-修订记录.md
+├─ 08-复盘建议.md
+├─ 09-run-log.md
 └─ assets/
 ```
 
@@ -34,7 +36,8 @@ Minimum first-run files:
 
 - `任务说明.md`: task goal, source links, current status, next action
 - `00-上下文证据.md`: source materials and evidence notes
-- `04-PRD草案v0.md`: the draft Markdown file
+- `09-run-log.md`: created from `05_context/run-log.md` template at Boot — running timeline, decision append, revision root causes, pain point log
+- `04-PRD草案v0.md`: the draft Markdown file (created at Node 2)
 
 Use additional files only when that stage has actually happened.
 

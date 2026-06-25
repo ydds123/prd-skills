@@ -1,0 +1,415 @@
+{
+  "meta": {
+    "name": "operational-completeness-checklist",
+    "version": "1.0.0",
+    "source": "浙能需求自查清单V2.0",
+    "belongs_to": "prd-workflow-skill/references",
+    "governed_by": "prd-definition-quality-standard.md §5.3 不留猜疑",
+    "consumed_by": ["Node 3: Fill Details", "Node 4: Review"],
+    "levels": {
+      "blocking": { "key": "blocking", "label": "阻断项", "symbol": "🔴", "rule": "研发没有此信息无法开工，遗漏即 P1" },
+      "advisory": { "key": "advisory", "label": "建议项", "symbol": "🟡", "rule": "影响体验或运维效率，累积 >5 提示" },
+      "contextual": { "key": "contextual", "label": "上下文项", "symbol": "🔵", "rule": "依赖具体业务场景，不适用需在 PRD 中说明" }
+    }
+  },
+  "domains": {
+    "frontend": {
+      "label": "前端信息交互清单",
+      "description": "覆盖框架、路径、网络、数据、返回、列表、刷新、Tab、App交互、版本兼容等领域",
+      "modules": {
+        "framework": {
+          "label": "框架",
+          "items": [
+            { "id": "F01", "text": "功能框架、功能点是否完成", "level": "blocking", "applies": "always" },
+            { "id": "F02", "text": "流程是否清晰完整", "level": "blocking", "applies": "has_flow" },
+            { "id": "F03", "text": "页面布局是否清晰完整", "level": "blocking", "applies": "has_page" }
+          ]
+        },
+        "navigation": {
+          "label": "路径",
+          "items": [
+            { "id": "F04", "text": "功能入口和出口", "level": "blocking", "applies": "has_page" },
+            { "id": "F05", "text": "前进：下一步操作跳转，是否带入数据", "level": "blocking", "applies": "has_step_flow" },
+            { "id": "F06", "text": "返回：是否可返回，返回到哪，数据是否保存", "level": "blocking", "applies": "has_page_jump" },
+            { "id": "F07", "text": "退出：关闭程序、放到后台、再回来的显示和处理", "level": "advisory", "applies": "app" },
+            { "id": "F08", "text": "流程结束后怎么引导", "level": "advisory", "applies": "has_flow" }
+          ]
+        },
+        "network": {
+          "label": "网络",
+          "items": [
+            { "id": "F09", "text": "WiFi和非WiFi显示策略，是否有省流量模式", "level": "advisory", "applies": "app" },
+            { "id": "F10", "text": "网络不好时的文案和提示", "level": "blocking", "applies": "always" },
+            { "id": "F11", "text": "网络异常显示、文案和提示", "level": "blocking", "applies": "always" }
+          ]
+        },
+        "data_state": {
+          "label": "数据状态",
+          "items": [
+            { "id": "F12", "text": "数据为空的提示方式和文案", "level": "blocking", "applies": "has_list_or_detail" },
+            { "id": "F13", "text": "数据加载中的提示方式和文案", "level": "blocking", "applies": "has_async" },
+            { "id": "F14", "text": "数据获取失败的提示方式和文案", "level": "blocking", "applies": "has_async" },
+            { "id": "F15", "text": "数据边界值是多少", "level": "advisory", "applies": "has_numeric_input" },
+            { "id": "F16", "text": "输入达到边界值的处理方式", "level": "blocking", "applies": "has_input" }
+          ]
+        },
+        "back": {
+          "label": "返回",
+          "items": [
+            { "id": "F17", "text": "点击返回回到哪", "level": "blocking", "applies": "has_page_jump" },
+            { "id": "F18", "text": "点击返回是否弹窗提示放弃当前页操作", "level": "blocking", "applies": "has_form_edit" }
+          ]
+        },
+        "list": {
+          "label": "列表",
+          "items": [
+            { "id": "F19", "text": "分页策略：自动加载OR手动加载，数据加载条数，数据加载完的提示", "level": "blocking", "applies": "has_list" },
+            { "id": "F20", "text": "位置记忆：离开后再次进入是否记住上次浏览位置", "level": "advisory", "applies": "has_long_list" },
+            { "id": "F21", "text": "排序规则：是否提供排序维度选择", "level": "advisory", "applies": "has_list" },
+            { "id": "F22", "text": "刷新策略：下拉刷新、自动刷新，刷新的触发条件", "level": "blocking", "applies": "has_list" },
+            { "id": "F23", "text": "返回顶部：是否支持快速回到列表顶部", "level": "advisory", "applies": "has_long_list" }
+          ]
+        },
+        "refresh": {
+          "label": "刷新",
+          "items": [
+            { "id": "F24", "text": "刷新方式：下拉刷新、点击刷新、自动刷新", "level": "blocking", "applies": "has_list_or_detail" },
+            { "id": "F25", "text": "刷新过程：原内容保持还是清空、正在加载状态反馈", "level": "blocking", "applies": "has_refresh" },
+            { "id": "F26", "text": "刷新频率：定时刷新、前后台切换、刷新超时策略", "level": "advisory", "applies": "has_realtime" }
+          ]
+        },
+        "tab": {
+          "label": "Tab",
+          "items": [
+            { "id": "F27", "text": "默认：默认选中哪个Tab，Tab图没加载出来的默认显示", "level": "blocking", "applies": "has_tab" },
+            { "id": "F28", "text": "切换：是否支持滑动切换", "level": "advisory", "applies": "has_tab" },
+            { "id": "F29", "text": "记忆：离开后再次进入是否记住上次浏览Tab", "level": "advisory", "applies": "has_tab" },
+            { "id": "F30", "text": "刷新：点击Tab是否支持刷新", "level": "advisory", "applies": "has_tab_and_list" }
+          ]
+        },
+        "app_webview": {
+          "label": "APP与WebView交互",
+          "items": [
+            { "id": "F31", "text": "用原生页面还是H5页面", "level": "blocking", "applies": "hybrid_app" },
+            { "id": "F32", "text": "进入WebView前是否需要登录", "level": "blocking", "applies": "has_webview" },
+            { "id": "F33", "text": "WebView是否带入App登录状态", "level": "blocking", "applies": "has_webview" },
+            { "id": "F34", "text": "WebView登录是否需要调用App登录页面", "level": "advisory", "applies": "has_webview" }
+          ]
+        },
+        "app_version": {
+          "label": "APP版本",
+          "items": [
+            { "id": "F35", "text": "兼容性处理：需求是否兼容老版本，如何兼容", "level": "blocking", "applies": "app" },
+            { "id": "F36", "text": "无法兼容老版本时，如何处理减小影响范围", "level": "advisory", "applies": "app_breaking_change" }
+          ]
+        },
+        "app_other": {
+          "label": "APP其他",
+          "items": [
+            { "id": "F37", "text": "是否支持横竖屏切换", "level": "advisory", "applies": "app" },
+            { "id": "F38", "text": "是否需要屏幕常亮显示", "level": "advisory", "applies": "app_specific" },
+            { "id": "F39", "text": "多屏幕适配如何解决", "level": "advisory", "applies": "app" },
+            { "id": "F40", "text": "Android和iOS是否要做区分处理", "level": "blocking", "applies": "app_platform_diff" }
+          ]
+        }
+      }
+    },
+    "backend": {
+      "label": "后台系统清单",
+      "description": "覆盖权限安全 + 增删改查显算传异八大操作维度",
+      "modules": {
+        "auth_security": {
+          "label": "权限和安全",
+          "tags": ["权限", "安全"],
+          "items": [
+            { "id": "B01", "text": "是否要做权限系统", "level": "blocking", "applies": "multi_role" },
+            { "id": "B02", "text": "权限控制是页面级还是数据级", "level": "blocking", "applies": "has_permission" },
+            { "id": "B03", "text": "登录是否需要二次验证", "level": "advisory", "applies": "security_sensitive" },
+            { "id": "B04", "text": "外网是否限制访问", "level": "blocking", "applies": "has_external_access" },
+            { "id": "B05", "text": "白名单还是VPN解决外网访问", "level": "blocking", "applies": "has_external_access" },
+            { "id": "B06", "text": "数据是否不能全量查询", "level": "blocking", "applies": "has_sensitive_data" },
+            { "id": "B07", "text": "信息是否要掩码", "level": "blocking", "applies": "has_sensitive_fields" },
+            { "id": "B08", "text": "导出信息是否不包含敏感信息", "level": "blocking", "applies": "has_export" },
+            { "id": "B09", "text": "是否有记录每次的操作人", "level": "blocking", "applies": "has_crud" },
+            { "id": "B10", "text": "是否要记录每次操作的设备号", "level": "advisory", "applies": "high_audit" }
+          ]
+        },
+        "create": {
+          "label": "增",
+          "tags": ["新增", "创建", "添加", "表单"],
+          "items": [
+            { "id": "B11", "text": "点击增加后的信息提示", "level": "blocking", "applies": "has_create" },
+            { "id": "B12", "text": "增加的内容信息是否必填", "level": "blocking", "applies": "has_create" },
+            { "id": "B13", "text": "增加条件是什么", "level": "blocking", "applies": "has_create" },
+            { "id": "B14", "text": "增加是否有限制条件（字数、字符限制、格式）", "level": "blocking", "applies": "has_input_fields" },
+            { "id": "B15", "text": "哪些情况不允许增加", "level": "blocking", "applies": "has_create" },
+            { "id": "B16", "text": "增加过程中输入参数有哪些", "level": "blocking", "applies": "has_create_form" },
+            { "id": "B17", "text": "支持批量增加吗", "level": "advisory", "applies": "has_create" },
+            { "id": "B18", "text": "操作提示", "level": "blocking", "applies": "has_create" },
+            { "id": "B19", "text": "增加是否进入到编辑状态", "level": "advisory", "applies": "has_create" },
+            { "id": "B20", "text": "编辑状态是否支持删除", "level": "advisory", "applies": "create_then_edit" },
+            { "id": "B21", "text": "点击确认提交后，提交后返回，返回到哪里", "level": "blocking", "applies": "has_create_form" },
+            { "id": "B22", "text": "支持连续添加吗，应该如何设置", "level": "advisory", "applies": "has_create" },
+            { "id": "B23", "text": "增加类型支持：文本、图片、视频、GIF", "level": "advisory", "applies": "has_media" },
+            { "id": "B24", "text": "关联数据梳理", "level": "blocking", "applies": "create_with_relations" }
+          ]
+        },
+        "delete": {
+          "label": "删",
+          "tags": ["删除", "移除", "批量删除"],
+          "items": [
+            { "id": "B25", "text": "点击删除后是否需要二次确认", "level": "blocking", "applies": "has_delete" },
+            { "id": "B26", "text": "删除条件是什么", "level": "blocking", "applies": "has_delete" },
+            { "id": "B27", "text": "删除后是否可以快速撤销", "level": "advisory", "applies": "has_delete" },
+            { "id": "B28", "text": "删除到一半就停止（例如断网），被删除内容怎么处理", "level": "blocking", "applies": "has_delete" },
+            { "id": "B29", "text": "删除后是否进入回收站，是否支持恢复", "level": "blocking", "applies": "has_delete" },
+            { "id": "B30", "text": "是否支持批量删除，如何操作，如何提示", "level": "blocking", "applies": "has_list" },
+            { "id": "B31", "text": "在增加过程中是否支持删除", "level": "advisory", "applies": "create_and_delete" },
+            { "id": "B32", "text": "考虑是否有关联数据", "level": "blocking", "applies": "delete_with_relations" },
+            { "id": "B33", "text": "删除数据采用逻辑删还是物理删", "level": "blocking", "applies": "has_delete" }
+          ]
+        },
+        "update": {
+          "label": "改",
+          "tags": ["编辑", "修改", "更新", "批量修改"],
+          "items": [
+            { "id": "B34", "text": "改的条件是什么", "level": "blocking", "applies": "has_edit" },
+            { "id": "B35", "text": "修改的限制条件是什么", "level": "blocking", "applies": "has_edit" },
+            { "id": "B36", "text": "哪些参数可以修改，哪些参数不可修改", "level": "blocking", "applies": "has_edit" },
+            { "id": "B37", "text": "是否支持批量修改", "level": "advisory", "applies": "has_list" },
+            { "id": "B38", "text": "修改过程中如何取消修改", "level": "blocking", "applies": "has_edit_form" },
+            { "id": "B39", "text": "修改后支持撤销吗", "level": "advisory", "applies": "critical_edit" },
+            { "id": "B40", "text": "修改提交有二次确认吗", "level": "blocking", "applies": "critical_edit" },
+            { "id": "B41", "text": "修改是否涉及数据转移", "level": "advisory", "applies": "ownership_change" }
+          ]
+        },
+        "query": {
+          "label": "查",
+          "tags": ["查询", "搜索", "筛选", "列表"],
+          "items": [
+            { "id": "B42", "text": "查询的入口在哪里", "level": "blocking", "applies": "has_query" },
+            { "id": "B43", "text": "查询异常情况怎样显示", "level": "blocking", "applies": "has_query" },
+            { "id": "B44", "text": "查询对象是什么", "level": "blocking", "applies": "has_query" },
+            { "id": "B45", "text": "哪些字段支持查", "level": "blocking", "applies": "has_query" },
+            { "id": "B46", "text": "查询条件：按权限？按类别？按时间？", "level": "blocking", "applies": "has_query" },
+            { "id": "B47", "text": "查询方式：搜索、筛选", "level": "blocking", "applies": "has_query" },
+            { "id": "B48", "text": "搜索条件：ID、用户名、手机号等", "level": "blocking", "applies": "has_search" },
+            { "id": "B49", "text": "匹配方式：精准匹配、模糊匹配等", "level": "blocking", "applies": "has_search" },
+            { "id": "B50", "text": "查询结果：有屏蔽要求吗？对查询结果可以进行哪些操作？", "level": "blocking", "applies": "has_query_result" },
+            { "id": "B51", "text": "查找结果展示：如何展示，如何排序，没找到怎么办，如何显示", "level": "blocking", "applies": "has_query" },
+            { "id": "B52", "text": "打开结果展示方式：新标签页、当前页、弹窗、详情页，是否可以继续点击跳转", "level": "blocking", "applies": "has_query_result" }
+          ]
+        },
+        "display": {
+          "label": "显",
+          "tags": ["展示", "显示", "渲染", "列表字段"],
+          "items": [
+            { "id": "B53", "text": "敏感数据如何显示，如何配置（隐藏、权限设置）", "level": "blocking", "applies": "has_sensitive_data" },
+            { "id": "B54", "text": "显示内容的优先级（必要字段、重要字段、排版、呈现方式）", "level": "advisory", "applies": "has_page" },
+            { "id": "B55", "text": "显示的层级关系（父子级嵌套关系）", "level": "advisory", "applies": "has_nested_data" },
+            { "id": "B56", "text": "功能操作前、操作方式、操作过程展示、操作结果展示", "level": "blocking", "applies": "has_action_buttons" },
+            { "id": "B57", "text": "数据绘制交互：请求前、请求中、绘制、绘制完成（有数据、失败）、数据缓存、请求及重试机制", "level": "blocking", "applies": "has_async" },
+            { "id": "B58", "text": "页面默认选中焦点、选中项、默认值", "level": "blocking", "applies": "has_form_or_list" },
+            { "id": "B59", "text": "页面显示元素交互状态有哪些（常态、鼠标悬停、点击、选中、禁用）", "level": "advisory", "applies": "has_interactive_elements" },
+            { "id": "B60", "text": "显示的顺序：按创建时间、修改时间、类别", "level": "blocking", "applies": "has_list" },
+            { "id": "B61", "text": "列表显示样式、一页显示数量、分页显示数量、响应式布局", "level": "blocking", "applies": "has_list" },
+            { "id": "B62", "text": "列表是否支持快捷操作：筛选、排序、搜索", "level": "advisory", "applies": "has_list" },
+            { "id": "B63", "text": "显示的元素数量范围，文本过多如何显示", "level": "blocking", "applies": "has_list_or_text" },
+            { "id": "B64", "text": "内容为空怎么显示", "level": "blocking", "applies": "has_data_display" },
+            { "id": "B65", "text": "哪些错误、错误提示显示方式和内容", "level": "blocking", "applies": "always" },
+            { "id": "B66", "text": "哪些内容是固定的，哪些内容是服务端返回的", "level": "blocking", "applies": "has_list_or_detail" }
+          ]
+        },
+        "compute": {
+          "label": "算",
+          "tags": ["计算", "统计", "公式", "数值"],
+          "items": [
+            { "id": "B67", "text": "多久算一次", "level": "blocking", "applies": "has_computation" },
+            { "id": "B68", "text": "哪些数据参与计算", "level": "blocking", "applies": "has_computation" },
+            { "id": "B69", "text": "参数的限制", "level": "blocking", "applies": "has_compute_params" },
+            { "id": "B70", "text": "数据变化的规则：实时更新、自动拉取、推送、隔天更新等", "level": "blocking", "applies": "has_dynamic_data" },
+            { "id": "B71", "text": "需要什么哪些条件", "level": "blocking", "applies": "has_computation" },
+            { "id": "B72", "text": "哪些信息需要默认保存、自动填充", "level": "advisory", "applies": "has_form" },
+            { "id": "B73", "text": "需要什么统计", "level": "advisory", "applies": "has_statistics" },
+            { "id": "B74", "text": "数量变化规则", "level": "advisory", "applies": "has_numeric_display" }
+          ]
+        },
+        "transfer": {
+          "label": "传",
+          "tags": ["上传", "导入", "导出", "文件", "传输"],
+          "items": [
+            { "id": "B75", "text": "传输内容格式支持：文本、图片、视频、数据等", "level": "blocking", "applies": "has_upload_or_import" },
+            { "id": "B76", "text": "哪些需要传，哪些不需要传", "level": "blocking", "applies": "has_upload_or_import" },
+            { "id": "B77", "text": "手动传还是自动传", "level": "blocking", "applies": "has_upload_or_import" },
+            { "id": "B78", "text": "传输的内容", "level": "blocking", "applies": "has_upload_or_import" },
+            { "id": "B79", "text": "传输的方向", "level": "blocking", "applies": "has_upload_or_import" },
+            { "id": "B80", "text": "上传文件是否有格式限制、大小限制", "level": "blocking", "applies": "has_file_upload" },
+            { "id": "B81", "text": "上传文件是否要显示格式信息、格式提示", "level": "blocking", "applies": "has_file_upload" },
+            { "id": "B82", "text": "上传文件后是否显示文件名，怎样显示", "level": "blocking", "applies": "has_file_upload" },
+            { "id": "B83", "text": "上传后是否允许重复上传、覆盖上传、取消上传", "level": "blocking", "applies": "has_file_upload" },
+            { "id": "B84", "text": "是否可以批量上传，批量上传后如何显示", "level": "blocking", "applies": "has_file_upload" },
+            { "id": "B85", "text": "上传后是否可以删除、批量删除，如何删除", "level": "blocking", "applies": "has_file_upload" }
+          ]
+        },
+        "exception": {
+          "label": "异",
+          "tags": ["异常", "错误", "边界", "超时", "兜底"],
+          "items": [
+            { "id": "B86", "text": "数据的异常边界", "level": "blocking", "applies": "has_data_io" },
+            { "id": "B87", "text": "异常处理：为空、字符超长、超时等", "level": "blocking", "applies": "always" },
+            { "id": "B88", "text": "网络异常数据如何处理，如何提示用户，下一步如何操作", "level": "blocking", "applies": "always" },
+            { "id": "B89", "text": "账号异常情况（登录、注册、更换设备、账号是否互斥）", "level": "blocking", "applies": "has_auth" },
+            { "id": "B90", "text": "中断、失败、超出限制如何处理", "level": "blocking", "applies": "always" },
+            { "id": "B91", "text": "业务关联的边缘场景如何处理", "level": "blocking", "applies": "has_biz_flow" },
+            { "id": "B92", "text": "敏感词、内容违规", "level": "advisory", "applies": "has_ugc" },
+            { "id": "B93", "text": "无法获取数据（无响应）", "level": "blocking", "applies": "has_async" },
+            { "id": "B94", "text": "加载时间过长（页面多久超时，超时后提示方式）", "level": "blocking", "applies": "has_async" },
+            { "id": "B95", "text": "状态码提示（404、403、5XX等）", "level": "blocking", "applies": "always" }
+          ]
+        }
+      }
+    },
+    "business": {
+      "label": "业务规则清单",
+      "description": "覆盖合规合同、注册登录、数据统计、支付、用户/订单/商品/运营中心等领域",
+      "modules": {
+        "compliance": {
+          "label": "合规和合同",
+          "tags": ["合规", "合同", "法律"],
+          "items": [
+            { "id": "R01", "text": "是否是新业务", "level": "advisory", "applies": "new_project" },
+            { "id": "R02", "text": "公司主体是否明确", "level": "blocking", "applies": "multi_entity" },
+            { "id": "R03", "text": "是否有合规性的考虑", "level": "blocking", "applies": "regulated_industry" },
+            { "id": "R04", "text": "用户操作过程中是否需要合同", "level": "advisory", "applies": "legal_ops" },
+            { "id": "R05", "text": "几方合同？合同内容是什么？", "level": "blocking", "applies": "needs_contract" },
+            { "id": "R06", "text": "通过什么方式签署", "level": "blocking", "applies": "needs_contract" },
+            { "id": "R07", "text": "用户签订合同需存储", "level": "blocking", "applies": "needs_contract" }
+          ]
+        },
+        "auth": {
+          "label": "注册登录",
+          "tags": ["注册", "登录", "鉴权"],
+          "items": [
+            { "id": "R08", "text": "是否需要注册/登录", "level": "blocking", "applies": "new_system_or_endpoint" },
+            { "id": "R09", "text": "是否需要定制化注册/登录页", "level": "advisory", "applies": "has_brand" },
+            { "id": "R10", "text": "是否需要统计注册/登录来源", "level": "advisory", "applies": "has_ops" },
+            { "id": "R11", "text": "是否可免密登录", "level": "advisory", "applies": "app" }
+          ]
+        },
+        "data_tracking": {
+          "label": "数据和数据统计",
+          "tags": ["埋点", "日志", "数据统计"],
+          "items": [
+            { "id": "R12", "text": "需要记录哪些业务数据", "level": "blocking", "applies": "has_data_gen" },
+            { "id": "R13", "text": "对于业务数据，数据表需要记录哪些字段", "level": "blocking", "applies": "has_data_gen" },
+            { "id": "R14", "text": "需要记录哪些用户行为数据", "level": "advisory", "applies": "has_ops" },
+            { "id": "R15", "text": "用户行为数据是否可通过三方网站完成", "level": "advisory", "applies": "has_ops" },
+            { "id": "R16", "text": "是否需要前后台打log或埋点", "level": "blocking", "applies": "has_core_flow" }
+          ]
+        },
+        "payment": {
+          "label": "支付中心",
+          "tags": ["支付", "结算", "扣款"],
+          "note": "仅适用于涉及支付/结算的业务场景",
+          "items": [
+            { "id": "R17", "text": "用哪个支付通道", "level": "blocking", "applies": "has_payment" },
+            { "id": "R18", "text": "是否启动自动划扣", "level": "blocking", "applies": "has_deduction" },
+            { "id": "R19", "text": "支付成功页后返回哪里", "level": "blocking", "applies": "has_payment" },
+            { "id": "R20", "text": "结算主体是谁", "level": "blocking", "applies": "has_settlement" },
+            { "id": "R21", "text": "结算方式是什么", "level": "blocking", "applies": "has_settlement" },
+            { "id": "R22", "text": "如何进行结算操作", "level": "blocking", "applies": "has_settlement" },
+            { "id": "R23", "text": "需要提供哪些结算数据", "level": "blocking", "applies": "has_settlement" },
+            { "id": "R24", "text": "数据表需要记录哪些数据", "level": "blocking", "applies": "has_payment" },
+            { "id": "R25", "text": "财务是否有其他要求，怎么满足", "level": "advisory", "applies": "has_payment" }
+          ]
+        },
+        "user_center": {
+          "label": "用户中心",
+          "note": "领域待扩展",
+          "items": [
+            { "id": "R26", "text": "待补充：用户中心相关自查项", "level": "advisory", "applies": "has_user_center" }
+          ]
+        },
+        "order_center": {
+          "label": "订单中心",
+          "note": "领域待扩展",
+          "items": [
+            { "id": "R27", "text": "待补充：订单中心相关自查项", "level": "advisory", "applies": "has_order_center" }
+          ]
+        },
+        "product_mgmt": {
+          "label": "商品管理",
+          "note": "领域待扩展",
+          "items": [
+            { "id": "R28", "text": "待补充：商品管理相关自查项", "level": "advisory", "applies": "has_product_mgmt" }
+          ]
+        },
+        "ops_center": {
+          "label": "运营中心",
+          "note": "领域待扩展",
+          "items": [
+            { "id": "R29", "text": "待补充：运营中心相关自查项", "level": "advisory", "applies": "has_ops_center" }
+          ]
+        }
+      }
+    }
+  },
+  "load_map": {
+    "description": "按功能类型映射需要加载的模块。Agent 在 Fill Details 或 Review 阶段使用此映射渐进式加载。",
+    "mappings": {
+      "create_form_or_modal": {
+        "label": "新增表单/弹窗",
+        "load": ["backend.create", "backend.transfer"]
+      },
+      "edit_form_or_modal": {
+        "label": "编辑表单/弹窗",
+        "load": ["backend.update"]
+      },
+      "delete_action": {
+        "label": "删除操作",
+        "load": ["backend.delete"]
+      },
+      "list_page": {
+        "label": "列表页",
+        "load": ["frontend.list", "frontend.refresh", "backend.query", "backend.display"]
+      },
+      "detail_page": {
+        "label": "详情页",
+        "load": ["backend.display"]
+      },
+      "approval_or_state_flow": {
+        "label": "审批/状态流转",
+        "load": ["backend.exception", "business.compliance"]
+      },
+      "file_upload": {
+        "label": "文件上传",
+        "load": ["backend.transfer"]
+      },
+      "computation_or_stats": {
+        "label": "计算/统计",
+        "load": ["backend.compute"]
+      },
+      "permission_or_security": {
+        "label": "权限/安全",
+        "load": ["backend.auth_security"]
+      },
+      "app_feature": {
+        "label": "App端功能",
+        "load": ["frontend.framework", "frontend.navigation", "frontend.network", "frontend.data_state", "frontend.back", "frontend.list", "frontend.refresh", "frontend.tab", "frontend.app_webview", "frontend.app_version", "frontend.app_other"]
+      },
+      "delete_group": {
+        "label": "删除分组/组织关系",
+        "load": ["backend.delete"]
+      }
+    }
+  },
+  "gate_rules": {
+    "node4_review": {
+      "blocking_threshold": {
+        "per_module": { "max_blocking_miss": 3, "exceed_action": "mark_module_p0" },
+        "total": { "max_p1": 5, "exceed_action": "reject" }
+      },
+      "output_format": "操作完整度检查表 + 阻断遗漏详情"
+    }
+  }
+}

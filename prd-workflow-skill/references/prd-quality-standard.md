@@ -6,13 +6,15 @@ Use this reference whenever the workflow writes, reviews, revises, or retrospect
 
 A PRD fixes product judgment into a shared answer that a team can execute, verify, and trace.
 
+Functions are results. Judgment is the process. A PRD that only lists features without embedded judgment produces code that runs but is useless. The hard work of writing a PRD is not "listing everything," but deciding: whose problem is this, how far do we go, and where is the line we will not cross in this release.
+
 The only final quality standard:
 
 ```text
 Readers should not need to come back to the PM for confirmation.
 ```
 
-Readers include engineering, QA, design, operations, business owners, and the future PM who revisits the decision months later.
+Readers include engineering, QA, design, operations, business owners, and the future PM who revisits the decision months later. When an AI implementer replaces a human engineer, this standard gets stricter: an AI will not fill gaps, will not ask clarifying questions, and will faithfully reproduce every omission. Every missing sentence in the PRD becomes a missing behavior in the implementation — without a human engineer acting as a buffer. The gap between the PRD and the implementation is a direct, objective measure of what the PRD left unsaid.
 
 ## Foundational Thinking Model
 
@@ -95,17 +97,22 @@ Every PRD must include:
 - pending items
 - known assumptions
 
-## Do Not Write
+## 五不清单
 
-Do not put these into a PRD unless the user explicitly asks for a technical or visual design document:
+These five boundaries keep the PRD focused on product behavior — what it should do and why — not on implementation, visual styling, or filler language. Unless the user explicitly asks for a technical design or visual design document, the PRD must not cross these lines.
 
-- database tables
-- API field details
-- code logic
-- colors, pixels, font sizes, or exact component styling
-- unverified external data
-- future plans mixed into current scope
-- vague phrases such as "optimize", "friendly", "reasonable", or "intelligent" without measurable criteria
+| # | 不写什么 | 具含义 | 举例 |
+|---|---------|--------|------|
+| 1 | 不写技术实现 | 不写具体技术、架构、接口、数据库表、代码逻辑。产品行为说"要什么"，不说"用什么技术做到"。 | 写"搜索结果需脱敏"；不写"用正则替换手机号"。 |
+| 2 | 不写设计参数 | 不定义色号、像素、字体大小、精确组件样式。用功能性描述替代视觉参数。 | 写"主要操作按钮"；不写"蓝色 #1890FF、圆角 4px"。 |
+| 3 | 不写代码层内容 | 不写具体怎么用代码实现，那是研发的判断范畴。PM 替研发定死实现细节，既越界又容易随版本过期。 | 写"多次失败后锁定账号 30 分钟"；不写"用 Redis 计数器 + 定时任务"。 |
+| 4 | 不写废话 | 避免营销话术、冗长段落、没有可衡量标准的模糊词汇。多用要点、表格、清晰的逻辑。 | 不写"打造极致友好的用户体验"，不写"优化"（不说怎么算优化）。 |
+| 5 | 不设限 | 除非必要，不人为限制 PRD 的结构发挥。不要让模板约束内容表达；该多写的地方放开，该简略的地方不硬凑。 | 不要因为模板有某一章就强行填满，也不要因为模板没有就不写该写的内容。 |
+
+两项跨边界的补充约束：
+
+- **不写未验伪数据**：未经核实的外部数据、第三方口径、或无法在本次需求中验证的统计数字，不应作为事实写入 PRD。
+- **不上混下牵**：不把将来规划混入本期范围。每个版本有每个版本的边界。
 
 ## Complexity Levels
 

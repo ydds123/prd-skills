@@ -1,103 +1,143 @@
-# Gates and Retrospective
+# 门禁与复盘
 
-## Writable-State Gate
+## 可写状态门禁
 
-Pass only when:
+仅当以下全部满足时放行：
 
-- background is understandable
-- real user or role problem is clear
-- in-scope and out-of-scope items are explicit enough
-- key upstream/downstream dependencies are identified
-- key decisions are confirmed or marked as pending
-- there is no question that could overturn the main PRD direction
+- 背景可被理解
+- 真实的用户或角色问题明确
+- 本期包含与本期不包含已足够显式
+- 关键上下游依赖已识别
+- 关键决策已被确认或标记为待确认
+- 不存在能推翻 PRD 主方向的问题
 
-Fail action:
+失败动作：
 
-- stop PRD writing
-- ask at most 3 priority questions
-- explain which output each answer unlocks
+- 停止 PRD 写作
+- 问最多 3 个优先级最高的问题
+- 解释每个答案能解锁哪部分输出
 
-## Decision-Confirmation Gate
+## 决策确认门禁
 
-Pass only when:
+仅当以下满足时放行：
 
-- important tradeoffs are confirmed by user material, or
-- AI recommendations are labeled as recommended defaults, not facts
+- 重要的权衡由用户材料确认，或
+- AI 的推荐被标记为推荐默认，而非事实
 
-Fail action:
+失败动作：
 
-- produce decision ledger
-- mark pending decisions
-- do not hide pending decisions in prose
+- 产出决策账本
+- 标记待确认决策
+- 不把待确认决策藏在流畅的文字里
 
-## Phase-1 Confirmation Gate
+## 第一阶段确认门禁
 
-Pass only when:
+仅当以下满足时放行：
 
-- scope is stable
-- main flow is stable
-- affected roles are stable
+- 范围稳定
+- 主流程稳定
+- 涉及角色稳定
 
-Fail action:
+失败动作：
 
-- output phase 1 only
-- ask for confirmation before phase 2
+- 仅输出第一阶段（v0）
+- 请求确认后再进入第二阶段
 
-## Review-Blocking Gate
+## 评审阻塞门禁
 
-P0 always blocks final output.
+P0 永远阻塞最终输出。
 
-P1 blocks by default unless the PM explicitly accepts risk and the PRD records:
+P1 默认阻塞，除非 PM 明确接受风险，且 PRD 记录在案：
 
-- accepted risk
-- reason
-- owner
-- follow-up condition
+- 已接受的风险
+- 原因
+- 归属人
+- 跟进条件
 
-P2 and P3 do not block final output.
+P2 和 P3 不阻塞最终输出。
 
-## Final-Output Gate
+## 最终输出门禁
 
-Before saying "final PRD", check:
+在声称"终版 PRD"之前，检查：
 
-- no unmarked assumptions
-- no unverified data presented as fact
-- no invented system capability
-- no future plan mixed into current scope
-- no technical implementation detail unless requested
-- no visual design parameter unless requested
-- no unresolved P0
-- no unresolved unaccepted P1
+- 无未标记的假设
+- 无未经验证的数据被当作事实呈现
+- 无虚构的系统能力
+- 无混入当前范围的将来规划
+- 无技术实现细节（除非被要求）
+- 无视觉设计参数（除非被要求）
+- 无未解决的 P0
+- 无未被接受的未解决 P1
 
-## Skill-Update Gate
+## Skill 更新门禁
 
-Retrospective can propose changes to reusable assets, but cannot apply them without human confirmation.
+复盘可以提议对可复用资产的改动，但未经人类确认，不得应用。
 
-Valid patch categories:
+有效的补丁分类：
 
-| Failure type | Patch target |
+| 失败类型 | 补丁目标 |
 |---|---|
-| Missing business knowledge | Context |
-| Missing method rule | Skill |
-| Missing output slot | Template |
-| Missing blocker | Gate |
-| Missing comparable case | Example |
-| One-off issue | Run history only |
+| 缺业务知识 | Context |
+| 缺方法规则 | Skill |
+| 缺输出槽位 | Template |
+| 缺阻塞条件 | Gate |
+| 缺可比案例 | Example |
+| 偶发问题 | 仅记录本次运行历史 |
 
-Patch proposal must include:
+补丁提案必须包含：
 
-- observed failure
-- evidence from the run
-- why existing rules missed it
-- proposed target file or category
-- bounded change
-- regression risk
-- adoption recommendation
+- 观察到的失败
+- 本次运行的证据
+- 为什么现有规则未能拦截
+- 提议的目标文件或分类
+- 有边界的改动描述
+- 回归风险
+- 采纳建议
 
-Rejected patch signals:
+被拒绝的补丁信号：
 
-- it turns one-off preference into a universal rule
-- it expands PRD scope instead of fixing clarity
-- it duplicates an existing rule
-- it makes the entry skill heavier without improving reliability
-- it changes rules without evidence
+- 把一次性的偏好变成通用规则
+- 扩大 PRD 范围而非修复清晰度
+- 复制已有规则
+- 让入口 Skill 变重但不提升可靠性
+- 没有证据支撑的规则变更
+
+## 复盘确认→写入闭环
+
+复盘的最后一步不是输出建议文件，而是逐条确认并写入。未经过这一步的复盘是未完成的复盘。
+
+### 执行规则
+
+1. 复盘 Agent 输出 `08-Skill复盘沉淀建议.md` 后，**必须**逐条询问用户是否采纳。
+2. 逐条询问时，每条 patch 给出目标文件路径和改动摘要，用户回答"是/否/改"。
+3. 用户确认采纳的 patch，Agent **立即**写入对应目标文件。不应延迟到"下次再做"。
+4. 用户拒绝的 patch，在 `08-Skill复盘沉淀建议.md` 中标记"已拒绝"和拒绝原因。
+5. 用户要求修改的 patch，Agent 提出修改版本，二次确认后写入。
+
+### 确认格式
+
+```text
+Patch 1/7: 端范围一致性检查（缺门禁）
+  目标文件: 03_gates/ 或 workflow-protocol.md §4
+  改动: 增加规则——若用户确认 Web+App 双端，Review 时分别校验两端可见、详情、处理入口、验收标准是否一致
+  采纳？(是/否/改)
+```
+
+### 写入后的收尾
+
+所有采纳的 patch 写入完成后，Agent 在 `08-Skill复盘沉淀建议.md` 末尾追加：
+
+```md
+## 采纳记录
+
+| 时间 | Patch | 目标文件 | 动作 |
+|------|-------|---------|------|
+| 2026-06-25 | 端范围一致性检查 | workflow-protocol.md §4 | 已写入 |
+| 2026-06-25 | 查询条件固定字段规范 | writing-standards/table-format-conventions.md | 已写入 |
+```
+
+### 禁止行为
+
+- 不得在用户确认前写入任何 skill 文件。
+- 不得批量询问（"以上 7 条都采纳吗？"）——必须逐条确认。
+- 不得因"改动太小"跳过确认步骤。
