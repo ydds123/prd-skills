@@ -1,6 +1,6 @@
 import json, re
 
-with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/operational-completeness-checklist.json','r',encoding='utf-8') as f:
+with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/checklist-v3.3.json','r',encoding='utf-8') as f:
     data = json.load(f)
 
 # Clean all template_ref to be semantic labels only (not file paths or Excel coords)
@@ -43,7 +43,7 @@ for item in data['items']:
 
     item['template_ref'] = ' | '.join(unique) if unique else ''
 
-with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/operational-completeness-checklist.json','w',encoding='utf-8') as f:
+with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/checklist-v3.3.json','w',encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
 
 # Verify

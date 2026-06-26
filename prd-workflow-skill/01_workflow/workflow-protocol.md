@@ -97,7 +97,7 @@ Goal: expand the accepted frame into a complete PRD body.
 
 1. Verify `09-run-log.md` exists in the task folder. If not, create it from the template at `04_templates/run-log.md`. Append a Node 3 start entry to 运行时间线.
 2. Read `09-run-log.md` — particularly 痛点日志 — to avoid repeating mistakes from prior runs.
-3. Load `05_context/prd-standards/operational-completeness-checklist.json` (V3.3).
+3. Load `05_context/prd-standards/checklist-v3.3.json` (V3.3).
 4. Identify which checklist items apply: filter by `complexity` (L1-L4 matches the PRD's complexity level) and `condition` (domain-specific conditions like "has multi-role" or "has delete action").
 5. For each applicable item, use `question`, `pass_criteria`, and `failure_signal` as the writing guide. The `suggested_format` field tells you which table template to use (see `04_templates/table-templates/`).
 6. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
@@ -141,14 +141,14 @@ Goal: catch problems the writer missed, with a separate role that has no ego in 
 
 **Role switch (mandatory):** Before starting the review, explicitly switch context:
 - You are no longer the PRD writer. You are an independent reviewer.
-- Your only loyalty is to the quality standard (`05_context/prd-standards/prd-quality-standard.md`) and the completeness checklist (`05_context/prd-standards/operational-completeness-checklist.json`).
+- Your only loyalty is to the quality standard (`05_context/prd-standards/prd-quality-standard.md`) and the completeness checklist (`05_context/prd-standards/checklist-v3.3.json`).
 - You were not in the room when this PRD was written. Every claim in the PRD is a claim to be verified, not a fact to be assumed correct.
 - Default stance: skeptical. If the PRD makes something sound easy, ask "what breaks when this fails?"
 
 **Review materials (load before starting):**
 1. Read `09-run-log.md` in the task folder — focus on 痛点日志 and 修订记录. These tell you what the writer already knows they missed and why. Cross-check: did the writer actually fix those gaps, or just acknowledge them?
 2. `05_context/prd-standards/prd-quality-standard.md` — the four criteria and blocking severity rules
-3. `05_context/prd-standards/operational-completeness-checklist.json` (V3.3) — for each checklist item, review against the PRD using `question` (what to check), `pass_criteria` (what passing looks like), and `failure_signal` (what failing looks like). Items are filtered by `hierarchy` (gate = must check, extended = applicable-by-condition, advisory = suggested). When an applicable item is missing: **the severity follows `priority`, not `hierarchy`**. A gate item with priority P1 is P1. An extended item with priority P0 is P0. Only when `priority` is empty does `hierarchy` provide the fallback: gate → P0, extended → P1, advisory → P3.
+3. `05_context/prd-standards/checklist-v3.3.json` (V3.3) — for each checklist item, review against the PRD using `question` (what to check), `pass_criteria` (what passing looks like), and `failure_signal` (what failing looks like). Items are filtered by `hierarchy` (gate = must check, extended = applicable-by-condition, advisory = suggested). When an applicable item is missing: **the severity follows `priority`, not `hierarchy`**. A gate item with priority P1 is P1. An extended item with priority P0 is P0. Only when `priority` is empty does `hierarchy` provide the fallback: gate → P0, extended → P1, advisory → P3.
 
 Required actions:
 
@@ -163,7 +163,7 @@ Required actions:
 - produce minimum fix set
 - say whether the PRD can enter review or final output
 
-**Review gate** (V3.3 rules, see `05_context/prd-standards/operational-completeness-checklist.json` §gate_rules):
+**Review gate** (V3.3 rules, see `05_context/prd-standards/checklist-v3.3.json` §gate_rules):
 - **P0 always blocks** final output and review entry. Any single P0 = the PRD cannot proceed.
 - **P1 blocks by default** unless the PM explicitly accepts the risk and records it in a 风险接受表 (reason, owner, follow-up action, deadline). See `04_templates/table-templates/risk-acceptance-table.md`.
 - **P2 and P3 do not block.**

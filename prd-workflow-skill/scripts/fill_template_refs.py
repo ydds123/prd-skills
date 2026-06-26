@@ -1,6 +1,6 @@
 import json
 
-with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/operational-completeness-checklist.json','r',encoding='utf-8') as f:
+with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/checklist-v3.3.json','r',encoding='utf-8') as f:
     data = json.load(f)
 
 TEMPLATE_MAP = {
@@ -48,7 +48,7 @@ for item in data['items']:
         filled += 1
         print(f"{item['id']} {item['item']} -> {item['template_ref']}")
 
-with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/operational-completeness-checklist.json','w',encoding='utf-8') as f:
+with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/checklist-v3.3.json','w',encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
 
 print(f"\nDone: {filled} items filled")

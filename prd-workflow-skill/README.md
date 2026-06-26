@@ -446,7 +446,7 @@ prd-workflow-skill/
 └─ 05_context/                              # 标准与知识
    ├─ prd-standards/                        # PRD质量标准+V3.3完整性清单
    │  ├─ prd-quality-standard.md            # PRD根标准、五不清单、复杂度等级、P0-P3
-   │  └─ operational-completeness-checklist.json  # V3.3 66项操作完整性清单（Node 3/4共用）
+   │  └─ checklist-v3.3.json                # V3.3 66项操作完整性清单（Node 3/4共用）
    ├─ writing-standards/                    # 表格格式规范、交互逻辑写作规范
    │  ├─ table-format-conventions.md        # 查询/列表/表单表格的固定列集规范
    │  └─ interaction-logic-writing.md       # 交互逻辑表（步骤→触发→动作→响应→规则）

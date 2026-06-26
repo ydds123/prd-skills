@@ -69,13 +69,13 @@ Output: draft v0.
 
 ### Node 3: Fill Details
 
-The agent first loads `05_context/prd-standards/operational-completeness-checklist.json` (V3.3) and identifies applicable items by filtering on `complexity` (matching the PRD's L1-L4 level) and `condition`. For each applicable item, the `question` / `pass_criteria` / `failure_signal` fields guide writing; the `suggested_format` field drives table template selection (resolved via `04_templates/table-templates/table-template-index.md`). Every gate item must be addressed or marked "不适用". Do not dump the 66-item checklist into the PRD — it is a silent writing guide. If a P1 risk is accepted rather than fixed, it must be recorded in a risk-acceptance table. See the full Node 3 protocol in [Workflow Protocol](01_workflow/workflow-protocol.md).
+The agent first loads `05_context/prd-standards/checklist-v3.3.json` (V3.3) and identifies applicable items by filtering on `complexity` (matching the PRD's L1-L4 level) and `condition`. For each applicable item, the `question` / `pass_criteria` / `failure_signal` fields guide writing; the `suggested_format` field drives table template selection (resolved via `04_templates/table-templates/table-template-index.md`). Every gate item must be addressed or marked "不适用". Do not dump the 66-item checklist into the PRD — it is a silent writing guide. If a P1 risk is accepted rather than fixed, it must be recorded in a risk-acceptance table. See the full Node 3 protocol in [Workflow Protocol](01_workflow/workflow-protocol.md).
 
 Output: complete PRD v1.
 
 ### Node 4: Independent Review
 
-A separate agent role reviews the full PRD. The reviewer explicitly switches context — loads `05_context/prd-standards/prd-quality-standard.md` and `05_context/prd-standards/operational-completeness-checklist.json` (V3.3), adopts a skeptical default stance, and is no longer the writer. The reviewer subtracts first — asking "if we skip this, what breaks?" — then checks each applicable checklist item against `question` / `pass_criteria` / `failure_signal`, classifies findings as P0/P1/P2/P3, and applies the V3.3 gate formula: P0 > 0 blocks; P1 > 0 blocks unless the PM explicitly accepts the risk and records it in a 风险接受表. Writer self-review is not allowed. See the full review protocol in [Workflow Protocol](01_workflow/workflow-protocol.md).
+A separate agent role reviews the full PRD. The reviewer explicitly switches context — loads `05_context/prd-standards/prd-quality-standard.md` and `05_context/prd-standards/checklist-v3.3.json` (V3.3), adopts a skeptical default stance, and is no longer the writer. The reviewer subtracts first — asking "if we skip this, what breaks?" — then checks each applicable checklist item against `question` / `pass_criteria` / `failure_signal`, classifies findings as P0/P1/P2/P3, and applies the V3.3 gate formula: P0 > 0 blocks; P1 > 0 blocks unless the PM explicitly accepts the risk and records it in a 风险接受表. Writer self-review is not allowed. See the full review protocol in [Workflow Protocol](01_workflow/workflow-protocol.md).
 
 → Human decides which fixes to apply.
 
