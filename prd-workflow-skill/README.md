@@ -417,10 +417,26 @@ prd-workflow-skill/
 │  └─ interface.yaml
 ├─ hooks/
 │  ├─ retrospect_trigger.py
+│  ├─ append_retrospect_event.py
 │  └─ hook_config.example.json
-├─ 05_context/
+├─ scripts/
+│  ├─ build_checklist.py
+│  ├─ clean_template_refs.py
+│  └─ fill_template_refs.py
+├─ evals/
+│  └─ trigger-evals.json
+├─ 00_meta/
+│  └─ blueprint-roadmap.md
+├─ 01_workflow/
+│  ├─ workflow-protocol.md
+│  ├─ task-and-draft-rules.md
+│  └─ content-consistency-sweep.md
+├─ 03_gates/
+│  └─ gates-and-retrospective.md
+├─ 04_templates/
+│  ├─ output-contracts.md
 │  ├─ run-log.md
-│  └─ writing-standards/
+│  └─ table-templates/
 │     ├─ table-template-index.md
 │     ├─ rule-table.md
 │     ├─ field-rule-table.md
@@ -430,17 +446,15 @@ prd-workflow-skill/
 │     ├─ acceptance-criteria-table.md
 │     ├─ self-test-case-table.md
 │     └─ risk-acceptance-table.md
-├─ references/
-│  ├─ prd-quality-standard.md
-│  ├─ workflow-protocol.md
-│  ├─ task-and-draft-rules.md
-│  ├─ output-contracts.md
-│  ├─ gates-and-retrospective.md
-│  ├─ retrospect-trigger-rules.md
-│  ├─ operational-completeness-checklist.json
-│  └─ blueprint-roadmap.md
-└─ evals/
-   └─ trigger-evals.json
+└─ 05_context/
+   ├─ prd-standards/
+   │  ├─ prd-quality-standard.md
+   │  └─ operational-completeness-checklist.json
+   ├─ writing-standards/
+   │  ├─ table-format-conventions.md
+   │  └─ interaction-logic-writing.md
+   └─ optimization-standards/
+      └─ retrospect-trigger-rules.md
 ```
 
 ---
@@ -451,15 +465,15 @@ prd-workflow-skill/
 | ---------------------------------------------------- | ------------------------------------ | -------------------------- |
 | `SKILL.md`                                           | 运行时入口，负责触发、任务路由、全局门禁和最小执行骨架          | 不保存完整方法论和长模板               |
 | `README.md`                                          | 给人看的介绍、安装理解、使用边界和目录职责说明              | 不作为运行时必须加载的执行规则            |
-| `references/prd-quality-standard.md`                 | 定义 PRD 根标准、质量指标、复杂度等级和 P0-P3         | 不定义完整流程状态机                 |
-| `references/workflow-protocol.md`                    | 定义工作流状态机、节点规则、评审、修订、回扫、复盘调用位置        | 不定义所有输出模板                  |
-| `references/operational-completeness-checklist.json` | V3.3 操作完整性清单，用于 Node 3 填充和 Node 4 评审 | 不直接输出到 PRD 正文              |
-| `references/gates-and-retrospective.md`              | 定义可写状态、确认门禁、评审阻塞、最终输出和 Skill 更新门禁    | 不生成 PRD 正文                 |
-| `references/retrospect-trigger-rules.md`             | 定义复盘触发信号、T0-T3、根因分类和自动记录边界           | 不保存事件，不写入文件                |
-| `05_context/run-log.md`                              | Run Log 模板，承接运行证据、用户指正和复盘触发状态        | 不定义触发规则                    |
-| `05_context/writing-standards/`                      | 表格模板、字段规则、异常处理、验收、自测、风险接受等写作标准       | 不负责流程调度                    |
-| `hooks/retrospect_trigger.py`                        | 轻量检测器，识别复盘信号并输出 JSON                 | 不写 run-log，不改 PRD，不改 Skill |
-| `hooks/hook_config.example.json`                     | hooks 配置示例，说明可选增强方式                  | 不作为强制运行依赖                  |
+| `05_context/prd-standards/prd-quality-standard.md`     | 定义 PRD 根标准、质量指标、复杂度等级和 P0-P3         | 不定义完整流程状态机                 |
+| `01_workflow/workflow-protocol.md`                    | 定义工作流状态机、节点规则、评审、修订、回扫、复盘调用位置        | 不定义所有输出模板                  |
+| `05_context/prd-standards/operational-completeness-checklist.json` | V3.3 操作完整性清单，用于 Node 3 填充和 Node 4 评审 | 不直接输出到 PRD 正文              |
+| `03_gates/gates-and-retrospective.md`                | 定义可写状态、确认门禁、评审阻塞、最终输出和 Skill 更新门禁    | 不生成 PRD 正文                 |
+| `05_context/optimization-standards/retrospect-trigger-rules.md` | 定义复盘触发信号、T0-T3、根因分类和自动记录边界           | 不保存事件，不写入文件                |
+| `04_templates/run-log.md`                             | Run Log 模板，承接运行证据、用户指正和复盘触发状态        | 不定义触发规则                    |
+| `04_templates/table-templates/`                       | 表格模板（规则表、字段表、校验表、异常表、验收表、自测表等）     | 不负责流程调度                    |
+| `05_context/writing-standards/`                       | 表格格式规范、交互逻辑写作规范                     | 不负责表格模板本身                  |
+| `hooks/`                                             | 复盘触发检测器与 run-log 记录器                  | 不改 PRD，不改 Skill            |
 | `evals/`                                             | 触发与回归样例                              | 不参与日常 PRD 输出               |
 
 ---
@@ -475,13 +489,13 @@ prd-workflow-skill/
 * 哪些门禁不能越过
 * 每个节点最小动作是什么
 
-复杂细则放进 `references/`。
+复杂细则放进 `01_workflow/`、`03_gates/`、`04_templates/`、`05_context/` 等对应目录。
 
 ---
 
 ### 细则下沉
 
-质量标准、流程协议、输出模板、复盘规则、写作表格模板，都放进引用文件中，按需加载。
+质量标准、流程协议、门禁规则、输出模板、复盘规则、写作表格模板，都放进对应目录中，按需加载。
 
 ---
 

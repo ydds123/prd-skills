@@ -20,7 +20,7 @@ Retrospect is conditional, not a required stage. It is triggered by explicit use
 
 A good PRD fixes product judgment into a shared answer that the team can execute, verify, and trace. The reader should not need to come back to the PM for confirmation.
 
-Judge every output by four criteria: clear boundary, explicit judgment, no guessing, and accurate information. Load [PRD Quality Standard](references/prd-quality-standard.md) before writing, reviewing, or revising PRD content.
+Judge every output by four criteria: clear boundary, explicit judgment, no guessing, and accurate information. Load [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md) before writing, reviewing, or revising PRD content.
 
 Apply the standard across input, processing, and output. Details live in the quality reference.
 
@@ -39,7 +39,7 @@ Use workflow protocol, task rules, output contracts, and trigger evals when rout
 
 The workflow has 5 core nodes plus a task-folder boot step and an on-demand retrospect. Humans confirm at exactly 2 points: after alignment, and after the draft body.
 
-**Boot**: Create or reuse a dated PRD task folder. All outputs are file-backed. **Always create `09-run-log.md` from the template at `05_context/run-log.md`** — this is the cross-node evidence log consumed by retrospect. See [Task and Draft Rules](references/task-and-draft-rules.md).
+**Boot**: Create or reuse a dated PRD task folder. All outputs are file-backed. **Always create `09-run-log.md` from the template at `04_templates/run-log.md`** — this is the cross-node evidence log consumed by retrospect. See [Task and Draft Rules](01_workflow/task-and-draft-rules.md).
 
 ```
 input_received
@@ -69,13 +69,13 @@ Output: draft v0.
 
 ### Node 3: Fill Details
 
-The agent first loads `references/operational-completeness-checklist.json` (V3.3) and identifies applicable items by filtering on `complexity` (matching the PRD's L1-L4 level) and `condition`. For each applicable item, the `question` / `pass_criteria` / `failure_signal` fields guide writing; the `suggested_format` field drives table template selection (resolved via `05_context/writing-standards/table-template-index.md`). Every gate item must be addressed or marked "不适用". Do not dump the 66-item checklist into the PRD — it is a silent writing guide. If a P1 risk is accepted rather than fixed, it must be recorded in a risk-acceptance table. See the full Node 3 protocol in [Workflow Protocol](references/workflow-protocol.md).
+The agent first loads `05_context/prd-standards/operational-completeness-checklist.json` (V3.3) and identifies applicable items by filtering on `complexity` (matching the PRD's L1-L4 level) and `condition`. For each applicable item, the `question` / `pass_criteria` / `failure_signal` fields guide writing; the `suggested_format` field drives table template selection (resolved via `04_templates/table-templates/table-template-index.md`). Every gate item must be addressed or marked "不适用". Do not dump the 66-item checklist into the PRD — it is a silent writing guide. If a P1 risk is accepted rather than fixed, it must be recorded in a risk-acceptance table. See the full Node 3 protocol in [Workflow Protocol](01_workflow/workflow-protocol.md).
 
 Output: complete PRD v1.
 
 ### Node 4: Independent Review
 
-A separate agent role reviews the full PRD. The reviewer explicitly switches context — loads `references/prd-quality-standard.md` and `references/operational-completeness-checklist.json` (V3.3), adopts a skeptical default stance, and is no longer the writer. The reviewer subtracts first — asking "if we skip this, what breaks?" — then checks each applicable checklist item against `question` / `pass_criteria` / `failure_signal`, classifies findings as P0/P1/P2/P3, and applies the V3.3 gate formula: P0 > 0 blocks; P1 > 0 blocks unless the PM explicitly accepts the risk and records it in a 风险接受表. Writer self-review is not allowed. See the full review protocol in [Workflow Protocol](references/workflow-protocol.md).
+A separate agent role reviews the full PRD. The reviewer explicitly switches context — loads `05_context/prd-standards/prd-quality-standard.md` and `05_context/prd-standards/operational-completeness-checklist.json` (V3.3), adopts a skeptical default stance, and is no longer the writer. The reviewer subtracts first — asking "if we skip this, what breaks?" — then checks each applicable checklist item against `question` / `pass_criteria` / `failure_signal`, classifies findings as P0/P1/P2/P3, and applies the V3.3 gate formula: P0 > 0 blocks; P1 > 0 blocks unless the PM explicitly accepts the risk and records it in a 风险接受表. Writer self-review is not allowed. See the full review protocol in [Workflow Protocol](01_workflow/workflow-protocol.md).
 
 → Human decides which fixes to apply.
 
@@ -83,15 +83,15 @@ After fixes are applied, the agent runs a Content Consistency Sweep (Node 4.5) t
 
 ### Retrospect Trigger Detector
 
-After user corrections, node completion, PRD revision, and content consistency sweep, the agent runs a Retrospect Trigger Check (see `references/retrospect-trigger-rules.md`). The detector captures signals, writes observations to `09-run-log.md`, marks retrospective candidates (T2), and triggers skill retrospect proposals (T3). It must never modify reusable Skill files without explicit per-patch user confirmation. All Skill modifications remain governed by `references/gates-and-retrospective.md`.
+After user corrections, node completion, PRD revision, and content consistency sweep, the agent runs a Retrospect Trigger Check (see `05_context/optimization-standards/retrospect-trigger-rules.md`). The detector captures signals, writes observations to `09-run-log.md`, marks retrospective candidates (T2), and triggers skill retrospect proposals (T3). It must never modify reusable Skill files without explicit per-patch user confirmation. All Skill modifications remain governed by `03_gates/gates-and-retrospective.md`.
 
 ### Retrospect (On Demand)
 
-Triggered when a repeated quality problem appears or the user asks to improve the workflow. **First, read `09-run-log.md` in the task folder as primary evidence** — analyze root cause distribution from 修订记录 and 痛点日志 (same root cause ≥ 2 → must propose patch; ≥ 3 → P0). Classify the failure, propose a bounded patch, **ask the user per-patch whether to adopt**, and apply confirmed patches to the relevant reference files immediately. **After all patches are resolved, append to `09-run-log.md` 复盘消费 section.** See [Workflow Protocol](references/workflow-protocol.md) §5 for the full evidence→analysis→patch→write loop, and [Gates and Retrospective](references/gates-and-retrospective.md) for the confirm→write mechanism.
+Triggered when a repeated quality problem appears or the user asks to improve the workflow. **First, read `09-run-log.md` in the task folder as primary evidence** — analyze root cause distribution from 修订记录 and 痛点日志 (same root cause ≥ 2 → must propose patch; ≥ 3 → P0). Classify the failure, propose a bounded patch, **ask the user per-patch whether to adopt**, and apply confirmed patches to the relevant reference files immediately. **After all patches are resolved, append to `09-run-log.md` 复盘消费 section.** See [Workflow Protocol](01_workflow/workflow-protocol.md) §5 for the full evidence→analysis→patch→write loop, and [Gates and Retrospective](03_gates/gates-and-retrospective.md) for the confirm→write mechanism.
 
 ## Forbidden Behaviors
 
-PRD body must follow the 五不清单 and additional constraints in [PRD Quality Standard](references/prd-quality-standard.md). In particular:
+PRD body must follow the 五不清单 and additional constraints in [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md). In particular:
 
 - No PRD before writable-state checking.
 - No full PRD from a vague one-line request.

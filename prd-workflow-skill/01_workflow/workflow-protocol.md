@@ -95,11 +95,11 @@ Goal: expand the accepted frame into a complete PRD body.
 
 **Before writing:**
 
-1. Verify `09-run-log.md` exists in the task folder. If not, create it from the template at `05_context/run-log.md`. Append a Node 3 start entry to 运行时间线.
+1. Verify `09-run-log.md` exists in the task folder. If not, create it from the template at `04_templates/run-log.md`. Append a Node 3 start entry to 运行时间线.
 2. Read `09-run-log.md` — particularly 痛点日志 — to avoid repeating mistakes from prior runs.
-3. Load `references/operational-completeness-checklist.json` (V3.3).
+3. Load `05_context/prd-standards/operational-completeness-checklist.json` (V3.3).
 4. Identify which checklist items apply: filter by `complexity` (L1-L4 matches the PRD's complexity level) and `condition` (domain-specific conditions like "has multi-role" or "has delete action").
-5. For each applicable item, use `question`, `pass_criteria`, and `failure_signal` as the writing guide. The `suggested_format` field tells you which table template to use (see `05_context/writing-standards/`).
+5. For each applicable item, use `question`, `pass_criteria`, and `failure_signal` as the writing guide. The `suggested_format` field tells you which table template to use (see `04_templates/table-templates/`).
 6. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
 7. Do not dump the checklist into the PRD. Use it as a silent writing guide.
 
@@ -141,14 +141,14 @@ Goal: catch problems the writer missed, with a separate role that has no ego in 
 
 **Role switch (mandatory):** Before starting the review, explicitly switch context:
 - You are no longer the PRD writer. You are an independent reviewer.
-- Your only loyalty is to the quality standard (`references/prd-quality-standard.md`) and the completeness checklist (`references/operational-completeness-checklist.json`).
+- Your only loyalty is to the quality standard (`05_context/prd-standards/prd-quality-standard.md`) and the completeness checklist (`05_context/prd-standards/operational-completeness-checklist.json`).
 - You were not in the room when this PRD was written. Every claim in the PRD is a claim to be verified, not a fact to be assumed correct.
 - Default stance: skeptical. If the PRD makes something sound easy, ask "what breaks when this fails?"
 
 **Review materials (load before starting):**
 1. Read `09-run-log.md` in the task folder — focus on 痛点日志 and 修订记录. These tell you what the writer already knows they missed and why. Cross-check: did the writer actually fix those gaps, or just acknowledge them?
-2. `references/prd-quality-standard.md` — the four criteria and blocking severity rules
-3. `references/operational-completeness-checklist.json` (V3.3) — for each checklist item, review against the PRD using `question` (what to check), `pass_criteria` (what passing looks like), and `failure_signal` (what failing looks like). Items are filtered by `hierarchy` (gate = must check, extended = applicable-by-condition, advisory = suggested). When an applicable item is missing: **the severity follows `priority`, not `hierarchy`**. A gate item with priority P1 is P1. An extended item with priority P0 is P0. Only when `priority` is empty does `hierarchy` provide the fallback: gate → P0, extended → P1, advisory → P3.
+2. `05_context/prd-standards/prd-quality-standard.md` — the four criteria and blocking severity rules
+3. `05_context/prd-standards/operational-completeness-checklist.json` (V3.3) — for each checklist item, review against the PRD using `question` (what to check), `pass_criteria` (what passing looks like), and `failure_signal` (what failing looks like). Items are filtered by `hierarchy` (gate = must check, extended = applicable-by-condition, advisory = suggested). When an applicable item is missing: **the severity follows `priority`, not `hierarchy`**. A gate item with priority P1 is P1. An extended item with priority P0 is P0. Only when `priority` is empty does `hierarchy` provide the fallback: gate → P0, extended → P1, advisory → P3.
 
 Required actions:
 
@@ -163,9 +163,9 @@ Required actions:
 - produce minimum fix set
 - say whether the PRD can enter review or final output
 
-**Review gate** (V3.3 rules, see `references/operational-completeness-checklist.json` §gate_rules):
+**Review gate** (V3.3 rules, see `05_context/prd-standards/operational-completeness-checklist.json` §gate_rules):
 - **P0 always blocks** final output and review entry. Any single P0 = the PRD cannot proceed.
-- **P1 blocks by default** unless the PM explicitly accepts the risk and records it in a 风险接受表 (reason, owner, follow-up action, deadline). See `05_context/writing-standards/risk-acceptance-table.md`.
+- **P1 blocks by default** unless the PM explicitly accepts the risk and records it in a 风险接受表 (reason, owner, follow-up action, deadline). See `04_templates/table-templates/risk-acceptance-table.md`.
 - **P2 and P3 do not block.**
 - **V3.3 review conclusion logic:**
   - P0阻塞 > 0 → 不可进入评审
@@ -191,7 +191,7 @@ Trigger: executed after ANY content fix, unless the only changes are typos, form
 Method:
 
 1. Determine the fix's blast radius: which sections were modified, which objects/roles/states/rules were changed.
-2. Use the blast-radius table in `05_context/writing-standards/content-consistency-sweep.md` to select which of the 10 consistency dimensions to sweep. Do NOT run all 10 — only those affected by the blast radius.
+2. Use the blast-radius table in `01_workflow/content-consistency-sweep.md` to select which of the 10 consistency dimensions to sweep. Do NOT run all 10 — only those affected by the blast radius.
 3. For each selected dimension, check per the dimension's criteria.
 4. Classify each finding: `can-auto-fix` (PRD-internal evidence exists, no new product facts) / `needs-pm-confirm` (involves scope/permission/state/default/data decisions) / `forbidden` (would fabricate unconfirmed facts).
 5. Apply auto-fixes immediately. Do not accumulate auto-fixes into a new revision round — they are applied inline within the sweep.
@@ -200,7 +200,7 @@ Method:
 
 Gate: a P0 consistency issue (contradiction that would cause R&D to build the wrong thing) blocks final output. P1 issues default to auto-fix or PM confirmation. P2 (terminology drift, stale reference) auto-fix.
 
-See `05_context/writing-standards/content-consistency-sweep.md` for the full 10-dimension checklist, auto-fix boundary rules, output format, and real example.
+See `01_workflow/content-consistency-sweep.md` for the full 10-dimension checklist, auto-fix boundary rules, output format, and real example.
 
 **After sweep completes:** Update `09-run-log.md` 运行时间线 with sweep execution, and 修订记录 for any auto-fix patches applied.
 
@@ -212,11 +212,11 @@ See `05_context/writing-standards/content-consistency-sweep.md` for the full 10-
 
 After user corrections, node completion, revision completion, and content consistency sweep, the agent MUST execute a Retrospect Trigger Check. This check does not replace any existing gate — it determines whether a quality issue is a one-off PRD fix or a reusable Skill gap.
 
-See `references/retrospect-trigger-rules.md` for the full trigger signal definitions, T0-T3 escalation levels, and root cause classification.
+See `05_context/optimization-standards/retrospect-trigger-rules.md` for the full trigger signal definitions, T0-T3 escalation levels, and root cause classification.
 
 The check procedure:
 
-1. For each significant event (user correction, node complete, revision applied, sweep finding), classify the event against the trigger signals in `references/retrospect-trigger-rules.md`.
+1. For each significant event (user correction, node complete, revision applied, sweep finding), classify the event against the trigger signals in `05_context/optimization-standards/retrospect-trigger-rules.md`.
 2. **Mandatory landing**: if the event triggers T1 or higher, the detection result MUST be written to `09-run-log.md` in the task folder — not just explained in the conversation. Use the `append_retrospect_event.py` recorder, or if the hook is not mounted, the Agent writes directly.
 3. If user correction or high-risk signal: append to `09-run-log.md` 用户指正记录 — time, node, user quote excerpt, correction type, content involved, AI judgment (PRD-local or Skill-gap).
 4. If classified as T1 or higher: append to `09-run-log.md` 复盘触发状态 — trigger ID, root cause, occurrence count, recent evidence, current level, suggested action.
@@ -224,7 +224,7 @@ The check procedure:
    - T0: do not write. No action needed.
    - T2: mark `needs_retrospect_candidate`. At next Node 5 or user idle point, ask whether to enter retrospect.
    - T3: mark `needs_retrospect`. Generate `08-Skill复盘沉淀建议.md`. Each patch in the proposal STILL requires per-patch user confirmation before writing to any Skill file.
-6. T3 does NOT auto-apply patches. T3 does NOT bypass `gates-and-retrospective.md` confirm→write loop.
+6. T3 does NOT auto-apply patches. T3 does NOT bypass `../03_gates/gates-and-retrospective.md` confirm→write loop.
 
 **When NOT to escalate**: a one-time stylistic preference, a single PRD-local fix with no reusable pattern, or a correction that the user explicitly says is "just this once."
 
@@ -248,10 +248,10 @@ Triggered when a repeated quality problem appears or the user asks to improve th
    - 缺案例 → Example patch
    - 偶发 → 仅记录，不出 patch
 2. **Threshold rule**: same root cause ≥ 2 occurrences → must propose a patch. ≥ 3 occurrences → patch priority is P0.
-3. Classify each failure using the taxonomy in [Gates and Retrospective](references/gates-and-retrospective.md).
+3. Classify each failure using the taxonomy in [Gates and Retrospective](03_gates/gates-and-retrospective.md).
 
 Patch proposals must include observed failure, run evidence from `09-run-log.md`, why existing rules missed it, a proposed target, bounded change, regression risk, and adoption recommendation. Rejected-patch signals: turning one-off preference into a universal rule, expanding PRD scope instead of fixing clarity, duplicating an existing rule, making the entry skill heavier without improving reliability, or changing rules without evidence.
 
-Execute the per-patch confirm→write loop defined in [Gates and Retrospective](references/gates-and-retrospective.md) §复盘确认→写入闭环.
+Execute the per-patch confirm→write loop defined in [Gates and Retrospective](03_gates/gates-and-retrospective.md) §复盘确认→写入闭环.
 
 **After retrospect completes:** Update `09-run-log.md` 复盘消费 section: which 痛点 were consumed, which patches were produced, and whether each patch was written to its target file.

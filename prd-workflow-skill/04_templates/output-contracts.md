@@ -36,7 +36,7 @@ Minimum first-run files:
 
 - `任务说明.md`: task goal, source links, current status, next action
 - `00-上下文证据.md`: source materials and evidence notes
-- `09-run-log.md`: created from `05_context/run-log.md` template at Boot — running timeline, decision append, revision root causes, pain point log
+- `09-run-log.md`: created from `04_templates/run-log.md` template at Boot — running timeline, decision append, revision root causes, pain point log
 - `04-PRD草案v0.md`: the draft Markdown file (created at Node 2)
 
 Use additional files only when that stage has actually happened.

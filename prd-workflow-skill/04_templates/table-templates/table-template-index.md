@@ -1,6 +1,6 @@
 # 表格模板索引
 
-> Belongs to: `05_context/writing-standards/`  
+> Belongs to: `04_templates/table-templates/`  
 > Source: PRD 需求自查清单 V3.3 · Sheet 07  
 > Version: v1.0.0
 

@@ -1,7 +1,7 @@
 # Interaction Logic Writing
 
 > Belongs to: `05_context/writing-standards/`  
-> Governed by: `prd-definition-quality-standard.md` §5.3 "不留猜疑"  
+> Governed by: `../prd-standards/prd-quality-standard.md` §5.3 "不留猜疑"  
 > Evidence: first PRD run — v1.0 lacked interaction logic for all features; 6 features needed retroactive addition in v1.1  
 > Version: v1.1.0 — added cross-reference to rule-table.md for business-rule-heavy features
 
@@ -9,7 +9,7 @@
 
 Every core feature that involves user action must include an interaction logic table. "Core feature" means any function that appears in the feature inventory and involves user input, navigation, or state change. Read-only static content pages are exempt.
 
-**When the feature involves complex business rules**, use [rule-table.md](rule-table.md) alongside this table. The interaction logic table covers "what happens when user does X"; the rule table covers "under what conditions does Y happen."
+**When the feature involves complex business rules**, use [rule-table.md](../../04_templates/table-templates/rule-table.md) alongside this table. The interaction logic table covers "what happens when user does X"; the rule table covers "under what conditions does Y happen."
 
 ## Table Structure
 

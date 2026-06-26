@@ -1,7 +1,7 @@
 # Table Format Conventions
 
 > Belongs to: `05_context/writing-standards/`
-> Governed by: `prd-definition-quality-standard.md` §5.3 "不留猜疑"
+> Governed by: `../prd-standards/prd-quality-standard.md` §5.3 "不留猜疑"
 > Evidence: first PRD run — query/filter/field/form tables were reworked across 8 revision rounds due to missing format standards
 > Version: v1.0.0
 

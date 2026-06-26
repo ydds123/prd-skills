@@ -1,15 +1,15 @@
 # Retrospect Trigger Rules
 
-> Belongs to: `references/`  
+> Belongs to: `05_context/optimization-standards/`  
 > Purpose: Define the trigger signals, escalation levels, and boundaries for the Retrospect Trigger Detector  
-> Governed by: `gates-and-retrospective.md` — all Skill file modifications still require per-patch user confirmation  
+> Governed by: `../../03_gates/gates-and-retrospective.md` — all Skill file modifications still require per-patch user confirmation  
 > Version: v1.0.0
 
 ---
 
 ## Core Principle
 
-The trigger detector captures signals, the recorder writes them to run-log, and the Agent escalates by level. The confirm→write loop in `gates-and-retrospective.md` remains the only path to modifying Skill reusable files.
+The trigger detector captures signals, the recorder writes them to run-log, and the Agent escalates by level. The confirm→write loop in `../../03_gates/gates-and-retrospective.md` remains the only path to modifying Skill reusable files.
 
 ```
 Detector (retrospect_trigger.py) outputs JSON
@@ -19,7 +19,7 @@ Detector (retrospect_trigger.py) outputs JSON
   → User confirms per-patch → Agent writes to target Skill file
 ```
 
-**The recorder writes only to `09-run-log.md`.** It never touches PRD body content or Skill files. If the pipeline hook is not mounted, the Agent itself performs the write as part of the Retrospect Trigger Check defined in `workflow-protocol.md`.
+**The recorder writes only to `09-run-log.md`.** It never touches PRD body content or Skill files. If the pipeline hook is not mounted, the Agent itself performs the write as part of the Retrospect Trigger Check defined in `../../01_workflow/workflow-protocol.md`.
 
 ## Trigger Signals
 
@@ -72,7 +72,7 @@ Keywords: P0, P1, 阻塞, 漏了, 没覆盖, 不一致, 前后矛盾, 旧说法,
 
 ## Root Cause Classification
 
-Reuses the existing taxonomy from `gates-and-retrospective.md`. No second classification system.
+Reuses the existing taxonomy from `../../03_gates/gates-and-retrospective.md`. No second classification system.
 
 | Root cause | Meaning | Patch target |
 |-----------|---------|-------------|
@@ -98,14 +98,14 @@ Reuses the existing taxonomy from `gates-and-retrospective.md`. No second classi
 
 ## Workflow Protocol Integration
 
-Per `workflow-protocol.md`, Retrospect Trigger Check is called at:
+Per `../../01_workflow/workflow-protocol.md`, Retrospect Trigger Check is called at:
 
 1. **After user correction** — judge PRD fix vs Skill gap
 2. **After each Node completes** — scan for repeats, gate failures
 3. **After revision completes** — did this revision expose a template/method/gate gap?
 4. **After content consistency sweep** — are recurring inconsistencies a Skill defect?
 
-See `workflow-protocol.md` for the inline check procedure at each point.
+See `../../01_workflow/workflow-protocol.md` for the inline check procedure at each point.
 
 ## Relation to Existing Mechanisms
 
@@ -113,7 +113,7 @@ See `workflow-protocol.md` for the inline check procedure at each point.
 |-----------|----------------------|
 | `09-run-log.md` | Trigger writes events; run-log is the persistent evidence container |
 | `08-Skill复盘沉淀建议.md` | Trigger decides whether to enter retrospect; 08- is the output artifact |
-| `gates-and-retrospective.md` | Trigger does NOT bypass the confirm→write gate |
-| `workflow-protocol.md` | Protocol calls the trigger check; trigger rules are defined here |
+| `../../03_gates/gates-and-retrospective.md` | Trigger does NOT bypass the confirm→write gate |
+| `../../01_workflow/workflow-protocol.md` | Protocol calls the trigger check; trigger rules are defined here |
 | Content Consistency Sweep | Sweep finds PRD issues; trigger judges whether those issues are Skill defects |
 | V3.3 checklist | Still the primary quality gate. Trigger does not add a second pass/fail standard |

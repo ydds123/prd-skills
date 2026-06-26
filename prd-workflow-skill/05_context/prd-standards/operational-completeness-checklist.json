@@ -2,7 +2,7 @@
   "meta": {
     "version": "3.3",
     "source": "PRD需求自查清单 V3.3",
-    "governed_by": "references/prd-quality-standard.md",
+    "governed_by": "05_context/prd-standards/prd-quality-standard.md",
     "total_items": 66,
     "hierarchies": {
       "gate": 21,

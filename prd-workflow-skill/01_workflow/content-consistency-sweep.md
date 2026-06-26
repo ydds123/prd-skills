@@ -1,6 +1,6 @@
 # Post-Revision Content Consistency Sweep
 
-> Belongs to: `05_context/writing-standards/`  
+> Belongs to: `01_workflow/`  
 > Node: 4.5 — executed after Node 4 revision, before Final-output check  
 > Version: v1.0.0
 

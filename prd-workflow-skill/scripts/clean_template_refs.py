@@ -1,6 +1,6 @@
 import json, re
 
-with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/references/operational-completeness-checklist.json','r',encoding='utf-8') as f:
+with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/operational-completeness-checklist.json','r',encoding='utf-8') as f:
     data = json.load(f)
 
 # Clean all template_ref to be semantic labels only (not file paths or Excel coords)
@@ -23,9 +23,9 @@ for item in data['items']:
             else:
                 part = part.split('!')[-1].strip()
             excel_count += 1
-        # Strip file paths: "05_context/writing-standards/rule-table.md" -> "rule-table"
-        if part.startswith('05_context'):
-            part = part.replace('05_context/writing-standards/', '').replace('.md', '')
+        # Strip file paths: "04_templates/table-templates/rule-table.md" -> "rule-table"
+        if part.startswith('04_templates'):
+            part = part.replace('04_templates/table-templates/', '').replace('.md', '')
             path_count += 1
         # Strip "｜模板" suffix if present as duplicative
         if '｜' in part:
@@ -43,7 +43,7 @@ for item in data['items']:
 
     item['template_ref'] = ' | '.join(unique) if unique else ''
 
-with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/references/operational-completeness-checklist.json','w',encoding='utf-8') as f:
+with open('C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/operational-completeness-checklist.json','w',encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
 
 # Verify

@@ -86,7 +86,7 @@ data = {
     }
 }
 
-out_path = 'C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/references/operational-completeness-checklist.json'
+out_path = 'C:/Users/rd001/.claude/skills/prd-skills/prd-workflow-skill/05_context/prd-standards/operational-completeness-checklist.json'
 with open(out_path, 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
 

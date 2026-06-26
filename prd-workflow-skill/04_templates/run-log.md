@@ -1,8 +1,8 @@
 # Run Log Template
 
-> Belongs to: `05_context/`  
+> Belongs to: `04_templates/`  
 > Purpose: 跨节点的持续性运行日志 — 决策追加、修订根因、痛点证据  
-> Governed by: `workflow-protocol.md` §Run Log Checkpoints  
+> Governed by: `01_workflow/workflow-protocol.md` §Run Log Checkpoints  
 > Version: v1.0.0
 
 ---

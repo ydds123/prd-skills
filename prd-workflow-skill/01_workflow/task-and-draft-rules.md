@@ -57,7 +57,7 @@ YYYY-MM-DD-{PRD名称}/
 | `06-审核报告.md` | Independent review report | After review |
 | `07-修订记录.md` | Revision summary, unresolved items, accepted risks | After revision |
 | `08-复盘建议.md` | Skill retrospective patch proposals | After retrospect |
-| `09-run-log.md` | Cross-node running timeline, decision append, revision root causes, pain point log | Always — created at Boot from `05_context/run-log.md` template |
+| `09-run-log.md` | Cross-node running timeline, decision append, revision root causes, pain point log | Always — created at Boot from `04_templates/run-log.md` template |
 | `assets/` | Screenshots, exported diagrams, source images | Only when assets exist |
 
 Do not create empty stage files just to look complete. A task folder should show the true workflow state. **Exception**: `09-run-log.md` is always created at Boot because it is written to throughout all subsequent nodes.
