@@ -126,6 +126,18 @@ Write:
 2. If any content was revised in response to feedback, append to 修订记录: round number, trigger, scope, root cause classification (缺知识/缺方法/缺模板/缺门禁/缺案例/偶发), and which checklist module was involved.
 3. If a revision reveals a systemic gap (something the writer "shouldn't have missed" on first pass), append to 痛点日志: what was missed, why it was missed on the first pass, which checklist module covers it, and severity.
 
+**Decision intake after corrections (inline):**
+
+When a user correction, review finding, or sweep discovery changes product judgment:
+
+1. Append the decision to `02-决策账本.md` with a new decision ID.
+2. If the correction changes a prior decision, mark the old entry `superseded` and reference the new ID.
+3. Record the event in `09-run-log.md` 运行时间线.
+4. If triggered by user correction, also record in 用户指正记录 with the decision ID.
+5. If triggered by review or sweep revision, record in 修订记录 with the decision ID.
+
+Do NOT duplicate full decision content in `09-run-log.md`. Decision changes go to `02-决策账本.md`. Process evidence goes to `09-run-log.md`.
+
 **Table format conventions** (see `05_context/writing-standards/table-format-conventions.md`):
 - Query condition tables: 查询字段 | 组件类型 | 查询精度 | 说明
 - Form field tables: 字段名称 | 字段类型 | 是否必填 | 引导文案 | 字段说明

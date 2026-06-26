@@ -50,14 +50,14 @@ YYYY-MM-DD-{PRD名称}/
 | `任务说明.md` | Task goal, source links, status, next action | Always |
 | `00-上下文证据.md` | Source materials, code/page evidence, assumptions, unresolved source gaps | Always |
 | `01-背景理解卡.md` | Background understanding card | After thinking |
-| `02-决策账本.md` | Confirmed, recommended, pending, and risk-accepted decisions | After thinking |
+| `02-决策账本.md` | Full-lifecycle append-only decision ledger. Created at Node 1 with initial decisions, then appended whenever later user corrections, full PRD writing, review, revision, or sweep introduces a new product judgment. | After thinking (initial) / any subsequent stage (append) |
 | `03-可写状态判断.md` | Writable-state judgment and blocking questions | Before draft |
 | `04-PRD草案v0.md` | First PRD draft Markdown | When writing a draft |
 | `05-完整PRDv1.md` | Full PRD expanded from accepted draft frame | After draft frame is accepted |
 | `06-审核报告.md` | Independent review report | After review |
 | `07-修订记录.md` | Revision summary, unresolved items, accepted risks | After revision |
 | `08-复盘建议.md` | Skill retrospective patch proposals | After retrospect |
-| `09-run-log.md` | Cross-node running timeline, decision append, revision root causes, pain point log | Always — created at Boot from `04_templates/run-log.md` template |
+| `09-run-log.md` | Cross-node running timeline, user correction evidence, revision root causes, pain point log, node completion records, retrospect trigger status. References decision IDs but does not duplicate the decision ledger. | Always — created at Boot from `04_templates/run-log.md` template |
 | `assets/` | Screenshots, exported diagrams, source images | Only when assets exist |
 
 Do not create empty stage files just to look complete. A task folder should show the true workflow state. **Exception**: `09-run-log.md` is always created at Boot because it is written to throughout all subsequent nodes.

@@ -85,6 +85,8 @@ Reuses the existing taxonomy from `../../03_gates/gates-and-retrospective.md`. N
 
 ## Auto-Record vs Human-Confirm Boundary
 
+**Decision boundary**: The trigger writes process evidence to `09-run-log.md`. If the triggering event changes product judgment, the workflow protocol must also append a decision entry to `02-决策账本.md`. The trigger itself does not write decision entries.
+
 | Action | Auto? | Rule |
 |--------|-------|------|
 | Write to run-log 用户指正记录 | Yes | No confirmation needed |

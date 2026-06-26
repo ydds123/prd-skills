@@ -55,7 +55,7 @@ input_received
 
 ### Node 1: Write-before Alignment
 
-The agent reads all materials, drills through solutions to find the real problem, produces a background understanding card and a decision ledger. Every decision entry must carry a recommendation and rationale — listing options without a recommendation is invalid. The alignment is done when background, problem, scope, non-goals, upstream/downstream dependencies, and key decisions are clear enough. If not, the agent stops and asks at most 3 high-leverage questions.
+The agent reads all materials, drills through solutions to find the real problem, produces a background understanding card and a decision ledger. Every decision entry must carry a recommendation and rationale — listing options without a recommendation is invalid. The decision ledger is append-only and remains open across the entire PRD lifecycle: later user corrections, full-PRD discoveries, review fixes, and sweep findings that change product judgment must append to it. The alignment is done when background, problem, scope, non-goals, upstream/downstream dependencies, and key decisions are clear enough. If not, the agent stops and asks at most 3 high-leverage questions.
 
 Outputs: task folder, context evidence, background card, decision ledger, writable-state judgment.
 

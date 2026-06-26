@@ -75,9 +75,16 @@ Use additional files only when that stage has actually happened.
 ```md
 ## 决策账本
 
-| 决策项 | 推荐结论 | 备选方案 | 依据 | 状态 | 确认人 |
-|---|---|---|---|---|---|
-|  |  |  |  | confirmed / recommended / pending / risk accepted |  |
+| 决策编号 | 时间 | 触发阶段 | 触发来源 | 决策项 | 原判断 | 当前判断 / 推荐结论 | 备选方案 | 影响范围 | 状态 | 依据 | 确认人 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| D001 |  | Node 1 / Node 2 / Node 3 / Review / Revision / Sweep | 用户指正 / AI 自发现 / checklist / 审核发现 / 上下文补充 |  | 无 / 原判断 |  |  |  | confirmed / recommended / pending / risk accepted / superseded |  |  |
+
+Rules:
+
+- Append-only. Never overwrite existing entries.
+- Mark superseded decisions as `superseded` — do not delete them.
+- Initial decisions from Node 1 have `原判断` as "无".
+- Later decisions that change a prior judgment must reference the superseded decision ID.
 ```
 
 ## Writable-State Report
