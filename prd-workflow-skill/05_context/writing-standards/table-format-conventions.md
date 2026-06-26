@@ -58,6 +58,19 @@ For any list page or data table:
 
 If the list has action buttons, add an `操作` column at the end.
 
+## Query Controls vs List Columns — Naming Non-Sharing Principle
+
+Query tables (§X.Y.2) and list field tables (§X.Y.3) serve different purposes and must not share row names or structures:
+
+| | Query / Filter Table | List / Display Table |
+|---|---|---|
+| Purpose | How the user finds data | How the system presents data |
+| Column set | 查询字段 \| 组件类型 \| 查询精度 \| 说明 | 字段 \| 字段含义 \| 数据来源 \| 展示规则 \| 空值展示 \| 备注 |
+| Merging dimensions | Allowed — a cascading dropdown can combine two fields into one UX control (e.g. "模块消息" = 模块 → 消息类型) | Forbidden — each column must correspond to a single data source with its own independent format and empty state |
+| Example of violation | — | "模块消息" column that merges 所属模块 and 消息类型 into a single display cell — should be two columns |
+
+**Rule**: if a query table row and a list table row have the same name, verify whether this is a legitimate merge (UX design) or an illegitimate copy. If the list row merges two data sources that have independent origins, split it.
+
 ### Example
 
 | 字段 | 字段含义 | 数据来源 | 展示规则 | 空值展示 | 备注 |
