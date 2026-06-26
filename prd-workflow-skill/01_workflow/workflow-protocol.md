@@ -12,7 +12,7 @@ This is not advisory. It is the line that keeps judgment human and execution aut
 | Draft Body | Confirming the scope and main-flow frame is correct before details are filled | Writing strategy layer, scope layer, and main-flow skeleton only — no exceptions, permissions, or data yet |
 | Fill Details | Only needed if draft scope is being overridden; normally the agent runs without human intervention | Expanding the accepted frame: exceptions, error states, permissions, state transitions, data sources, acceptance criteria, self-test cases |
 | Independent Review | Deciding which P0/P1 fixes to apply, whether to accept a risk, and whether to cut a feature | Spotting errors by checklist: inconsistency, gaps, conflicts, over-design, missing items; subtracting first, then classifying |
-| Retrospect (on demand) | Confirming which patch proposals should modify reusable rules | Classifying failure types and proposing bounded patches |
+| Retrospect (conditional) | Confirming which patch proposals should modify reusable rules | Classifying failure types and proposing bounded patches |
 
 The four things only humans can hold: problem definition, direction, tradeoffs, and quality sign-off. The rest is volume work with clear right answers — AI territory.
 
@@ -25,7 +25,7 @@ input_received
 → [2] draft_body → human confirms scope & main flow
 → [3] fill_details
 → [4] review → human decides fixes
-→ [retrospect] on demand only
+→ [retrospect] conditional — user request, repeated quality issues, or T3 trigger
 ```
 
 ## Node Rules
@@ -228,7 +228,7 @@ The check procedure:
 
 **When NOT to escalate**: a one-time stylistic preference, a single PRD-local fix with no reusable pattern, or a correction that the user explicitly says is "just this once."
 
-### 5. Retrospect (On Demand)
+### 5. Retrospect (Conditional)
 
 Triggered when a repeated quality problem appears or the user asks to improve the workflow.
 

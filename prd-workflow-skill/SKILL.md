@@ -35,11 +35,13 @@ Apply the standard across input, processing, and output. Details live in the qua
 
 Use workflow protocol, task rules, output contracts, and trigger evals when route boundaries matter.
 
-## Workflow (5 Nodes)
+These route labels (`prd-thinking`, `prd-writer`, `prd-reviewer`, `skill-retrospector`) are logical roles, not physical sub-skill packages. Execute the role inline using the workflow, gates, templates, and context files already present in this Skill.
 
-The workflow has 5 core nodes plus a task-folder boot step and an on-demand retrospect. Humans confirm at exactly 2 points: after alignment, and after the draft body.
+## Workflow
 
-**Boot**: Create or reuse a dated PRD task folder. All outputs are file-backed. **Always create `09-run-log.md` from the template at `04_templates/run-log.md`** — this is the cross-node evidence log consumed by retrospect. See [Task and Draft Rules](01_workflow/task-and-draft-rules.md).
+The workflow has one boot step, 4 gated execution nodes, an optional Content Consistency Sweep after fixes, and a conditional retrospect stage. Humans confirm at exactly 2 points: after alignment, and after the draft body.
+
+**Boot**: Create or reuse a dated PRD task folder. All outputs are file-backed. **Always create `09-run-log.md` from the template at `04_templates/run-log.md`** — this is the cross-node evidence log consumed by retrospect. If the task folder or `09-run-log.md` cannot be created or reused, stop and ask the user. Do not continue the file-backed workflow in chat-only mode. See [Task and Draft Rules](01_workflow/task-and-draft-rules.md).
 
 ```
 input_received
@@ -83,9 +85,9 @@ After fixes are applied, the agent runs a Content Consistency Sweep (Node 4.5) t
 
 ### Retrospect Trigger Detector
 
-After user corrections, node completion, PRD revision, and content consistency sweep, the agent runs a Retrospect Trigger Check (see `05_context/optimization-standards/retrospect-trigger-rules.md`). The detector captures signals, writes observations to `09-run-log.md`, marks retrospective candidates (T2), and triggers skill retrospect proposals (T3). It must never modify reusable Skill files without explicit per-patch user confirmation. All Skill modifications remain governed by `03_gates/gates-and-retrospective.md`.
+After user corrections, node completion, PRD revision, and content consistency sweep, the agent runs a Retrospect Trigger Check (see `05_context/optimization-standards/retrospect-trigger-rules.md`). The check may use `hooks/retrospect_trigger.py` as a detector — it outputs structured signals to stdout. The agent or recorder records qualified observations to `09-run-log.md`, marks retrospective candidates (T2), and triggers skill retrospect proposals (T3). The trigger check must never modify reusable Skill files without explicit per-patch user confirmation. All Skill modifications remain governed by `03_gates/gates-and-retrospective.md`.
 
-### Retrospect (On Demand)
+### Retrospect (Conditional)
 
 Triggered when a repeated quality problem appears or the user asks to improve the workflow. **First, read `09-run-log.md` in the task folder as primary evidence** — analyze root cause distribution from 修订记录 and 痛点日志 (same root cause ≥ 2 → must propose patch; ≥ 3 → P0). Classify the failure, propose a bounded patch, **ask the user per-patch whether to adopt**, and apply confirmed patches to the relevant reference files immediately. **After all patches are resolved, append to `09-run-log.md` 复盘消费 section.** See [Workflow Protocol](01_workflow/workflow-protocol.md) §5 for the full evidence→analysis→patch→write loop, and [Gates and Retrospective](03_gates/gates-and-retrospective.md) for the confirm→write mechanism.
 
@@ -101,6 +103,8 @@ PRD body must follow the 五不清单 and additional constraints in [PRD Quality
 - No writer self-approval as final gate.
 - No "final PRD" with P0 issues.
 - No automatic reusable rule updates without human confirmation.
+- No inventing missing repository files, templates, examples, gates, or sub-skills merely because a blueprint mentions them.
+- No treating planned directory structures as implemented capabilities.
 
 ## Output Protocol
 
@@ -111,6 +115,6 @@ Default order:
 3. PRD draft v0 or blocking questions (Node 2)
 4. Complete PRD v1 (Node 3)
 5. Independent review report + revision summary (Node 4)
-6. Retrospective patch proposal (on demand)
+6. Retrospective patch proposal (conditional)
 
 Keep final PRD language precise, structured, and traceable. Mark unknowns as `待确认`; do not hide them inside polished prose.
