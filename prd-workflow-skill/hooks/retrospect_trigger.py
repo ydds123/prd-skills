@@ -14,6 +14,7 @@ import json
 import re
 import sys
 from datetime import datetime, timezone
+from typing import Optional
 
 
 # ── Signal definitions ──────────────────────────────────────────────
@@ -56,7 +57,7 @@ ROOT_CAUSE_KEYWORDS = {
 }
 
 
-def classify_root_cause(text: str) -> str | None:
+def classify_root_cause(text: str) -> Optional[str]:
     """Heuristic root cause classification from text content."""
     scores = {}
     for cause, patterns in ROOT_CAUSE_KEYWORDS.items():

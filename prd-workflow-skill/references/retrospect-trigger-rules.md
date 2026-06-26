@@ -12,9 +12,9 @@
 The trigger detector captures signals, logs observations, and proposes candidates. It does NOT apply changes. The confirm→write loop in `gates-and-retrospective.md` remains the only path to modifying Skill reusable files.
 
 ```
-Hook/Agent detects signal → writes to run-log → escalates by level
-  → T3: marks needs_retrospect → generates 08-Skill复盘沉淀建议.md
-  → User confirms per-patch → writes to target Skill file
+Hook or Agent detects signal → structured detection result → Agent writes to run-log → escalates by level
+  → T3: marks needs_retrospect → Agent generates 08-Skill复盘沉淀建议.md
+  → User confirms per-patch → Agent writes to target Skill file
 ```
 
 ## Trigger Signals

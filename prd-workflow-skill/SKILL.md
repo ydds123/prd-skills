@@ -14,7 +14,7 @@ Do not generate a full PRD from a vague request. Move the requirement through 4 
 3. **fill details** — expand the accepted frame into a complete PRD
 4. **independent review** — a separate role reviews, subtracts, and classifies issues; human decides fixes
 
-Retrospect is on-demand, not a required stage.
+Retrospect is conditional, not a required stage. It is triggered by explicit user request, repeated quality problems, or T3 Retrospect Trigger signals.
 
 ## Core Standard
 
@@ -48,7 +48,7 @@ input_received
 → [2] draft_body → human confirms scope & main flow
 → [3] fill_details
 → [4] review → human decides what to fix
-→ [retrospect] on demand only
+→ [retrospect] conditional — user request, repeated quality issues, or T3 trigger
 ```
 
 ### Node 1: Write-before Alignment
