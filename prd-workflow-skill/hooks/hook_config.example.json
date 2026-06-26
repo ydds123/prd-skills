@@ -1,0 +1,58 @@
+{
+  "_description": "Example hook configurations for retrospect_trigger.py. These hooks are OPTIONAL enhancements — the core trigger mechanism also runs inline in workflow-protocol.md checkpoints.",
+  "_platform_note": "Adapt the command path and Python executable to your environment. This file is a reference, not a runtime dependency.",
+
+  "hooks": [
+    {
+      "name": "retrospect-trigger-after-node-complete",
+      "when": "after_node_complete",
+      "command": "python prd-workflow-skill/hooks/retrospect_trigger.py --source node_complete --node \"$CURRENT_NODE\" --text \"$NODE_RESULT_SUMMARY\"",
+      "purpose": "After each workflow node completes, scan the result for high-risk signals and retrospective candidates.",
+      "writes_files": false,
+      "may_modify_skill_files": false,
+      "optional": true
+    },
+    {
+      "name": "retrospect-trigger-after-user-input",
+      "when": "after_user_input",
+      "command": "python prd-workflow-skill/hooks/retrospect_trigger.py --source user_prompt --node \"$CURRENT_NODE\" --text \"$USER_INPUT\"",
+      "purpose": "Detect user corrections and retrospective intent in user messages.",
+      "writes_files": false,
+      "may_modify_skill_files": false,
+      "optional": true
+    },
+    {
+      "name": "retrospect-trigger-after-review",
+      "when": "after_node_4_complete",
+      "command": "python prd-workflow-skill/hooks/retrospect_trigger.py --source review_result --node \"Node 4\" --text \"$REVIEW_FINDINGS\"",
+      "purpose": "After independent review, scan P0/P1 findings for gate failures that indicate Skill deficiencies.",
+      "writes_files": false,
+      "may_modify_skill_files": false,
+      "optional": true
+    },
+    {
+      "name": "retrospect-trigger-after-sweep",
+      "when": "after_consistency_sweep",
+      "command": "python prd-workflow-skill/hooks/retrospect_trigger.py --source sweep_result --node \"Node 4.5\" --text \"$SWEEP_FINDINGS\"",
+      "purpose": "After content consistency sweep, check if recurring inconsistency patterns indicate Skill gaps.",
+      "writes_files": false,
+      "may_modify_skill_files": false,
+      "optional": true
+    }
+  ],
+
+  "forbidden_behaviors": [
+    "hooks MUST NOT modify PRD body content",
+    "hooks MUST NOT modify any Skill reusable file",
+    "hooks MUST NOT bypass user confirmation for Skill changes",
+    "hooks MUST NOT auto-apply retrospective patches",
+    "hooks MUST NOT elevate a one-time preference to a universal rule without user confirmation"
+  ],
+
+  "runtime_requirements": {
+    "python": ">=3.8",
+    "dependencies": "standard library only (argparse, json, re, datetime)",
+    "network_access": "not required",
+    "file_write": "none — output goes to stdout only"
+  }
+}

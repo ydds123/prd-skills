@@ -81,6 +81,10 @@ A separate agent role reviews the full PRD. The reviewer explicitly switches con
 
 After fixes are applied, the agent runs a Content Consistency Sweep (Node 4.5) to verify the fix did not create cross-section contradictions or stale references — sweeping only the fix's blast radius across 10 consistency dimensions — then produces a revised PRD, revision summary, unresolved items, accepted risks, and sweep report. The PRD is final when: no unmarked assumptions, no invented capabilities, no future plans mixed into scope, no unresolved P0, no unaccepted P1, and no P0 consistency contradictions.
 
+### Retrospect Trigger Detector
+
+After user corrections, node completion, PRD revision, and content consistency sweep, the agent runs a Retrospect Trigger Check (see `references/retrospect-trigger-rules.md`). The detector captures signals, writes observations to `09-run-log.md`, marks retrospective candidates (T2), and triggers skill retrospect proposals (T3). It must never modify reusable Skill files without explicit per-patch user confirmation. All Skill modifications remain governed by `references/gates-and-retrospective.md`.
+
 ### Retrospect (On Demand)
 
 Triggered when a repeated quality problem appears or the user asks to improve the workflow. **First, read `09-run-log.md` in the task folder as primary evidence** — analyze root cause distribution from 修订记录 and 痛点日志 (same root cause ≥ 2 → must propose patch; ≥ 3 → P0). Classify the failure, propose a bounded patch, **ask the user per-patch whether to adopt**, and apply confirmed patches to the relevant reference files immediately. **After all patches are resolved, append to `09-run-log.md` 复盘消费 section.** See [Workflow Protocol](references/workflow-protocol.md) §5 for the full evidence→analysis→patch→write loop, and [Gates and Retrospective](references/gates-and-retrospective.md) for the confirm→write mechanism.

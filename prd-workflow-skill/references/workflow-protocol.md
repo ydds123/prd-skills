@@ -208,6 +208,24 @@ See `05_context/writing-standards/content-consistency-sweep.md` for the full 10-
 
 **After review completes:** Update `09-run-log.md` Node 完成记录 for Node 4: checklist modules swept, blocking items found, P0/P1 counts.
 
+**Retrospect Trigger Check (inline, after every significant event):**
+
+After user corrections, node completion, revision completion, and content consistency sweep, the agent MUST execute a Retrospect Trigger Check. This check does not replace any existing gate — it determines whether a quality issue is a one-off PRD fix or a reusable Skill gap.
+
+See `references/retrospect-trigger-rules.md` for the full trigger signal definitions, T0-T3 escalation levels, and root cause classification.
+
+The check procedure:
+
+1. For each significant event (user correction, node complete, revision applied, sweep finding), classify the event against the trigger signals in `references/retrospect-trigger-rules.md`.
+2. If user correction or high-risk signal: write to `09-run-log.md` 用户指正记录 — time, node, user quote excerpt, correction type, content involved, AI judgment (PRD-local or Skill-gap).
+3. If classified as T1 or higher: update or append to `09-run-log.md` 复盘触发状态 — root cause, occurrence count, recent evidence, current level, suggested action.
+4. Apply escalation rules from T0-T3:
+   - T2: mark `needs_retrospect_candidate`. At next Node 5 or user idle point, ask whether to enter retrospect.
+   - T3: mark `needs_retrospect`. Generate `08-Skill复盘沉淀建议.md`. Each patch in the proposal STILL requires per-patch user confirmation before writing to any Skill file.
+5. T3 does NOT auto-apply patches. T3 does NOT bypass `gates-and-retrospective.md` confirm→write loop.
+
+**When NOT to escalate**: a one-time stylistic preference, a single PRD-local fix with no reusable pattern, or a correction that the user explicitly says is "just this once."
+
 ### 5. Retrospect (On Demand)
 
 Triggered when a repeated quality problem appears or the user asks to improve the workflow.
