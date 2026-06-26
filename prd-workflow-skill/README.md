@@ -433,7 +433,7 @@ prd-workflow-skill/
 ├─ 04_templates/                            # 输出模板：契约、run-log、表格空白模板
 │  ├─ output-contracts.md                   # 任务文件夹结构、背景卡/决策账本/审核报告模板
 │  ├─ run-log.md                            # Run Log模板（运行时间线、修订根因、痛点、触发状态）
-│  └─ table-templates/
+│  └─ table-templates/                       # 表格空白模板（9类），供checklist的suggested_format路由
 │     ├─ table-template-index.md            # 模板→文件路由索引（suggested_format关键词映射）
 │     ├─ rule-table.md                      # 业务规则表（条件→动作→结果）
 │     ├─ field-rule-table.md                # 字段规则表（表单/列表/详情字段定义）
