@@ -417,8 +417,7 @@ prd-workflow-skill/
 │  ├─ append_retrospect_event.py            # 消费检测JSON，写入09-run-log.md
 │  └─ hook_config.example.json              # hooks可选配置参考，非运行强依赖
 ├─ scripts/                                 # 构建与维护脚本
-│  ├─ build_checklist.py                    # 从Excel构建V3.3 checklist JSON
-│  ├─ clean_template_refs.py                # 清理checklist中残留的路径和Excel坐标
+│  ├─ build_checklist.py                    # 从Excel构建V3.3 checklist JSON（含自动清理）
 │  └─ fill_template_refs.py                 # 为checklist条目填充template_ref字段
 ├─ evals/                                   # 触发路由正例/负例，不参与日常输出
 │  └─ trigger-evals.json                    # 触发路由正例+负例，用于回归验证

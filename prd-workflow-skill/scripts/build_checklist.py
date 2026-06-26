@@ -52,6 +52,27 @@ for label, domains in quality_indicators.items():
             'item_ids': [i['id'] for i in matched]
         }
 
+# Clean template_ref: strip Excel coords/file paths → semantic labels only
+cleaned_excel = 0
+cleaned_path = 0
+for item in items:
+    tr = item.get('template_ref', '')
+    if not tr:
+        continue
+    parts = []
+    for part in tr.split(' | '):
+        part = part.strip()
+        if '!' in part:
+            part = part.split('｜')[-1].strip() if '｜' in part else part.split('!')[-1].strip()
+            cleaned_excel += 1
+        if part.startswith('04_templates'):
+            part = part.replace('04_templates/table-templates/', '').replace('.md', '')
+            cleaned_path += 1
+        parts.append(part)
+    seen = set()
+    unique = [p for p in parts if not (p in seen or seen.add(p))]
+    item['template_ref'] = ' | '.join(unique)
+
 data = {
     'meta': {
         'version': '3.3',
@@ -95,3 +116,4 @@ print(f"  Gate: {data['meta']['hierarchies']['gate']}")
 print(f"  Extended: {data['meta']['hierarchies']['extended']}")
 print(f"  Advisory: {data['meta']['hierarchies']['advisory']}")
 print(f"  Load map groups: {list(load_map.keys())}")
+print(f"  Cleaned: {cleaned_excel} Excel refs, {cleaned_path} path refs")
