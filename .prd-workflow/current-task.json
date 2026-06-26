@@ -1,0 +1,6 @@
+{
+  "_description": "Active PRD task pointer. Written by the workflow boot step, read by hooks/append_retrospect_event.py.",
+  "_example_path": "E:/claude-code/项目开发/浙能/作业票审批站内信消息模板/2026-06-24-作业票审批站内信消息模板",
+  "task_folder": "E:/claude-code/项目开发/浙能/作业票审批站内信消息模板/2026-06-24-作业票审批站内信消息模板",
+  "run_log_path": "E:/claude-code/项目开发/浙能/作业票审批站内信消息模板/2026-06-24-作业票审批站内信消息模板/09-run-log.md"
+}

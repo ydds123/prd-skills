@@ -217,12 +217,14 @@ See `references/retrospect-trigger-rules.md` for the full trigger signal definit
 The check procedure:
 
 1. For each significant event (user correction, node complete, revision applied, sweep finding), classify the event against the trigger signals in `references/retrospect-trigger-rules.md`.
-2. If user correction or high-risk signal: write to `09-run-log.md` 用户指正记录 — time, node, user quote excerpt, correction type, content involved, AI judgment (PRD-local or Skill-gap).
-3. If classified as T1 or higher: update or append to `09-run-log.md` 复盘触发状态 — root cause, occurrence count, recent evidence, current level, suggested action.
-4. Apply escalation rules from T0-T3:
+2. **Mandatory landing**: if the event triggers T1 or higher, the detection result MUST be written to `09-run-log.md` in the task folder — not just explained in the conversation. Use the `append_retrospect_event.py` recorder, or if the hook is not mounted, the Agent writes directly.
+3. If user correction or high-risk signal: append to `09-run-log.md` 用户指正记录 — time, node, user quote excerpt, correction type, content involved, AI judgment (PRD-local or Skill-gap).
+4. If classified as T1 or higher: append to `09-run-log.md` 复盘触发状态 — trigger ID, root cause, occurrence count, recent evidence, current level, suggested action.
+5. Apply escalation rules from T0-T3:
+   - T0: do not write. No action needed.
    - T2: mark `needs_retrospect_candidate`. At next Node 5 or user idle point, ask whether to enter retrospect.
    - T3: mark `needs_retrospect`. Generate `08-Skill复盘沉淀建议.md`. Each patch in the proposal STILL requires per-patch user confirmation before writing to any Skill file.
-5. T3 does NOT auto-apply patches. T3 does NOT bypass `gates-and-retrospective.md` confirm→write loop.
+6. T3 does NOT auto-apply patches. T3 does NOT bypass `gates-and-retrospective.md` confirm→write loop.
 
 **When NOT to escalate**: a one-time stylistic preference, a single PRD-local fix with no reusable pattern, or a correction that the user explicitly says is "just this once."
 

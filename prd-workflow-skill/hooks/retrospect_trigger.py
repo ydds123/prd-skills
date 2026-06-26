@@ -9,6 +9,8 @@ Usage:
   python retrospect_trigger.py --source review_result --node "Node 4" --text "<finding>"
 """
 
+from __future__ import annotations
+
 import argparse
 import json
 import re
@@ -24,6 +26,9 @@ USER_CORRECTION = [
     r'怎么又', r'不要这样', r'这个不能这么写', r'应该放到', r'这里应该是',
     r'这个是错的', r'重新写', r'搞错了', r'你漏了', r'这里少了',
     r'你没有', r'你怎么', r'这个不是', r'为什么要',
+    # 推理式否定（用户讲道理而非对抗）
+    r'通常没必要', r'一般不需要', r'不需要每次都', r'不应该.*因为',
+    r'没必要.*因为', r'不需要.*新增', r'这里不用',
 ]
 
 RETROSPECT_INTENT = [

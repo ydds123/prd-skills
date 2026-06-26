@@ -9,13 +9,17 @@
 
 ## Core Principle
 
-The trigger detector captures signals, logs observations, and proposes candidates. It does NOT apply changes. The confirm→write loop in `gates-and-retrospective.md` remains the only path to modifying Skill reusable files.
+The trigger detector captures signals, the recorder writes them to run-log, and the Agent escalates by level. The confirm→write loop in `gates-and-retrospective.md` remains the only path to modifying Skill reusable files.
 
 ```
-Hook or Agent detects signal → structured detection result → Agent writes to run-log → escalates by level
-  → T3: marks needs_retrospect → Agent generates 08-Skill复盘沉淀建议.md
+Detector (retrospect_trigger.py) outputs JSON
+  → Recorder (append_retrospect_event.py) writes to 09-run-log.md
+  → Agent reads run-log, determines escalation
+  → T3: Agent generates 08-Skill复盘沉淀建议.md
   → User confirms per-patch → Agent writes to target Skill file
 ```
+
+**The recorder writes only to `09-run-log.md`.** It never touches PRD body content or Skill files. If the pipeline hook is not mounted, the Agent itself performs the write as part of the Retrospect Trigger Check defined in `workflow-protocol.md`.
 
 ## Trigger Signals
 
