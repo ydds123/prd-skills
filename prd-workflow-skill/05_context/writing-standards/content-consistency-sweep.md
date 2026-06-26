@@ -39,6 +39,51 @@ Do NOT run all 10 dimensions every time. Determine the fix's blast radius and ru
 | Terminology / naming (anywhere) | 10.术语 |
 | Full §10 rewrite (role matrix + operation control + permission exception) | 2.角色 + 3.权限 + 4.流程 + 8.异常 + 9.验收 + 10.术语 |
 | Template detail table column changed (e.g. 跳转入口 renamed) | 10.术语(match against §8.3.5 reference table) + 4.流程(verify flow target consistency) |
+| **Added/deleted an item in an enumerated set** (e.g. new message type, new role, new state, new exception case) | **11.枚举完备性**(re-verify the set's coverage against its domain) + 10.术语(sync all cross-references to the updated count) |
+
+## Enumeration Completeness — Cross-Cutting Check
+
+Not a 10-dimension check — a method that applies whenever the PRD contains an **enumerated set** that claims to cover a domain.
+
+The V3.3 checklist checks whether each *member* of the set is written well. It cannot check whether the *set itself* is missing members. This is the blind spot: "each item is thorough, but one was never listed."
+
+### When to apply
+
+Trigger when:
+- A new item was added to an enumerated set (the domain was incomplete before the add).
+- A set claims completeness ("全部 12 类", "覆盖所有角色", "所有异常类型").
+- User reports a missing notification/missing state/missing permission that "should obviously be there."
+
+### Method
+
+```
+1. Identify the domain the set claims to cover.
+   Source: business flow (§6), role table (§5), feature inventory (§7).
+
+2. Extract the set's current members from the PRD.
+
+3. Subtract: domain − covered members = gap.
+
+4. Gap ≠ ∅ → the set is incomplete. Fill missing members:
+   a. Derive each missing member's attributes from the domain source.
+   b. Insert into the set at the structurally correct position.
+   c. Sync all cross-references (counts, query options, acceptance items, self-test entries).
+   d. Gap = ⊘ → set is complete.
+
+5. No explicit domain source? → cannot auto-fix. Ask PM: "here are the 12 members I found. Should there be 13?"
+```
+
+### This applies generically to
+
+| Set type | Domain source | Gap example |
+|---------|--------------|-------------|
+| Message types / notification templates | Business flow nodes needing notification | 许可审批节点到达通知 missing |
+| States in a state machine | All states the business object can be in | "已过期" state never listed |
+| Roles in a permission matrix | All actors defined in §5 | A role in §5 never mapped to §10 |
+| Exception types per feature | All exception dimensions (empty/failure/duplicate/conflict/permission) | 并发冲突 never addressed |
+| Acceptance criteria | All feature points in §7 | A feature has the "how" but no "how to verify" |
+| Variables in a variable dictionary | All variables referenced in template bodies | A variable used in a body but never defined in the dict |
+| Query filter options | All enumerable values of the filtered field | "许可审批待处理" missing from the dropdown list |
 
 ## 10 Consistency Dimensions
 
