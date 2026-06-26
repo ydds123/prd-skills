@@ -20,7 +20,18 @@ For any list page or search panel that has filter controls:
 | Column | Content |
 |--------|---------|
 | 查询字段 | The field name as shown to the user |
-| 组件类型 | Input component: 单行文本输入框 / 下拉单选 / 下拉多选 / 日期范围选择 / 标签页 — and any special behaviors (e.g. "超过 7 项支持模糊搜索") |
+| 组件类型 | Input component: 单行文本输入框 / 下拉单选 / 下拉多选 / 日期范围选择 / 标签页 / 级联选择 — and any special behaviors (e.g. "超过 7 项支持模糊搜索") |
+
+**控件有内部层级结构时，说明列必须写清层级关系、默认展开状态和搜索范围。**
+
+| 控件特征 | 说明列必须覆盖 |
+|---------|-------------|
+| 有父子层级（如"模块→消息类型"、"部门→人员"、"省→市→区"） | 层级关系：共几级，每级的取值来源 |
+| 默认折叠 | 默认展开到第几级，或默认全部折叠 |
+| 支持模糊搜索 | 搜索范围：仅最末级 / 所有层级 |
+| 树形选择 | 是否支持勾选父级（勾选父级=全选子级 / 父级仅作分类不可选） |
+
+级联选择不是独立组件类型——它是下拉单选/下拉多选的**结构变体**。组件类型写"下拉单选（级联）"或"下拉多选（级联）"，内部结构全部落在说明列。
 | 查询精度 | Match mode: 精确匹配 / 模糊匹配 / 范围匹配 |
 | 说明 | Constraints: character limits, whitespace trimming rules, default value, option source ("写死选项" / "引用系统模块字段"), empty handling |
 
@@ -98,3 +109,4 @@ System-side capabilities (automated triggers, message generation, state computat
 | Use prose paragraphs where a table would work | Prose hides missing fields — it's easy to write "supports filtering" without specifying which fields, what component, or what match mode | Use the fixed table format; a blank cell is a visible gap |
 | Let the same table type have different column sets in different sections | R&D and QA build different mental models for each variation, leading to inconsistent implementation | Pick one column set per table type and use it everywhere |
 | Write "下拉选择" without specifying 单选 or 多选 | R&D cannot implement "a dropdown" — they need to know whether the user can pick one option or many. Multi-select requires checkboxes, single-select does not. | Always write "下拉单选" or "下拉多选" — never the bare "下拉选择" |
+| Use "下拉单选" for a cascading tree of options without explaining the structure | R&D knows it's a dropdown but doesn't know there are two levels (e.g. 模块→消息类型), whether it's collapsed by default, or whether searching hits both levels. | Write "下拉单选（级联）" in 组件类型; put hierarchy, expansion state, and search scope in 说明 |
