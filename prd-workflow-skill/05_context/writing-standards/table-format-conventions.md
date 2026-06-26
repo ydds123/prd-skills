@@ -20,7 +20,7 @@ For any list page or search panel that has filter controls:
 | Column | Content |
 |--------|---------|
 | 查询字段 | The field name as shown to the user |
-| 组件类型 | Input component: 单行文本输入框 / 下拉选择 / 日期范围选择 / 标签页 — and any special behaviors (e.g. "超过 7 项支持模糊搜索") |
+| 组件类型 | Input component: 单行文本输入框 / 下拉单选 / 下拉多选 / 日期范围选择 / 标签页 — and any special behaviors (e.g. "超过 7 项支持模糊搜索") |
 | 查询精度 | Match mode: 精确匹配 / 模糊匹配 / 范围匹配 |
 | 说明 | Constraints: character limits, whitespace trimming rules, default value, option source ("写死选项" / "引用系统模块字段"), empty handling |
 
@@ -52,7 +52,7 @@ For any create or edit form:
 | Column | Content |
 |--------|---------|
 | 字段名称 | Field label |
-| 字段类型 | Component: 单行文本输入框 / 下拉选择 / 多选列表 / 日期选择器 — and any special behaviors |
+| 字段类型 | Component: 单行文本输入框 / 下拉单选 / 下拉多选 / 多选列表 / 日期选择器 — and any special behaviors |
 | 是否必填 | 是 / 否 |
 | 引导文案 | Placeholder text shown in the empty field |
 | 字段说明 | Validation rules, character limits, uniqueness constraints, linkage rules, "保存时自动去除首尾空格" rules, dependency on other fields |
@@ -97,3 +97,4 @@ System-side capabilities (automated triggers, message generation, state computat
 | Merge component type into 说明 as prose | Component choice and business rules get mixed together, hard to scan | Keep 组件类型 as its own column |
 | Use prose paragraphs where a table would work | Prose hides missing fields — it's easy to write "supports filtering" without specifying which fields, what component, or what match mode | Use the fixed table format; a blank cell is a visible gap |
 | Let the same table type have different column sets in different sections | R&D and QA build different mental models for each variation, leading to inconsistent implementation | Pick one column set per table type and use it everywhere |
+| Write "下拉选择" without specifying 单选 or 多选 | R&D cannot implement "a dropdown" — they need to know whether the user can pick one option or many. Multi-select requires checkboxes, single-select does not. | Always write "下拉单选" or "下拉多选" — never the bare "下拉选择" |
