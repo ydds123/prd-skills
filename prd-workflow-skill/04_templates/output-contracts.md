@@ -130,10 +130,6 @@ Do not include:
 
 ## Full PRD
 
-```md
-
-## Full PRD
-
 Full PRD uses a 总分总 structure:
 
 1. **Top summary**: document information, core conclusion, background, scope, users, main flow, and function list.
@@ -337,7 +333,7 @@ flowchart TD
 | 已接受风险 |    |
 | 不进入本期 |    |
 
-```
+````
 
 Rules:
 
@@ -347,20 +343,62 @@ Rules:
 - Use top-level cross-domain chapters only when the rule truly applies across multiple functional domains.
 - Keep “结论先行” as the first substantive section after document information.
 - Keep acceptance criteria and self-test cases aligned by functional domain or flow.
+
+---
+
+## Review Report
+
+```md
+## PRD 审核报告
+
+总体结论：可进入评审 / 需修订 / 不可进入评审
+总分：__/100
+
+### 四项核心指标
+
+| 指标 | 评价 | 关键证据 |
+|---|---|---|
+| 边界清晰 |  |  |
+| 判断显性 |  |  |
+| 不留猜疑 |  |  |
+| 信息准确 |  |  |
+
+### 阻塞问题
+
+| 级别 | 问题 | 位置 | 为什么阻塞 | 最小修法 |
+|---|---|---|---|---|
+| P0/P1 |  |  |  |  |
+
+### P2/P3 建议
+
+| 级别 | 问题 | 位置 | 建议 |
+|---|---|---|---|
+
+### 最小修改集
+1.
+2.
+3.
 ```
+
+---
 
 ## Checklist-driven Full PRD Writing
 
 `output-contracts.md` defines the PRD output structure.
 `05_context/prd-standards/checklist-v3.3.json` defines what must be checked, activated, and satisfied.
 
-Full PRD writing must be driven by both files:
+Full PRD writing runs on a five-file engine:
 
 ```text
-checklist-v3.3.json decides what must be extracted;
-output-contracts.md decides where the extracted content lands;
+01_workflow/workflow-protocol.md decides when and how the writing process runs;
+05_context/prd-standards/prd-quality-standard.md defines the quality baseline and blocking logic;
+05_context/prd-standards/checklist-v3.3.json decides what must be extracted;
+04_templates/output-contracts.md decides where extracted content lands;
 04_templates/table-templates/table-template-index.md decides which table template renders it.
 ```
+
+output-contracts.md is not a standalone template. It is the landing layer
+inside this engine.
 
 Do not treat the Full PRD template as a fixed form to fill mechanically.
 The template provides the 总分总 skeleton.
@@ -435,7 +473,8 @@ first. Do not extract all 12 slots for every domain.
 | 流程状态型 | 主流程、状态流转、节点规则、交互逻辑、异常分支 | 列表字段、变量字典 |
 | 消息通知型 | 触发事件、模板内容、变量字典、接收人解析、生成规则 | 查询条件、列表字段 |
 | 数据口径型 | 指标定义、数据来源、计算规则、空值处理 | 状态流转、权限矩阵 |
-| 系统联动型 | 触发条件、系统处理、上下游依赖、失败兜底 | 表单字段、验收标准 |
+| 系统联动型 | 触发条件、系统处理、上下游依赖、失败兜底 | 表单字段、列表字段 |
+| 扩展边界型 | 本期边界、后续扩展点、不做内容、兼容规则 | 查询条件、列表字段、表单字段 |
 
 A domain that mixes types (e.g. 台账型 + 业务型) should extract the union,
 but still skip slots neither type activates.
@@ -480,8 +519,8 @@ Checklist-driven extraction must strengthen information accuracy, not decorate m
 The PRD body must remain clean and readable. Checklist item IDs, gate status,
 and compliance judgments belong to the writing trace, not the PRD body.
 
-After Node 3 Fill Details completes, the writing trace (in `09-run-log.md`
-Node 完成记录 or a separate writing log) should record:
+After Node 3 Fill Details completes, record checklist application evidence
+in `09-run-log.md` Node 完成记录:
 
 1. The PRD complexity level used for filtering.
 2. Which checklist items were activated.
