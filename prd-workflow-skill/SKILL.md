@@ -89,7 +89,7 @@ After user corrections, node completion, PRD revision, and content consistency s
 
 ### Retrospect (Conditional)
 
-Triggered when a repeated quality problem appears or the user asks to improve the workflow. **First, read `09-run-log.md` in the task folder as primary evidence** — analyze root cause distribution from 修订记录 and 痛点日志 (same root cause ≥ 2 → must propose patch; ≥ 3 → P0). Classify the failure, propose a bounded patch, **ask the user per-patch whether to adopt**, and apply confirmed patches to the relevant reference files immediately. **After all patches are resolved, append to `09-run-log.md` 复盘消费 section.** See [Workflow Protocol](01_workflow/workflow-protocol.md) §5 for the full evidence→analysis→patch→write loop, and [Gates and Retrospective](03_gates/gates-and-retrospective.md) for the confirm→write mechanism.
+Triggered when a repeated quality problem appears or the user asks to improve the workflow. **First, read `09-run-log.md` in the task folder as primary evidence** — analyze root cause distribution from 修订记录 and 痛点日志 (same root cause ≥ 2 → must propose patch; ≥ 3 → P0). Classify the failure, propose a bounded patch, **ask the user per-patch whether to adopt**, and apply confirmed patches to the target reusable Skill files immediately. **After all patches are resolved, append to `09-run-log.md` 复盘消费 section.** See [Workflow Protocol](01_workflow/workflow-protocol.md) §5 for the full evidence→analysis→patch→write loop, and [Gates and Retrospective](03_gates/gates-and-retrospective.md) for the confirm→write mechanism.
 
 ## Forbidden Behaviors
 
