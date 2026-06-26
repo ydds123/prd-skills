@@ -196,7 +196,7 @@ Full PRD uses a 总分总 structure:
 flowchart TD
   A[开始] --> B[处理]
   B --> C[结束]
-````
+```
 
 ## 7. 功能清单
 
@@ -343,44 +343,6 @@ Rules:
 - Use top-level cross-domain chapters only when the rule truly applies across multiple functional domains.
 - Keep “结论先行” as the first substantive section after document information.
 - Keep acceptance criteria and self-test cases aligned by functional domain or flow.
-
----
-
-## Review Report
-
-```md
-## PRD 审核报告
-
-总体结论：可进入评审 / 需修订 / 不可进入评审
-总分：__/100
-
-### 四项核心指标
-
-| 指标 | 评价 | 关键证据 |
-|---|---|---|
-| 边界清晰 |  |  |
-| 判断显性 |  |  |
-| 不留猜疑 |  |  |
-| 信息准确 |  |  |
-
-### 阻塞问题
-
-| 级别 | 问题 | 位置 | 为什么阻塞 | 最小修法 |
-|---|---|---|---|---|
-| P0/P1 |  |  |  |  |
-
-### P2/P3 建议
-
-| 级别 | 问题 | 位置 | 建议 |
-|---|---|---|---|
-
-### 最小修改集
-1.
-2.
-3.
-```
-
----
 
 ## Checklist-driven Full PRD Writing
 
@@ -532,6 +494,48 @@ in `09-run-log.md` Node 完成记录:
 The checklist is a silent extraction and quality guide. Its evidence lives in
 run-log; its output lives in the PRD body. Never cross the streams.
 
+
+---
+
+## Review Report
+
+```md
+## PRD 审核报告
+
+总体结论：可进入评审 / 需修订 / 不可进入评审
+总分：__/100
+
+### 四项核心指标
+
+| 指标 | 评价 | 关键证据 |
+|---|---|---|
+| 边界清晰 |  |  |
+| 判断显性 |  |  |
+| 不留猜疑 |  |  |
+| 信息准确 |  |  |
+
+### 阻塞问题
+
+| 级别 | 问题 | 位置 | 为什么阻塞 | 最小修法 |
+|---|---|---|---|---|
+| P0/P1 |  |  |  |  |
+
+### P2/P3 建议
+
+| 级别 | 问题 | 位置 | 建议 |
+|---|---|---|---|
+
+### 最小修改集
+1.
+2.
+3.
+```
+
+---
+
+---
+
+## Retrospective Patch Proposal
 
 ```md
 ## Skill 复盘沉淀建议
