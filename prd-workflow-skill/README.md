@@ -355,15 +355,14 @@ input_received
 核心脚本：
 
 ```text
-hooks/retrospect_trigger.py
+hooks/retrospect_trigger.py   — 检测器，识别信号输出 JSON
+hooks/append_retrospect_event.py  — 记录器，消费 JSON 写入 09-run-log.md
 ```
 
 职责：
 
-* 识别用户指正
-* 识别沉淀意图
-* 识别 P0 / P1 / 门禁失效
-* 输出结构化 JSON
+* 识别用户指正、沉淀意图、P0/P1/门禁失效
+* 输出结构化 JSON（检测器），写入 run-log（记录器）
 * 不写文件
 * 不修改 PRD
 * 不修改 Skill
@@ -403,82 +402,61 @@ hooks/hook_config.example.json
 
 ---
 
-## 9. 包结构
-
-核心结构如下：
+## 9. 文件结构
 
 ```text
 prd-workflow-skill/
-├─ SKILL.md
-├─ README.md
-├─ VERSION
-├─ manifest.json
-├─ agents/
-│  └─ interface.yaml
-├─ hooks/
-│  ├─ retrospect_trigger.py
-│  ├─ append_retrospect_event.py
-│  └─ hook_config.example.json
-├─ scripts/
-│  ├─ build_checklist.py
-│  ├─ clean_template_refs.py
-│  └─ fill_template_refs.py
-├─ evals/
+├─ SKILL.md              # 运行时入口：触发、任务路由、全局门禁、最小执行骨架
+├─ README.md             # 给人看的介绍，不作为运行时执行规则
+├─ VERSION               # 版本号
+├─ manifest.json         # Agent 技能注册元数据
+├─ agents/               # Agent 兼容接口定义
+│  └─ interface.yaml     #   显示名、适配目标、激活方式、信任边界
+├─ hooks/                # 复盘触发器脚本（检测器 + 记录器），不改 PRD，不改 Skill
+│  ├─ retrospect_trigger.py      #   信号检测器，输出 JSON 到 stdout
+│  ├─ append_retrospect_event.py #   消费检测 JSON，写入 09-run-log.md
+│  └─ hook_config.example.json   #   hooks 可选配置参考，非运行强依赖
+├─ scripts/              # 构建与维护脚本
+│  ├─ build_checklist.py         #   从 Excel 构建 V3.3 checklist JSON
+│  ├─ clean_template_refs.py     #   清理 checklist 中残留的路径和 Excel 坐标
+│  └─ fill_template_refs.py      #   为 checklist 条目填充 template_ref 字段
+├─ evals/                # 触发路由正例/负例，不参与日常输出
 │  └─ trigger-evals.json
-├─ 00_meta/
-│  └─ blueprint-roadmap.md
-├─ 01_workflow/
-│  ├─ workflow-protocol.md
-│  ├─ task-and-draft-rules.md
-│  └─ content-consistency-sweep.md
-├─ 03_gates/
-│  └─ gates-and-retrospective.md
-├─ 04_templates/
-│  ├─ output-contracts.md
-│  ├─ run-log.md
+├─ 00_meta/              # 项目身份、蓝图路线图
+│  └─ blueprint-roadmap.md       #   蓝图 vs 现状对照，分阶段建设计划
+├─ 01_workflow/          # 流程协议：状态机、节点规则、草案边界、一致性回扫
+│  ├─ workflow-protocol.md       #   5 节点状态机、人机边界、评审/修订/回扫/触发检查
+│  ├─ task-and-draft-rules.md    #   任务文件夹结构、草案 v0 边界、复杂度路由
+│  └─ content-consistency-sweep.md # Node 4.5 回扫：10 维度、blast-radius、auto-fix 边界
+├─ 03_gates/             # 门禁定义 + 复盘确认→写入闭环
+│  └─ gates-and-retrospective.md #   7 个门禁、失败分类、补丁提案格式、逐条确认规则
+├─ 04_templates/         # 输出模板：契约、run-log、表格空白模板
+│  ├─ output-contracts.md        #   任务文件夹结构、背景卡/决策账本/审核报告模板
+│  ├─ run-log.md                 #   Run Log 模板（运行时间线、修订根因、痛点、触发状态）
 │  └─ table-templates/
-│     ├─ table-template-index.md
-│     ├─ rule-table.md
-│     ├─ field-rule-table.md
-│     ├─ validation-rule-table.md
-│     ├─ data-caliber-table.md
-│     ├─ exception-handling-writing.md
-│     ├─ acceptance-criteria-table.md
-│     ├─ self-test-case-table.md
-│     └─ risk-acceptance-table.md
-└─ 05_context/
-   ├─ prd-standards/
-   │  ├─ prd-quality-standard.md
-   │  └─ operational-completeness-checklist.json
-   ├─ writing-standards/
-   │  ├─ table-format-conventions.md
-   │  └─ interaction-logic-writing.md
-   └─ optimization-standards/
-      └─ retrospect-trigger-rules.md
+│     ├─ table-template-index.md    # 模板→文件路由索引（suggested_format 关键词映射）
+│     ├─ rule-table.md              # 业务规则表（条件→动作→结果）
+│     ├─ field-rule-table.md        # 字段规则表（表单/列表/详情字段定义）
+│     ├─ validation-rule-table.md   # 校验规则表（必填/重复/格式校验）
+│     ├─ data-caliber-table.md      # 数据口径表（来源/计算/更新频率/精度）
+│     ├─ exception-handling-writing.md # 异常处理表（空态/失败/冲突/权限不足）
+│     ├─ acceptance-criteria-table.md  # 验收标准表
+│     ├─ self-test-case-table.md       # 研发自测用例表
+│     └─ risk-acceptance-table.md      # 风险接受表 + 待确认事项表
+└─ 05_context/           # 标准与知识
+   ├─ prd-standards/             # PRD 质量标准 + V3.3 完整性清单
+   │  ├─ prd-quality-standard.md             #   PRD 根标准、五不清单、复杂度等级、P0-P3
+   │  └─ operational-completeness-checklist.json # V3.3 66 项操作完整性清单（Node 3/4 共用）
+   ├─ writing-standards/         # 表格格式规范、交互逻辑写作规范
+   │  ├─ table-format-conventions.md     #   查询/列表/表单表格的固定列集规范
+   │  └─ interaction-logic-writing.md    #   交互逻辑表（步骤→触发→动作→响应→规则）
+   └─ optimization-standards/    # 复盘触发信号、T0-T3 分级、根因分类
+      └─ retrospect-trigger-rules.md     #   信号定义、升级规则、自动/人工边界
 ```
 
 ---
 
-## 10. 文件与目录职责
-
-| 路径                                                   | 作用                                   | 不负责                        |
-| ---------------------------------------------------- | ------------------------------------ | -------------------------- |
-| `SKILL.md`                                           | 运行时入口，负责触发、任务路由、全局门禁和最小执行骨架          | 不保存完整方法论和长模板               |
-| `README.md`                                          | 给人看的介绍、安装理解、使用边界和目录职责说明              | 不作为运行时必须加载的执行规则            |
-| `05_context/prd-standards/prd-quality-standard.md`     | 定义 PRD 根标准、质量指标、复杂度等级和 P0-P3         | 不定义完整流程状态机                 |
-| `01_workflow/workflow-protocol.md`                    | 定义工作流状态机、节点规则、评审、修订、回扫、复盘调用位置        | 不定义所有输出模板                  |
-| `05_context/prd-standards/operational-completeness-checklist.json` | V3.3 操作完整性清单，用于 Node 3 填充和 Node 4 评审 | 不直接输出到 PRD 正文              |
-| `03_gates/gates-and-retrospective.md`                | 定义可写状态、确认门禁、评审阻塞、最终输出和 Skill 更新门禁    | 不生成 PRD 正文                 |
-| `05_context/optimization-standards/retrospect-trigger-rules.md` | 定义复盘触发信号、T0-T3、根因分类和自动记录边界           | 不保存事件，不写入文件                |
-| `04_templates/run-log.md`                             | Run Log 模板，承接运行证据、用户指正和复盘触发状态        | 不定义触发规则                    |
-| `04_templates/table-templates/`                       | 表格模板（规则表、字段表、校验表、异常表、验收表、自测表等）     | 不负责流程调度                    |
-| `05_context/writing-standards/`                       | 表格格式规范、交互逻辑写作规范                     | 不负责表格模板本身                  |
-| `hooks/`                                             | 复盘触发检测器与 run-log 记录器                  | 不改 PRD，不改 Skill            |
-| `evals/`                                             | 触发与回归样例                              | 不参与日常 PRD 输出               |
-
----
-
-## 11. 维护原则
+## 10. 维护原则
 
 ### 入口要轻
 
@@ -533,7 +511,7 @@ PRD 写作、评审、修订、复盘都必须能追溯到：
 
 ---
 
-## 12. 最小使用方式
+## 11. 最小使用方式
 
 可以这样调用：
 
@@ -567,7 +545,7 @@ PRD 写作、评审、修订、复盘都必须能追溯到：
 
 ---
 
-## 13. 当前版本边界
+## 12. 当前版本边界
 
 当前版本支持：
 
@@ -594,7 +572,7 @@ PRD 写作、评审、修订、复盘都必须能追溯到：
 
 ---
 
-## 14. 一句话总结
+## 13. 一句话总结
 
 ```text
 prd-workflow-skill 不是替你把 PRD 写长，
