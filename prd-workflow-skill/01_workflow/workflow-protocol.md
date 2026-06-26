@@ -28,6 +28,20 @@ input_received
 → [retrospect] conditional — user request, repeated quality issues, or T3 trigger
 ```
 
+## Cross-node Correction and Decision Intake
+
+When a user correction, review finding, full-PRD discovery, or sweep finding changes product judgment:
+
+1. Append the decision to `02-决策账本.md` with a new decision ID.
+2. If the correction changes a prior decision, mark the old entry `superseded` and reference the new ID.
+3. Record the event in `09-run-log.md` 运行时间线.
+4. If triggered by user correction, also record in 用户指正记录 with the decision ID.
+5. If triggered by review, revision, or sweep, record in 修订记录 with the decision ID.
+6. Do not duplicate full decision content in `09-run-log.md`.
+
+Decision changes go to `02-决策账本.md`.
+Process evidence goes to `09-run-log.md`.
+
 ## Node Rules
 
 ### 0. Task Folder (Boot)
@@ -125,18 +139,6 @@ Write:
 1. Update `09-run-log.md` Node 完成记录 for Node 3: which checklist items were applied (by complexity and condition filters), how many gate items were addressed vs. skipped.
 2. If any content was revised in response to feedback, append to 修订记录: round number, trigger, scope, root cause classification (缺知识/缺方法/缺模板/缺门禁/缺案例/偶发), and which checklist module was involved.
 3. If a revision reveals a systemic gap (something the writer "shouldn't have missed" on first pass), append to 痛点日志: what was missed, why it was missed on the first pass, which checklist module covers it, and severity.
-
-**Decision intake after corrections (inline):**
-
-When a user correction, review finding, or sweep discovery changes product judgment:
-
-1. Append the decision to `02-决策账本.md` with a new decision ID.
-2. If the correction changes a prior decision, mark the old entry `superseded` and reference the new ID.
-3. Record the event in `09-run-log.md` 运行时间线.
-4. If triggered by user correction, also record in 用户指正记录 with the decision ID.
-5. If triggered by review or sweep revision, record in 修订记录 with the decision ID.
-
-Do NOT duplicate full decision content in `09-run-log.md`. Decision changes go to `02-决策账本.md`. Process evidence goes to `09-run-log.md`.
 
 **Table format conventions** (see `05_context/writing-standards/table-format-conventions.md`):
 - Query condition tables: 查询字段 | 组件类型 | 查询精度 | 说明
@@ -246,7 +248,7 @@ Triggered when a repeated quality problem appears or the user asks to improve th
 
 **Before analysis, load evidence:**
 
-1. Read `09-run-log.md` as primary evidence — 修订记录 (revision rounds and root causes), 痛点日志 (systemic gaps), 决策追加 (mid-stream decisions).
+1. Read `09-run-log.md` as primary process evidence — 修订记录, 痛点日志, 用户指正记录, 复盘触发状态. If run-log records reference decision IDs, read `02-决策账本.md` to reconstruct product-judgment changes.
 2. Read the task folder's `06-审核报告.md` if it exists.
 3. Do NOT rely on conversation memory as the primary evidence source. Run Log is the authoritative record.
 

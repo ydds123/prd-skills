@@ -33,15 +33,6 @@ PRD workflow 的五个节点分布在多次对话中。复盘时 Agent 只能靠
 | 2026-06-24 14:00 | Node 3 | Fill Details — 加载 checklist 模块 | create_form_or_modal, list_page, delete_action, approval_or_state_flow |
 | | | | |
 
-## 决策引用
-
-（Run Log 不重复维护决策内容。凡涉及产品判断变化，必须追加到 `02-决策账本.md`。
-本区只记录运行事件与决策编号的关联。）
-
-| 时间 | 触发事件 | 关联决策编号 | 摘要 |
-|------|---------|------------|------|
-|  | 用户指正 / 修订 / 回扫 / 审核发现 | D001 |  |
-
 ## 修订记录
 
 | 轮次 | 时间 | 触发 | 修改范围 | 根因分类 | checklist 模块 | 关联决策编号 |

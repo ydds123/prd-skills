@@ -384,7 +384,6 @@ hooks/hook_config.example.json
 它记录：
 
 * 运行时间线
-* 决策追加
 * 修订记录
 * 痛点日志
 * Node 完成记录
