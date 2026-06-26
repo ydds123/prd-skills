@@ -131,58 +131,335 @@ Do not include:
 ## Full PRD
 
 ```md
-# {需求名称} PRD - 完整版
 
-## 1. 背景与真实问题
-## 2. 本期目标与成功标准
-## 3. 范围与非目标
-## 4. 用户 / 角色 / 场景
-## 5. 主流程与状态变化
-## 6. 功能规则与关键决策
-## 7. 异常、空态与兜底
-## 8. 权限与责任边界
-## 9. 数据说明与口径
-## 10. 上下游影响
-## 11. 验收标准
-## 12. 研发自测用例
-## 13. 待确认事项与已接受风险
-```
+## Full PRD
 
-## Review Report
+Full PRD uses a 总分总 structure:
 
-```md
-## PRD 审核报告
+1. **Top summary**: document information, core conclusion, background, scope, users, main flow, and function list.
+2. **Domain details**: organize detailed requirements by functional domain / business object, not by horizontal content type.
+3. **Final closure**: non-functional requirements, acceptance criteria, self-test checklist, business review items, and version boundary.
 
-总体结论：可进入评审 / 需修订 / 不可进入评审
-总分：__/100
+````md
+# {需求名称} PRD v{版本号}
 
-### 四项核心指标
+## 1. 文档信息
 
-| 指标 | 评价 | 关键证据 |
-|---|---|---|
-| 边界清晰 |  |  |
-| 判断显性 |  |  |
-| 不留猜疑 |  |  |
-| 信息准确 |  |  |
+| 项 | 内容 |
+|---|---|
+| 需求名称 |  |
+| 版本 |  |
+| 日期 |  |
+| 状态 | 草案 / 待评审 / 已修订 / 可进入评审 |
+| 适用端 | Web 端 / App 端 / 系统侧 / 其他 |
+| 需求类型 | 台账型 / 业务型 / 统计型 / 混合型 |
 
-### 阻塞问题
+## 2. 结论先行
 
-| 级别 | 问题 | 位置 | 为什么阻塞 | 最小修法 |
-|---|---|---|---|---|
-| P0/P1 |  |  |  |  |
+用 1-2 段先说明本期到底建设什么、不是建设什么。
 
-### P2/P3 建议
+核心结论：
 
-| 级别 | 问题 | 位置 | 建议 |
-|---|---|---|---|
-
-### 最小修改集
 1. 
 2. 
 3. 
+
+## 3. 背景与问题
+
+说明为什么做、解决谁的问题、当前没有它会产生什么影响。
+
+| 问题 | 影响 |
+|---|---|
+|  |  |
+
+## 4. 需求范围
+
+### 4.1 需求目标
+
+| 目标 | 成功标准 |
+|---|---|
+|  |  |
+
+### 4.2 本期不做
+
+| 非目标 | 说明 |
+|---|---|
+|  |  |
+
+## 5. 用户与场景
+
+| 用户 / 角色 | 典型场景 | 需要的能力 |
+|---|---|---|
+|  |  |  |
+
+## 6. 主流程
+
+优先使用 Mermaid 图或流程表说明主流程。
+
+```mermaid
+flowchart TD
+  A[开始] --> B[处理]
+  B --> C[结束]
+````
+
+## 7. 功能清单
+
+功能清单按功能域 / 业务对象纵向组织，`所属端` 只标记该功能涉及的端，不作为一级分组依据。
+
+| 所属端 | 模块 / 功能域 | 功能点 | 功能说明 |
+| --- | -------- | --- | ---- |
+|     |          |     |      |
+
+## 8. 详细需求
+
+详细需求必须按功能域 / 业务对象组织。每个功能域内部再写字段、规则、状态、交互、异常、数据和权限。不要把异常、权限、数据全部拆成独立大章节，除非它们确实是跨功能域的公共规则。
+
+### 8.1 {功能域一}
+
+#### 8.1.1 功能说明
+
+说明该功能域管理什么、解决什么问题、与其他功能域的关系。
+
+| 内容 | 说明 |
+| -- | -- |
+|    |    |
+
+#### 8.1.2 查询条件
+
+仅适用于存在查询区的功能域。不适用时删除本节。
+
+| 查询字段 | 组件类型        | 查询精度 | 说明 |
+| ---- | ----------- | ---- | -- |
+|      | 精准筛选 / 模糊筛选 |      |    |
+
+#### 8.1.3 列表字段
+
+仅适用于存在列表的功能域。不适用时删除本节。
+
+| 字段 | 字段含义 | 数据来源 | 展示规则 | 空值展示 | 备注 |
+| -- | ---- | ---- | ---- | ---- | -- |
+|    |      |      |      |      |    |
+
+#### 8.1.4 表单 / 详情字段
+
+根据功能形态选择“表单字段”或“详情字段”。不适用时删除本节。
+
+| 字段名称 | 字段含义 | 数据来源 | 字段状态             | 备注 |
+| ---- | ---- | ---- | ---------------- | -- |
+|      |      |      | 只读 / 可编辑 / 用户可配置 |    |
+
+#### 8.1.5 业务规则
+
+| 规则编号 | 规则对象 | 触发条件 | 规则说明 | 系统处理 | 处理后结果 | 异常处理 | 适用角色 | 备注 |
+| ---- | ---- | ---- | ---- | ---- | ----- | ---- | ---- | -- |
+| R001 |      |      |      |      |       |      |      |    |
+
+#### 8.1.6 状态流转
+
+仅适用于有状态变化的功能域。不适用时删除本节。
+
+| 当前状态 | 触发动作 | 目标状态 | 条件 |
+| ---- | ---- | ---- | -- |
+|      |      |      |    |
+
+#### 8.1.7 数据与口径
+
+仅适用于有字段来源、变量、统计口径、快照、状态数据的功能域。不适用时删除本节。
+
+| 数据 / 变量 / 口径 | 数据来源 | 使用位置 | 缺失处理 |
+| ------------ | ---- | ---- | ---- |
+|              |      |      |      |
+
+#### 8.1.8 交互逻辑
+
+| 步骤 | 触发起点 | 用户动作 | 系统响应 | 业务规则 |
+| -- | ---- | ---- | ---- | ---- |
+| 1  |      |      |      |      |
+
+#### 8.1.9 异常处理
+
+| 触发条件 | 处理逻辑 | 引导提示 | 恢复机制 |
+| ---- | ---- | ---- | ---- |
+|      |      |      |      |
+
+### 8.2 {功能域二}
+
+按 8.1 的结构继续展开。只保留适用于该功能域的小节，不机械填满。
+
+## 9. 非功能需求
+
+仅写与本期产品判断相关的非功能约束，不写具体技术实现。
+
+| 约束项 | 规则 |
+| --- | -- |
+|     |    |
+
+## 10. 验收标准
+
+验收标准按功能域或主流程编号组织，优先覆盖主流程，再覆盖分支、边界和异常。
+
+### 10.1 {功能域一}
+
+| 编号 | 验收项 | 预期结果 |
+| -- | --- | ---- |
+| A1 |     |      |
+
+### 10.2 {功能域二}
+
+| 编号 | 验收项 | 预期结果 |
+| -- | --- | ---- |
+| B1 |     |      |
+
+## 11. 研发自测清单
+
+自测清单与验收标准编号层级对齐，自上而下覆盖主流程、分支、边界和异常。
+
+| 编号 | 自测点 |
+| -- | --- |
+| D1 |     |
+
+## 12. 待业务复核项
+
+不阻塞进入研发评审、但建议业务方在评审会上确认的内容放在这里。每个复核项应包含推荐方案、备选方案和拍板人。
+
+| 复核项 | 推荐方案 | 备选方案 | 影响 | 建议拍板人 |
+| --- | ---- | ---- | -- | ----- |
+|     |      |      |    |       |
+
+## 13. 版本边界
+
+说明本版本的适用范围、后续扩展边界、已接受风险和不进入本期的内容。
+
+| 边界项   | 说明 |
+| ----- | -- |
+| 本期范围  |    |
+| 后续扩展  |    |
+| 已接受风险 |    |
+| 不进入本期 |    |
+
 ```
 
-## Retrospective Patch Proposal
+Rules:
+
+- Do not force every optional subsection to appear. Keep only sections supported by the current requirement.
+- Do not scatter one functional domain across separate top-level chapters.
+- Exceptions, permissions, data, and states should live inside the relevant functional domain whenever possible.
+- Use top-level cross-domain chapters only when the rule truly applies across multiple functional domains.
+- Keep “结论先行” as the first substantive section after document information.
+- Keep acceptance criteria and self-test cases aligned by functional domain or flow.
+```
+
+## Checklist-driven Full PRD Writing
+
+`output-contracts.md` defines the PRD output structure.
+`05_context/prd-standards/checklist-v3.3.json` defines what must be checked, activated, and satisfied.
+
+Full PRD writing must be driven by both files:
+
+```text
+checklist-v3.3.json decides what must be extracted;
+output-contracts.md decides where the extracted content lands;
+04_templates/table-templates/table-template-index.md decides which table template renders it.
+```
+
+Do not treat the Full PRD template as a fixed form to fill mechanically.
+The template provides the 总分总 skeleton.
+The checklist activates the actual content slots.
+
+### Checklist Execution Rule
+
+Before writing Full PRD details:
+
+1. Determine the PRD complexity level: L1 / L2 / L3 / L4.
+2. Load `05_context/prd-standards/checklist-v3.3.json`.
+3. Filter checklist items by:
+   - `complexity`: whether the item applies to the current PRD level.
+   - `condition`: whether the current requirement triggers the item.
+4. For each applicable item:
+   - use `question` to identify what must be answered;
+   - use `pass_criteria` to judge whether the PRD has written enough;
+   - use `failure_signal` to avoid common omissions;
+   - use `suggested_format` to select the output form through `04_templates/table-templates/table-template-index.md`;
+   - use `priority` and `hierarchy` to determine whether omission blocks output.
+5. Every applicable `hierarchy: gate` item must be addressed or explicitly marked `不适用` with a reason.
+6. Do not dump checklist items into the PRD. The checklist is a silent extraction and quality guide.
+
+### Location Resolution Rule
+
+The `suggested_location` field in checklist-v3.3 is a semantic hint, not a hard chapter path.
+
+When `suggested_location` conflicts with the Full PRD 总分总 structure, resolve location as follows:
+
+| Checklist item type | Landing location in Full PRD |
+|---|---|
+| Real problem, goal, scope, non-goals, applicable endpoints | Top summary: sections 2-4 |
+| Users, roles, scenarios | Section 5, or inside the relevant functional domain if role behavior differs by domain |
+| Main flow across the whole requirement | Section 6 |
+| Function list / scope decomposition | Section 7 |
+| Functional rules, defaults, operations, states, data, exceptions, permissions, interactions | Section 8, inside the relevant functional domain / business object |
+| Cross-domain rules shared by multiple functional domains | Section 8 shared/common subsection, or section 9 if it is non-functional |
+| Acceptance criteria | Section 10, aligned by functional domain or main flow |
+| Development self-test cases | Section 11, aligned with acceptance criteria |
+| Pending decisions, assumptions, accepted risks | Section 12 |
+| Current-version boundary and future exclusions | Section 13 |
+
+Default principle:
+
+```text
+If a checklist item belongs to one functional domain, place it inside that functional domain.
+If it applies across the whole PRD, place it in the top summary or final closure.
+```
+
+### Functional Domain Progressive Extraction
+
+Detailed requirements are extracted progressively.
+A functional domain does not need to include every possible subsection.
+It only includes subsections activated by applicable checklist items and supported by current evidence.
+
+For each functional domain:
+
+1. Identify the dominant functional-domain type.
+2. Select applicable checklist items.
+3. Group selected items into requirement slots.
+4. Write only the activated slots.
+5. Delete non-applicable slots.
+6. Mark necessary but insufficiently evidenced slots as `待确认`.
+
+### Functional Domain Slot Activation
+
+Use applicable checklist items to activate subsections:
+
+| Functional-domain slot | Activated by checklist examples | Typical output |
+|---|---|---|
+| 功能说明 | C01, C04, C11 | concise domain conclusion + explanation table |
+| 查询条件 | items related to search, filter, default query, query linkage | query condition table |
+| 列表字段 | list/table/card display items | field overview table |
+| 表单 / 详情字段 | field state, text input, selection, date/time, validation items | field rule table / validation table |
+| 业务规则 | core rules, default rules, operation control, trigger conditions | business rule table |
+| 状态流转 | approval, enable/disable, publish, close, terminate, state-change items | state machine diagram / state transition table |
+| 权限与责任 | role boundary, permission boundary, data permission items | role-permission matrix |
+| 数据与口径 | data source, variables, statistics, calculation, snapshot, missing value items | data caliber table |
+| 交互逻辑 | click before/during/after, popup behavior, page navigation, result feedback items | interaction logic table |
+| 异常处理 | empty, failure, duplicate, conflict, permission-denied, irreversible cases | exception handling table |
+| 验收点映射 | acceptance criteria items | acceptance table in section 10 |
+| 自测点映射 | self-test items | self-test table in section 11 |
+
+### Slot Treatment Rule
+
+For each possible slot:
+
+| Situation | Treatment |
+|---|---|
+| The current functional domain does not trigger this checklist item | Delete the slot |
+| The checklist item applies and evidence is sufficient | Write the slot |
+| The checklist item applies but evidence is insufficient | Keep the slot and mark `待确认` |
+| The checklist item is `hierarchy: gate` but not applicable | Mark `不适用` with reason in the writing/review trace, not necessarily in the PRD body |
+| The checklist item is applicable but intentionally accepted as risk | Record it in the accepted-risk / pending-decision area |
+
+Do not add empty placeholders merely to keep the template complete.
+Do not invent content to satisfy a checklist item.
+Checklist-driven extraction must strengthen information accuracy, not decorate missing evidence.
+
 
 ```md
 ## Skill 复盘沉淀建议
