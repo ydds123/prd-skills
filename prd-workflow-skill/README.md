@@ -421,7 +421,7 @@ prd-workflow-skill/
 │  ├─ clean_template_refs.py                # 清理checklist中残留的路径和Excel坐标
 │  └─ fill_template_refs.py                 # 为checklist条目填充template_ref字段
 ├─ evals/                                   # 触发路由正例/负例，不参与日常输出
-│  └─ trigger-evals.json                    # （暂无注释）
+│  └─ trigger-evals.json                    # 触发路由正例+负例，用于回归验证
 ├─ 00_meta/                                 # 项目身份、蓝图路线图
 │  └─ blueprint-roadmap.md                  # 蓝图vs现状对照，分阶段建设计划
 ├─ 01_workflow/                             # 流程协议：状态机、节点规则、草案边界、一致性回扫
