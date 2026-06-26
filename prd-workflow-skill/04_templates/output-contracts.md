@@ -425,6 +425,21 @@ For each functional domain:
 5. Delete non-applicable slots.
 6. Mark necessary but insufficiently evidenced slots as `待确认`.
 
+The dominant type of a functional domain determines which slots to extract
+first. Do not extract all 12 slots for every domain.
+
+| Domain type | Priority slots to extract | Typically skip |
+|---|---|---|
+| 列表管理型 | 查询条件、列表字段、操作规则、异常处理 | 状态流转、变量字典 |
+| 表单配置型 | 表单字段、校验规则、保存规则、业务规则 | 查询条件、列表字段 |
+| 流程状态型 | 主流程、状态流转、节点规则、交互逻辑、异常分支 | 列表字段、变量字典 |
+| 消息通知型 | 触发事件、模板内容、变量字典、接收人解析、生成规则 | 查询条件、列表字段 |
+| 数据口径型 | 指标定义、数据来源、计算规则、空值处理 | 状态流转、权限矩阵 |
+| 系统联动型 | 触发条件、系统处理、上下游依赖、失败兜底 | 表单字段、验收标准 |
+
+A domain that mixes types (e.g. 台账型 + 业务型) should extract the union,
+but still skip slots neither type activates.
+
 ### Functional Domain Slot Activation
 
 Use applicable checklist items to activate subsections:
@@ -459,6 +474,24 @@ For each possible slot:
 Do not add empty placeholders merely to keep the template complete.
 Do not invent content to satisfy a checklist item.
 Checklist-driven extraction must strengthen information accuracy, not decorate missing evidence.
+
+### Traceability Rule
+
+The PRD body must remain clean and readable. Checklist item IDs, gate status,
+and compliance judgments belong to the writing trace, not the PRD body.
+
+After Node 3 Fill Details completes, the writing trace (in `09-run-log.md`
+Node 完成记录 or a separate writing log) should record:
+
+1. The PRD complexity level used for filtering.
+2. Which checklist items were activated.
+3. Every gate item addressed, with section reference.
+4. Gate items marked `不适用`, with reason.
+5. Items deferred as `待确认` due to insufficient evidence.
+6. Accepted P1 risks.
+
+The checklist is a silent extraction and quality guide. Its evidence lives in
+run-log; its output lives in the PRD body. Never cross the streams.
 
 
 ```md
