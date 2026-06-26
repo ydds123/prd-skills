@@ -42,15 +42,29 @@ Do not merge 组件类型 and 说明 into a single column. Component choice and 
 For any list page or data table:
 
 ```
-字段 | 说明
+字段 | 字段含义 | 数据来源 | 展示规则 | 空值展示 | 备注
 ```
 
 | Column | Content |
 |--------|---------|
-| 字段 | Column name as shown in the list |
-| 说明 | What data this column shows, where it comes from, and any special rendering rules |
+| 字段 | Column name as shown in the list header |
+| 字段含义 | What business information this column conveys |
+| 数据来源 | Where the data comes from: which system/table/API field, or computed (with formula). Use dotted notation to trace the source chain (e.g. "作业票基础信息.作业票类型名称"). If static/system-generated, say so. |
+| 展示规则 | Format, truncation threshold, merge rules, special rendering (e.g. "超过 20 字符截断并追加…，hover 展示全文"), sorting capability. If the column supports click navigation, state the target. |
+| 空值展示 | What to show when the source data is empty/null/missing. Not the same as format — this is the fallback display. |
+| 备注 | Any constraints, linkage rules, or special notes |
 
-If the list has action buttons, add an 操作 column at the end with the available actions.
+**Why this replaces the old `字段 | 说明` two-column format**: the old format collapsed source, format, truncation, and empty state into one prose cell. R&D had to parse the description to extract what they needed. The new format makes each dimension explicit — a blank cell is a visible gap, not a buried omission.
+
+If the list has action buttons, add an `操作` column at the end.
+
+### Example
+
+| 字段 | 字段含义 | 数据来源 | 展示规则 | 空值展示 | 备注 |
+|------|---------|---------|---------|---------|------|
+| 消息类型 | 该模板对应的消息触发类型 | 系统内置消息类型枚举，取 display_name | 格式："模块名称 > 消息类型名称"（如"特殊作业 > 提交审批"） | — | 模块名称为第一级分类 |
+| 启用状态 | 模板当前是否启用 | 系统内置模板配置.启用状态 | 启用展示绿色"已启用"，停用展示灰色"已停用" | — | 停用后不触发消息 |
+| 最近更新时间 | 模板或分组最近一次维护时间 | 取模板维护记录.操作时间 或 分组维护记录.操作时间（取最新） | YYYY-MM-DD HH:mm | -- | 保存后自动更新 |
 
 ## Form / Modal Field Tables
 
