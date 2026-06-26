@@ -406,52 +406,52 @@ hooks/hook_config.example.json
 
 ```text
 prd-workflow-skill/
-├─ SKILL.md              # 运行时入口：触发、任务路由、全局门禁、最小执行骨架
-├─ README.md             # 给人看的介绍，不作为运行时执行规则
-├─ VERSION               # 版本号
-├─ manifest.json         # Agent 技能注册元数据
-├─ agents/               # Agent 兼容接口定义
-│  └─ interface.yaml     #   显示名、适配目标、激活方式、信任边界
-├─ hooks/                # 复盘触发器脚本（检测器 + 记录器），不改 PRD，不改 Skill
-│  ├─ retrospect_trigger.py      #   信号检测器，输出 JSON 到 stdout
-│  ├─ append_retrospect_event.py #   消费检测 JSON，写入 09-run-log.md
-│  └─ hook_config.example.json   #   hooks 可选配置参考，非运行强依赖
-├─ scripts/              # 构建与维护脚本
-│  ├─ build_checklist.py         #   从 Excel 构建 V3.3 checklist JSON
-│  ├─ clean_template_refs.py     #   清理 checklist 中残留的路径和 Excel 坐标
-│  └─ fill_template_refs.py      #   为 checklist 条目填充 template_ref 字段
-├─ evals/                # 触发路由正例/负例，不参与日常输出
-│  └─ trigger-evals.json
-├─ 00_meta/              # 项目身份、蓝图路线图
-│  └─ blueprint-roadmap.md       #   蓝图 vs 现状对照，分阶段建设计划
-├─ 01_workflow/          # 流程协议：状态机、节点规则、草案边界、一致性回扫
-│  ├─ workflow-protocol.md       #   5 节点状态机、人机边界、评审/修订/回扫/触发检查
-│  ├─ task-and-draft-rules.md    #   任务文件夹结构、草案 v0 边界、复杂度路由
-│  └─ content-consistency-sweep.md # Node 4.5 回扫：10 维度、blast-radius、auto-fix 边界
-├─ 03_gates/             # 门禁定义 + 复盘确认→写入闭环
-│  └─ gates-and-retrospective.md #   7 个门禁、失败分类、补丁提案格式、逐条确认规则
-├─ 04_templates/         # 输出模板：契约、run-log、表格空白模板
-│  ├─ output-contracts.md        #   任务文件夹结构、背景卡/决策账本/审核报告模板
-│  ├─ run-log.md                 #   Run Log 模板（运行时间线、修订根因、痛点、触发状态）
+├─ SKILL.md                                 # 运行时入口：触发、任务路由、全局门禁、最小执行骨架
+├─ README.md                                # 给人看的介绍，不作为运行时执行规则
+├─ VERSION                                  # 版本号
+├─ manifest.json                            # Agent 技能注册元数据
+├─ agents/                                  # Agent 兼容接口定义
+│  └─ interface.yaml                        # 显示名、适配目标、激活方式、信任边界
+├─ hooks/                                   # 复盘触发器脚本（检测器+记录器），不改PRD，不改Skill
+│  ├─ retrospect_trigger.py                 # 信号检测器，输出JSON到stdout
+│  ├─ append_retrospect_event.py            # 消费检测JSON，写入09-run-log.md
+│  └─ hook_config.example.json              # hooks可选配置参考，非运行强依赖
+├─ scripts/                                 # 构建与维护脚本
+│  ├─ build_checklist.py                    # 从Excel构建V3.3 checklist JSON
+│  ├─ clean_template_refs.py                # 清理checklist中残留的路径和Excel坐标
+│  └─ fill_template_refs.py                 # 为checklist条目填充template_ref字段
+├─ evals/                                   # 触发路由正例/负例，不参与日常输出
+│  └─ trigger-evals.json                    # （暂无注释）
+├─ 00_meta/                                 # 项目身份、蓝图路线图
+│  └─ blueprint-roadmap.md                  # 蓝图vs现状对照，分阶段建设计划
+├─ 01_workflow/                             # 流程协议：状态机、节点规则、草案边界、一致性回扫
+│  ├─ workflow-protocol.md                  # 5节点状态机、人机边界、评审/修订/回扫/触发检查
+│  ├─ task-and-draft-rules.md               # 任务文件夹结构、草案v0边界、复杂度路由
+│  └─ content-consistency-sweep.md           # Node 4.5回扫：10维度、blast-radius、auto-fix边界
+├─ 03_gates/                                # 门禁定义+复盘确认→写入闭环
+│  └─ gates-and-retrospective.md            # 7个门禁、失败分类、补丁提案格式、逐条确认规则
+├─ 04_templates/                            # 输出模板：契约、run-log、表格空白模板
+│  ├─ output-contracts.md                   # 任务文件夹结构、背景卡/决策账本/审核报告模板
+│  ├─ run-log.md                            # Run Log模板（运行时间线、修订根因、痛点、触发状态）
 │  └─ table-templates/
-│     ├─ table-template-index.md    # 模板→文件路由索引（suggested_format 关键词映射）
-│     ├─ rule-table.md              # 业务规则表（条件→动作→结果）
-│     ├─ field-rule-table.md        # 字段规则表（表单/列表/详情字段定义）
-│     ├─ validation-rule-table.md   # 校验规则表（必填/重复/格式校验）
-│     ├─ data-caliber-table.md      # 数据口径表（来源/计算/更新频率/精度）
-│     ├─ exception-handling-writing.md # 异常处理表（空态/失败/冲突/权限不足）
-│     ├─ acceptance-criteria-table.md  # 验收标准表
-│     ├─ self-test-case-table.md       # 研发自测用例表
-│     └─ risk-acceptance-table.md      # 风险接受表 + 待确认事项表
-└─ 05_context/           # 标准与知识
-   ├─ prd-standards/             # PRD 质量标准 + V3.3 完整性清单
-   │  ├─ prd-quality-standard.md             #   PRD 根标准、五不清单、复杂度等级、P0-P3
-   │  └─ operational-completeness-checklist.json # V3.3 66 项操作完整性清单（Node 3/4 共用）
-   ├─ writing-standards/         # 表格格式规范、交互逻辑写作规范
-   │  ├─ table-format-conventions.md     #   查询/列表/表单表格的固定列集规范
-   │  └─ interaction-logic-writing.md    #   交互逻辑表（步骤→触发→动作→响应→规则）
-   └─ optimization-standards/    # 复盘触发信号、T0-T3 分级、根因分类
-      └─ retrospect-trigger-rules.md     #   信号定义、升级规则、自动/人工边界
+│     ├─ table-template-index.md            # 模板→文件路由索引（suggested_format关键词映射）
+│     ├─ rule-table.md                      # 业务规则表（条件→动作→结果）
+│     ├─ field-rule-table.md                # 字段规则表（表单/列表/详情字段定义）
+│     ├─ validation-rule-table.md           # 校验规则表（必填/重复/格式校验）
+│     ├─ data-caliber-table.md              # 数据口径表（来源/计算/更新频率/精度）
+│     ├─ exception-handling-writing.md      # 异常处理表（空态/失败/冲突/权限不足）
+│     ├─ acceptance-criteria-table.md       # 验收标准表
+│     ├─ self-test-case-table.md            # 研发自测用例表
+│     └─ risk-acceptance-table.md           # 风险接受表+待确认事项表
+└─ 05_context/                              # 标准与知识
+   ├─ prd-standards/                        # PRD质量标准+V3.3完整性清单
+   │  ├─ prd-quality-standard.md            # PRD根标准、五不清单、复杂度等级、P0-P3
+   │  └─ operational-completeness-checklist.json  # V3.3 66项操作完整性清单（Node 3/4共用）
+   ├─ writing-standards/                    # 表格格式规范、交互逻辑写作规范
+   │  ├─ table-format-conventions.md        # 查询/列表/表单表格的固定列集规范
+   │  └─ interaction-logic-writing.md       # 交互逻辑表（步骤→触发→动作→响应→规则）
+   └─ optimization-standards/               # 复盘触发信号、T0-T3分级、根因分类
+      └─ retrospect-trigger-rules.md        # 信号定义、升级规则、自动/人工边界
 ```
 
 ---
