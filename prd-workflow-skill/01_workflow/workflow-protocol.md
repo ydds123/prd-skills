@@ -123,8 +123,8 @@ This protects the context window and prevents unrelated table schemas from influ
 
 6. Table template reading order: (1) `table-template-index.json` for routing → (2) match route by `suggested_format` → (3) load only the matched `schema_file` → (4) use schema for fixed columns and required fields → (5) load only the matched Markdown template when examples, anti-patterns, or boundary rules are needed. Do not load unrelated schemas or templates.
 7. Load `05_context/writing-standards/global-component-conventions.md`. When writing field validation, component behavior, list display, or action rules, apply global defaults unless the PRD states a justified exception.
-7. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
-8. Do not dump the checklist into the PRD. Use it as a silent writing guide.
+8. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
+9. Do not dump the checklist into the PRD. Use it as a silent writing guide.
 
 Write:
 
