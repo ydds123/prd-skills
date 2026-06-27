@@ -27,13 +27,19 @@ Do not replace Markdown with JSON wholesale. Split JSON only when the content ne
 
 ---
 
+## Completed JSONization Batches
+
+| Batch | Scope | Status | Notes |
+|---|---|---|---|
+| Batch 1 | Table Output Closure | Completed | `table-format-schemas.json` added; `04_templates/table-templates/schemas/*.schema.json` added (8 files); `table-template-index.json` routes now point to concrete `schema_file`; validator checks schema file existence and table template schema structure; `evals/table-format-evals.json` added |
+
+---
+
 ## P1: Next JSONization Candidates
 
 | Source Markdown | Suggested JSON | Purpose | Why JSON-worthy | Boundary |
 |---|---|---|---|---|
 | `01_workflow/content-consistency-sweep.md` | `01_workflow/content-consistency-sweep.rules.json` | Machine-readable consistency sweep rules | Contains blast-radius mapping, consistency dimensions, enumeration completeness rules, and auto-fix boundaries | Keep Markdown for method explanation, examples, and sweep rationale |
-| `05_context/writing-standards/table-format-conventions.md` | `05_context/writing-standards/table-format-schemas.json` | Machine-readable table column schemas | Contains fixed column sets for query, list, form, business-rule, and feature-inventory tables | Keep Markdown for rationale, anti-patterns, and examples |
-| `04_templates/table-templates/*.md` | `04_templates/table-templates/schemas/*.schema.json` | Machine-readable schemas for each table template | Each template contains stable columns, column meanings, required fields, and example values | Keep Markdown for examples, bad-writing explanations, and usage guidance |
 | `04_templates/run-log.md` | `04_templates/run-log.schema.json` | Machine-readable run-log writing structure | Contains fixed sections and write timing for timeline, revision records, pain points, user corrections, node completion, and retrospect trigger status | Do not convert task instance `09-run-log.md` to JSON |
 | `03_gates/gates-and-retrospective.md` | `03_gates/gate-rules.json` | Machine-readable gate and confirmation rules | Contains blocking levels, patch categories, auto-fix / PM-confirm / forbidden boundaries | Keep Markdown for behavior explanation and human-confirm loop |
 
