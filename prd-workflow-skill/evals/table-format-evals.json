@@ -1,0 +1,91 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "05_context/writing-standards/table-format-schemas.json",
+    "purpose": "Evaluate whether Agent applies table-format-schemas.json when writing common PRD tables"
+  },
+  "evals": [
+    {
+      "id": "query_filter_table_basic",
+      "input": "为站内信模板管理列表写查询条件表，包含消息类型、所属模块、启用状态。",
+      "expected_schema_id": "query_filter_table",
+      "expected_columns": [
+        "查询字段",
+        "组件类型",
+        "查询精度",
+        "说明"
+      ],
+      "forbidden_patterns": [
+        "是否必展示列",
+        "字段说明"
+      ],
+      "why": "Query/filter tables must use the stable query_filter_table columns."
+    },
+    {
+      "id": "list_display_table_basic",
+      "input": "为模板管理列表写列表字段表，包含模板名称、启用状态、最近更新时间。",
+      "expected_schema_id": "list_display_table",
+      "expected_columns": [
+        "字段",
+        "字段含义",
+        "数据来源",
+        "展示规则",
+        "空值展示",
+        "备注"
+      ],
+      "forbidden_patterns": [
+        "查询精度",
+        "组件类型"
+      ],
+      "why": "List/display tables must use the stable list_display_table columns."
+    },
+    {
+      "id": "form_modal_field_table_basic",
+      "input": "为新增分组弹窗写表单字段表，包含分组名称、所属模块、关联模板。",
+      "expected_schema_id": "form_modal_field_table",
+      "expected_columns": [
+        "字段名称",
+        "字段类型",
+        "是否必填",
+        "引导文案",
+        "字段说明"
+      ],
+      "forbidden_patterns": [
+        "查询字段",
+        "数据来源"
+      ],
+      "why": "Form/modal field tables must use the stable form_modal_field_table columns."
+    },
+    {
+      "id": "business_rule_table_basic",
+      "input": "为模板启停写业务规则表，包含启用后新事件生成、停用后不生成、以及重新启用不追溯。",
+      "expected_schema_id": "business_rule_table",
+      "expected_columns": [
+        "规则",
+        "说明",
+        "用例"
+      ],
+      "forbidden_patterns": [
+        "查询字段",
+        "校验编号"
+      ],
+      "why": "Business rule tables must use the stable business_rule_table columns."
+    },
+    {
+      "id": "scope_feature_inventory_table_basic",
+      "input": "为站内信审批模块写功能清单，包含模板管理、消息分组、站内信查看。",
+      "expected_schema_id": "scope_feature_inventory_table",
+      "expected_columns": [
+        "所属端",
+        "模块",
+        "功能点",
+        "功能说明"
+      ],
+      "forbidden_patterns": [
+        "校验编号",
+        "查询精度"
+      ],
+      "why": "Scope/feature inventory tables must use the stable scope_feature_inventory_table columns."
+    }
+  ]
+}

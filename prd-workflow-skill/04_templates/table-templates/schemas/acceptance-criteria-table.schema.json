@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/table-templates/acceptance-criteria-table.md",
+    "purpose": "Machine-readable column schema for requirement completion, test acceptance, business acceptance, and go-live acceptance tables"
+  },
+  "template_id": "acceptance_criteria_table",
+  "columns": [
+    {
+      "name": "验收编号",
+      "required": true,
+      "description": "唯一标识，如 A001",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "验收对象",
+      "required": true,
+      "description": "被验收的功能或场景",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "前置条件",
+      "required": true,
+      "description": "执行验收前必须满足的条件",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "操作/场景",
+      "required": true,
+      "description": "验收时执行的操作或模拟的场景",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "期望结果",
+      "required": true,
+      "description": "正确的结果是什么",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "验收方式",
+      "required": true,
+      "description": "功能测试/权限测试/数据验证/性能测试",
+      "allowed_values": [
+        "功能测试",
+        "权限测试",
+        "数据验证",
+        "性能测试"
+      ],
+      "notes": []
+    },
+    {
+      "name": "优先级",
+      "required": true,
+      "description": "P0/P1/P2——P0验收项是上线必过项",
+      "allowed_values": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "notes": []
+    },
+    {
+      "name": "通过标准",
+      "required": true,
+      "description": "判定通过的客观条件",
+      "allowed_values": [],
+      "notes": [
+        "不能写功能正常即可"
+      ]
+    },
+    {
+      "name": "备注",
+      "required": false,
+      "description": "关联的规则编号、对应用例编号",
+      "allowed_values": [],
+      "notes": []
+    }
+  ],
+  "required_columns": [
+    "验收编号",
+    "验收对象",
+    "前置条件",
+    "操作/场景",
+    "期望结果",
+    "验收方式",
+    "优先级",
+    "通过标准"
+  ],
+  "optional_columns": [
+    "备注"
+  ],
+  "usage_rules": [
+    "验收标准必须可观察、可测试、可判断",
+    "不能写功能正常即可"
+  ],
+  "anti_patterns_ref": "../acceptance-criteria-table.md"
+}

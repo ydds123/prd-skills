@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/table-templates/risk-acceptance-table.md",
+    "purpose": "Machine-readable column schema for temporarily accepted P1 risks, unconfirmed items, historical data deferred processing, and exception scenario deferral tables"
+  },
+  "template_id": "risk_acceptance_table",
+  "columns": [
+    {
+      "name": "风险编号",
+      "required": true,
+      "description": "唯一标识，如 RA001",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "风险类型",
+      "required": true,
+      "description": "数据口径/历史数据/异常处理/权限边界/性能边界/外部依赖/待确认",
+      "allowed_values": [
+        "数据口径",
+        "历史数据",
+        "异常处理",
+        "权限边界",
+        "性能边界",
+        "外部依赖",
+        "待确认"
+      ],
+      "notes": []
+    },
+    {
+      "name": "未解决问题",
+      "required": true,
+      "description": "具体是什么问题没有被解决",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "影响范围",
+      "required": true,
+      "description": "这个问题影响哪些功能、角色、数据、流程",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "问题等级",
+      "required": true,
+      "description": "P1（风险接受表仅用于P1风险；P0不能接受风险）",
+      "allowed_values": [
+        "P1"
+      ],
+      "notes": [
+        "P0不得写入风险接受表"
+      ]
+    },
+    {
+      "name": "接受原因",
+      "required": true,
+      "description": "为什么本期不修",
+      "allowed_values": [],
+      "notes": [
+        "不得写先这样"
+      ]
+    },
+    {
+      "name": "接受人/责任人",
+      "required": true,
+      "description": "谁接受了这个风险",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "后续处理",
+      "required": true,
+      "description": "什么时候、以什么方式解决",
+      "allowed_values": [],
+      "notes": [
+        "不得写后续优化——必须写具体版本和责任人"
+      ]
+    },
+    {
+      "name": "截止时间",
+      "required": true,
+      "description": "解决的deadline",
+      "allowed_values": [],
+      "notes": [
+        "不得为空"
+      ]
+    },
+    {
+      "name": "记录日期",
+      "required": false,
+      "description": "风险接受记录日期",
+      "allowed_values": [],
+      "notes": []
+    }
+  ],
+  "required_columns": [
+    "风险编号",
+    "风险类型",
+    "未解决问题",
+    "影响范围",
+    "问题等级",
+    "接受原因",
+    "接受人/责任人",
+    "后续处理",
+    "截止时间"
+  ],
+  "optional_columns": [
+    "记录日期"
+  ],
+  "usage_rules": [
+    "P1默认阻塞，除非PM明确接受风险并记录原因",
+    "不得将P0问题填入风险接受表"
+  ],
+  "anti_patterns_ref": "../risk-acceptance-table.md"
+}

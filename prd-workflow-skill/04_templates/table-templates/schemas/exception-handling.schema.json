@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/table-templates/exception-handling-writing.md",
+    "purpose": "Machine-readable column schema for empty, failure, duplicate, conflict, permission, upstream, and irreversible-state exception tables"
+  },
+  "template_id": "exception_handling_table",
+  "columns": [
+    {
+      "name": "异常类型",
+      "required": true,
+      "description": "空态/失败态/重复态/冲突态/权限不足/上下游异常/状态不可逆",
+      "allowed_values": [
+        "空态",
+        "失败态",
+        "重复态",
+        "冲突态",
+        "权限不足",
+        "上下游异常",
+        "状态不可逆",
+        "网络异常"
+      ],
+      "notes": []
+    },
+    {
+      "name": "触发场景",
+      "required": true,
+      "description": "什么情况下触发这个异常",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "系统处理",
+      "required": true,
+      "description": "系统执行什么操作",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "用户提示",
+      "required": true,
+      "description": "展示给用户的文案",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "数据状态",
+      "required": true,
+      "description": "异常发生后数据处于什么状态",
+      "allowed_values": [],
+      "notes": [
+        "需说明是否已写入、是否保留输入内容"
+      ]
+    },
+    {
+      "name": "是否可重试/恢复",
+      "required": true,
+      "description": "可重试/不可重试/不涉及/管理员恢复",
+      "allowed_values": [
+        "可重试",
+        "不可重试",
+        "不涉及",
+        "管理员恢复"
+      ],
+      "notes": []
+    },
+    {
+      "name": "责任人",
+      "required": false,
+      "description": "谁来处理这个异常",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "验收点",
+      "required": false,
+      "description": "如何验证这个异常处理正确",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "备注",
+      "required": false,
+      "description": "关联的校验规则、兜底策略",
+      "allowed_values": [],
+      "notes": []
+    }
+  ],
+  "required_columns": [
+    "异常类型",
+    "触发场景",
+    "系统处理",
+    "用户提示",
+    "数据状态",
+    "是否可重试/恢复"
+  ],
+  "optional_columns": [
+    "责任人",
+    "验收点",
+    "备注"
+  ],
+  "usage_rules": [
+    "必须回答：出岔子时，系统怎么处理，用户看到什么，数据怎么变化，能不能恢复",
+    "对每个核心功能至少检查八维覆盖率"
+  ],
+  "anti_patterns_ref": "../exception-handling-writing.md"
+}

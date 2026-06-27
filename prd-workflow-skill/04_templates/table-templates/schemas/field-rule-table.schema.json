@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/table-templates/field-rule-table.md",
+    "purpose": "Machine-readable column schema for form field, list field, detail field, and config field tables"
+  },
+  "template_id": "field_rule_table",
+  "columns": [
+    {
+      "name": "字段名称",
+      "required": true,
+      "description": "字段在页面上的标签名称",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "字段含义",
+      "required": true,
+      "description": "这个字段的业务含义",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "字段类型",
+      "required": true,
+      "description": "文本/开关/时间/下拉单选/下拉多选/多选列表等",
+      "allowed_values": [
+        "文本",
+        "开关",
+        "时间",
+        "下拉单选",
+        "下拉多选",
+        "多选列表",
+        "单行文本输入框",
+        "多行文本输入框"
+      ],
+      "notes": [
+        "不得只写下拉选择，必须明确下拉单选还是下拉多选"
+      ]
+    },
+    {
+      "name": "输入/展示",
+      "required": true,
+      "description": "用户输入还是系统展示（只读）",
+      "allowed_values": [
+        "输入",
+        "展示",
+        "只读"
+      ],
+      "notes": []
+    },
+    {
+      "name": "是否必填",
+      "required": true,
+      "description": "是/否",
+      "allowed_values": [
+        "是",
+        "否"
+      ],
+      "notes": []
+    },
+    {
+      "name": "长度/格式",
+      "required": false,
+      "description": "字符长度限制或格式约束",
+      "allowed_values": [],
+      "notes": [
+        "默认名称类字段 1-32 字符，见 global-component-conventions.json"
+      ]
+    },
+    {
+      "name": "默认值",
+      "required": false,
+      "description": "系统预设值",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "选项来源",
+      "required": false,
+      "description": "下拉选项从哪里来",
+      "allowed_values": [
+        "系统固定枚举",
+        "用户手动输入",
+        "字典配置",
+        "接口返回",
+        "当前业务对象"
+      ],
+      "notes": []
+    },
+    {
+      "name": "字段状态",
+      "required": true,
+      "description": "可编辑/只读/禁用/自动生成",
+      "allowed_values": [
+        "可编辑",
+        "只读",
+        "禁用",
+        "自动生成"
+      ],
+      "notes": []
+    },
+    {
+      "name": "空值展示",
+      "required": false,
+      "description": "没有数据时显示什么",
+      "allowed_values": [],
+      "notes": [
+        "默认展示 --"
+      ]
+    },
+    {
+      "name": "备注",
+      "required": false,
+      "description": "校验规则编号、查重规则、联动规则等",
+      "allowed_values": [],
+      "notes": []
+    }
+  ],
+  "required_columns": [
+    "字段名称",
+    "字段含义",
+    "字段类型",
+    "输入/展示",
+    "是否必填",
+    "字段状态"
+  ],
+  "optional_columns": [
+    "长度/格式",
+    "默认值",
+    "选项来源",
+    "空值展示",
+    "备注"
+  ],
+  "usage_rules": [
+    "必须回答：字段是什么，谁填写，怎么填写，从哪里来，能不能改"
+  ],
+  "anti_patterns_ref": "../field-rule-table.md"
+}

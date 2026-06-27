@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/table-templates/rule-table.md",
+    "purpose": "Machine-readable column schema for business rule, operation rule, default rule, and state rule tables"
+  },
+  "template_id": "rule_table",
+  "columns": [
+    {
+      "name": "规则编号",
+      "required": true,
+      "description": "唯一标识，如 R001",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "规则对象",
+      "required": true,
+      "description": "规则约束的业务对象",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "适用场景",
+      "required": false,
+      "description": "规则生效的业务流程或页面",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "触发条件",
+      "required": true,
+      "description": "什么情况下触发这条规则",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "规则说明",
+      "required": true,
+      "description": "规则内容——什么条件下允许/禁止/触发",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "系统处理",
+      "required": true,
+      "description": "系统执行什么操作",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "处理后结果",
+      "required": true,
+      "description": "系统处理后数据/状态变成什么",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "异常处理",
+      "required": false,
+      "description": "规则不满足时的处理方式",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "适用角色",
+      "required": false,
+      "description": "这条规则对谁生效",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "优先级",
+      "required": false,
+      "description": "P0/P1/P2",
+      "allowed_values": [
+        "P0",
+        "P1",
+        "P2"
+      ],
+      "notes": []
+    },
+    {
+      "name": "备注",
+      "required": false,
+      "description": "关联的状态机、校验规则或其他依赖",
+      "allowed_values": [],
+      "notes": []
+    }
+  ],
+  "required_columns": [
+    "规则编号",
+    "规则对象",
+    "触发条件",
+    "规则说明",
+    "系统处理",
+    "处理后结果"
+  ],
+  "optional_columns": [
+    "适用场景",
+    "异常处理",
+    "适用角色",
+    "优先级",
+    "备注"
+  ],
+  "usage_rules": [
+    "必须回答：什么条件下，谁对什么对象做什么，系统如何处理，处理后结果是什么"
+  ],
+  "anti_patterns_ref": "../rule-table.md"
+}

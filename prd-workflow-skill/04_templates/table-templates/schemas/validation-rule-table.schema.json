@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/table-templates/validation-rule-table.md",
+    "purpose": "Machine-readable column schema for required-field, format, duplicate, pre-submit, and pre-approval validation tables"
+  },
+  "template_id": "validation_rule_table",
+  "columns": [
+    {
+      "name": "校验编号",
+      "required": true,
+      "description": "唯一标识，如 V001",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "校验对象",
+      "required": true,
+      "description": "被校验的字段或操作",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "校验时机",
+      "required": true,
+      "description": "什么时候触发校验",
+      "allowed_values": [
+        "点击保存时",
+        "提交审批时",
+        "失焦时",
+        "提交时"
+      ],
+      "notes": []
+    },
+    {
+      "name": "校验条件",
+      "required": true,
+      "description": "校验的判定条件",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "通过标准",
+      "required": true,
+      "description": "数据达到什么状态算通过",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "失败提示",
+      "required": true,
+      "description": "校验不通过时展示给用户的文案",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "是否阻断",
+      "required": true,
+      "description": "是否阻止操作继续",
+      "allowed_values": [
+        "是",
+        "否"
+      ],
+      "notes": []
+    },
+    {
+      "name": "校验层级",
+      "required": true,
+      "description": "前端/后端/前端+后端",
+      "allowed_values": [
+        "前端",
+        "后端",
+        "前端+后端"
+      ],
+      "notes": []
+    },
+    {
+      "name": "备注",
+      "required": false,
+      "description": "关联规则编号、特殊处理说明",
+      "allowed_values": [],
+      "notes": []
+    }
+  ],
+  "required_columns": [
+    "校验编号",
+    "校验对象",
+    "校验时机",
+    "校验条件",
+    "通过标准",
+    "失败提示",
+    "是否阻断",
+    "校验层级"
+  ],
+  "optional_columns": [
+    "备注"
+  ],
+  "usage_rules": [
+    "必须回答：什么时候校验，按什么条件校验，失败时是否阻断，提示什么"
+  ],
+  "anti_patterns_ref": "../validation-rule-table.md"
+}

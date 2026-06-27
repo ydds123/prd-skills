@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/table-templates/data-caliber-table.md",
+    "purpose": "Machine-readable column schema for list data source, report data source, dashboard metric, and statistical caliber tables"
+  },
+  "template_id": "data_caliber_table",
+  "columns": [
+    {
+      "name": "指标/数据项",
+      "required": true,
+      "description": "指标或数据项名称",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "业务定义",
+      "required": true,
+      "description": "这个指标代表什么业务含义",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "数据来源",
+      "required": true,
+      "description": "数据从哪个系统/表/接口来",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "计算口径",
+      "required": true,
+      "description": "计算公式或聚合逻辑",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "统计范围",
+      "required": true,
+      "description": "时间范围、组织范围、筛选条件",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "更新时间",
+      "required": true,
+      "description": "实时/T+1/每小时/每日",
+      "allowed_values": [
+        "实时",
+        "T+1",
+        "每小时",
+        "每日"
+      ],
+      "notes": []
+    },
+    {
+      "name": "单位/精度",
+      "required": true,
+      "description": "条/百分比/元，保留几位小数",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "权限过滤",
+      "required": false,
+      "description": "不同角色看到的数据范围是否不同",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "空值/异常值处理",
+      "required": true,
+      "description": "分母为0、数据延迟、异常值时的展示和兜底",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "备注",
+      "required": false,
+      "description": "与其他指标的关联、特殊说明",
+      "allowed_values": [],
+      "notes": []
+    }
+  ],
+  "required_columns": [
+    "指标/数据项",
+    "业务定义",
+    "数据来源",
+    "计算口径",
+    "统计范围",
+    "更新时间",
+    "单位/精度",
+    "空值/异常值处理"
+  ],
+  "optional_columns": [
+    "权限过滤",
+    "备注"
+  ],
+  "usage_rules": [
+    "必须回答：数据从哪里来，怎么算，按什么范围算，多久更新，谁能看",
+    "数据类需求必须写数据为空、数据延迟、数据口径不一致的处理方式"
+  ],
+  "anti_patterns_ref": "../data-caliber-table.md"
+}

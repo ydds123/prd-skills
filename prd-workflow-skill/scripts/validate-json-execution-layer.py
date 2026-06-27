@@ -128,6 +128,16 @@ def check_template_index(data, json_dir):
             if not os.path.isfile(tf_path):
                 errors.append(f"{prefix}.template_file '{tf}' does not exist at {tf_path}")
 
+        sf = r.get("schema_file", "")
+        if not sf:
+            errors.append(f"{prefix}.schema_file is missing")
+        elif not sf.endswith(".schema.json"):
+            errors.append(f"{prefix}.schema_file '{sf}' must end with .schema.json")
+        else:
+            sf_path = os.path.join(json_dir, sf)
+            if not os.path.isfile(sf_path):
+                errors.append(f"{prefix}.schema_file '{sf}' does not exist at {sf_path}")
+
     ntf = data.get("non_template_formats")
     if ntf is not None:
         if not isinstance(ntf, list):
@@ -222,6 +232,51 @@ def check_table_format_schemas(data, json_dir):
 
     return errors, warnings
 
+def check_table_template_schema(data, json_dir):
+    """Validator for 04_templates/table-templates/schemas/*.schema.json"""
+    errors, warnings = [], []
+
+    tid = data.get("template_id", "")
+    if not tid:
+        errors.append("template_id is missing or empty")
+
+    cols = data.get("columns", [])
+    if not isinstance(cols, list) or not cols:
+        errors.append("columns is missing or empty")
+    else:
+        for j, c in enumerate(cols):
+            cp = f"columns[{j}]"
+            if not isinstance(c, dict):
+                errors.append(f"{cp} is not an object"); continue
+            if not c.get("name"): errors.append(f"{cp}.name is missing or empty")
+            rq = c.get("required")
+            if not isinstance(rq, bool): errors.append(f"{cp}.required is missing or not boolean")
+            if not c.get("description"): errors.append(f"{cp}.description is missing or empty")
+            for opt in ["allowed_values", "notes"]:
+                val = c.get(opt)
+                if val is not None and not isinstance(val, list):
+                    errors.append(f"{cp}.{opt} is present but not a list")
+
+    col_names = {c["name"] for c in cols if isinstance(c, dict) and c.get("name")}
+    for key in ["required_columns", "optional_columns"]:
+        subl = data.get(key)
+        if subl is not None:
+            if not isinstance(subl, list):
+                errors.append(f"{key} is not a list")
+            else:
+                for cn in subl:
+                    if cn not in col_names:
+                        errors.append(f"{key} references '{cn}' which is not in columns")
+
+    ur = data.get("usage_rules")
+    if ur is not None and not isinstance(ur, list):
+        warnings.append("usage_rules is present but not a list")
+    apr = data.get("anti_patterns_ref")
+    if apr is not None and not isinstance(apr, str):
+        warnings.append("anti_patterns_ref is present but not a string")
+
+    return errors, warnings
+
 def check_trigger_rules(data, json_dir):
     errors, warnings = [], []
     sigs = data.get("trigger_signals", [])
@@ -269,6 +324,10 @@ EXECUTION_LAYER_PATHS = {
     "05_context/writing-standards/table-format-schemas.json",
     "05_context/optimization-standards/retrospect-trigger-rules.json",
 }
+
+# Files under schemas/ are also execution layer
+def _is_execution_layer(rel_path):
+    return rel_path in EXECUTION_LAYER_PATHS or "/schemas/" in rel_path
 
 SPECIAL_VALIDATORS = {
     "table-template-index.json": check_template_index,
@@ -321,12 +380,14 @@ def main():
             continue
 
         # 2. generic checks
-        is_exec = rel in EXECUTION_LAYER_PATHS
+        is_exec = _is_execution_layer(rel)
         ge, gw = check_generic(path, data, skill_root, is_exec)
 
         # 3. specialized checks
         se, sw = [], []
         validator = SPECIAL_VALIDATORS.get(fname)
+        if not validator and fname.endswith(".schema.json"):
+            validator = check_table_template_schema
         if validator:
             se, sw = validator(data, json_dir)
 

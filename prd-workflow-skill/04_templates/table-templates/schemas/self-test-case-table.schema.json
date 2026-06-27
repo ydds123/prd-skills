@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/table-templates/self-test-case-table.md",
+    "purpose": "Machine-readable column schema for dev delivery self-test, PM smoke-check, and AI implementation self-check tables"
+  },
+  "template_id": "self_test_case_table",
+  "columns": [
+    {
+      "name": "用例编号",
+      "required": true,
+      "description": "唯一标识，如 TC001",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "用例类型",
+      "required": true,
+      "description": "主流程/校验用例/重复用例/权限用例/异常用例/数据用例",
+      "allowed_values": [
+        "主流程",
+        "校验用例",
+        "重复用例",
+        "权限用例",
+        "异常用例",
+        "数据用例"
+      ],
+      "notes": []
+    },
+    {
+      "name": "前置条件",
+      "required": true,
+      "description": "执行用例前必须满足的条件",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "操作步骤",
+      "required": true,
+      "description": "用例的操作路径",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "测试数据",
+      "required": true,
+      "description": "使用的具体测试数据",
+      "allowed_values": [],
+      "notes": [
+        "不能写正常数据——必须写具体值"
+      ]
+    },
+    {
+      "name": "预期结果",
+      "required": true,
+      "description": "正确的期望结果",
+      "allowed_values": [],
+      "notes": [
+        "不能写功能正常——必须写具体的可观察结果"
+      ]
+    },
+    {
+      "name": "覆盖规则/异常",
+      "required": true,
+      "description": "对应的规则编号（R001）或异常类型（空态）",
+      "allowed_values": [],
+      "notes": []
+    },
+    {
+      "name": "是否通过",
+      "required": false,
+      "description": "执行后填写：通过/失败",
+      "allowed_values": [
+        "通过",
+        "失败"
+      ],
+      "notes": [
+        "交付后由执行人填写"
+      ]
+    },
+    {
+      "name": "备注",
+      "required": false,
+      "description": "冒烟必跑标记、特殊说明",
+      "allowed_values": [],
+      "notes": []
+    }
+  ],
+  "required_columns": [
+    "用例编号",
+    "用例类型",
+    "前置条件",
+    "操作步骤",
+    "测试数据",
+    "预期结果",
+    "覆盖规则/异常"
+  ],
+  "optional_columns": [
+    "是否通过",
+    "备注"
+  ],
+  "usage_rules": [
+    "自测用例不是全量测试用例——是最小集合",
+    "每个验收标准至少有一个对应的自测用例",
+    "L2及以上需求必须包含：主流程x1、校验用例x1、权限用例x1"
+  ],
+  "anti_patterns_ref": "../self-test-case-table.md"
+}
