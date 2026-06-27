@@ -52,3 +52,4 @@
 1. 当 checklist 的 `suggested_format` 命中"主模板"表的关键词时 → 打开对应 .md 文件，按空白模板填写。若该 route 有 `schema_file`，先读取 schema 获取固定列集和必填字段，再读取 Markdown 模板获取范例和反例。
 2. 当命中"非模板呈现方式"时 → 按"落地方式"列的指引处理，不要强行映射到表格模板。
 3. 如果 `suggested_format` 同时命中主模板和非模板（如"流程图 + 规则表"），两个都要落地。
+4. Lazy loading: do not preload all `schemas/*.schema.json` or all table template Markdown files. First load `table-template-index.json` for routing. After a route is matched, load only the matched `schema_file`; then load only the matched Markdown template when examples, anti-patterns, or boundary explanations are needed.

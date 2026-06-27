@@ -114,7 +114,15 @@ Goal: expand the accepted frame into a complete PRD body.
 3. Load `05_context/prd-standards/checklist-v3.3.json` (V3.3).
 4. Identify which checklist items apply: filter by `complexity` (L1-L4 matches the PRD's complexity level) and `condition` (domain-specific conditions like "has multi-role" or "has delete action").
 5. For each applicable item, use `question`, `pass_criteria`, and `failure_signal` as the writing guide. The `suggested_format` field tells you which table template to use (see `04_templates/table-templates/`). **When available, read the JSON execution layer first** — `table-template-index.json` for template routing (use `schema_file` to get fixed columns and required fields before opening the Markdown template), `table-format-schemas.json` for stable table column schemas, `global-component-conventions.json` for field/input/selection/list/action defaults, and `retrospect-trigger-rules.json` for trigger/escalation rules — **then read the Markdown file** for rationale, examples, and boundary rules. JSON provides the mechanical answer; Markdown provides the why.
-6. Load `05_context/writing-standards/global-component-conventions.md`. When writing field validation, component behavior, list display, or action rules, apply global defaults unless the PRD states a justified exception.
+
+**Table template lazy loading rule:**
+
+Do not preload all table template schemas or Markdown templates. Load `table-template-index.json` first for routing. After a route is matched, load only the matched `schema_file` to get fixed columns and required fields. Load only the matched Markdown template when examples, anti-patterns, or boundary explanations are needed.
+
+This protects the context window and prevents unrelated table schemas from influencing the current PRD output.
+
+6. Table template reading order: (1) `table-template-index.json` for routing → (2) match route by `suggested_format` → (3) load only the matched `schema_file` → (4) use schema for fixed columns and required fields → (5) load only the matched Markdown template when examples, anti-patterns, or boundary rules are needed. Do not load unrelated schemas or templates.
+7. Load `05_context/writing-standards/global-component-conventions.md`. When writing field validation, component behavior, list display, or action rules, apply global defaults unless the PRD states a justified exception.
 7. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
 8. Do not dump the checklist into the PRD. Use it as a silent writing guide.
 
