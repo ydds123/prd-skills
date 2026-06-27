@@ -350,6 +350,7 @@ Rules:
 - Use top-level cross-domain chapters only when the rule truly applies across multiple functional domains.
 - Keep “结论先行” as the first substantive section after document information.
 - Keep acceptance criteria and self-test cases aligned by functional domain or flow.
+- Field limits, input handling, selection behavior, list display, and action defaults must follow `05_context/writing-standards/global-component-conventions.md` unless a justified business exception is stated.
 
 ## Checklist-driven Full PRD Writing
 

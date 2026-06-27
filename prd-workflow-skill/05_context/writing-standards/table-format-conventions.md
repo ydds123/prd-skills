@@ -5,6 +5,8 @@
 > Evidence: first PRD run — query/filter/field/form tables were reworked across 8 revision rounds due to missing format standards
 > Version: v1.0.0
 
+For default field lengths, input handling, selection behavior, list display, and action defaults, see `global-component-conventions.md`.
+
 ---
 
 Every table in a PRD that R&D or QA depends on must use a fixed column set. Do not let the column set drift by section.

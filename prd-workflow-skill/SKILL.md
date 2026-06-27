@@ -20,7 +20,7 @@ Retrospect is conditional, not a required stage. It is triggered by explicit use
 
 A good PRD fixes product judgment into a shared answer that the team can execute, verify, and trace. The reader should not need to come back to the PM for confirmation.
 
-Judge every output by four criteria: clear boundary, explicit judgment, no guessing, and accurate information. Load [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md) before writing, reviewing, or revising PRD content.
+Judge every output by four criteria: clear boundary, explicit judgment, no guessing, and accurate information. Load [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md) before writing, reviewing, or revising PRD content. When expanding PRD details, use [Global Component Conventions](05_context/writing-standards/global-component-conventions.md) as the default-value layer for reusable field, control, list, action, and feedback behavior.
 
 Apply the standard across input, processing, and output. Details live in the quality reference.
 
