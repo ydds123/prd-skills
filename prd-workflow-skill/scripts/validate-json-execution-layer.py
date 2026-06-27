@@ -170,6 +170,58 @@ def check_conventions(data, json_dir):
         errors.append("override_rule is missing or not an object")
     return errors, warnings
 
+def check_table_format_schemas(data, json_dir):
+    errors, warnings = [], []
+    schemas = data.get("schemas")
+    if not isinstance(schemas, list) or not schemas:
+        errors.append("schemas is missing or not a non-empty list")
+        return errors, warnings
+
+    CORE_IDS = [
+        "query_filter_table", "list_display_table", "form_modal_field_table",
+        "business_rule_table", "scope_feature_inventory_table"
+    ]
+    seen = set()
+    found_core = set()
+    for i, s in enumerate(schemas):
+        prefix = f"schemas[{i}]"
+        if not isinstance(s, dict):
+            errors.append(f"{prefix} is not an object"); continue
+        sid = s.get("id", "")
+        if not sid:
+            errors.append(f"{prefix}.id is missing or empty")
+        elif sid in seen:
+            errors.append(f"{prefix}.id '{sid}' is duplicated")
+        else:
+            seen.add(sid)
+        if sid in CORE_IDS:
+            found_core.add(sid)
+        cols = s.get("columns", [])
+        if not isinstance(cols, list) or not cols:
+            errors.append(f"{prefix}.columns is missing or empty")
+        else:
+            for j, c in enumerate(cols):
+                cp = f"{prefix}.columns[{j}]"
+                if not isinstance(c, dict): errors.append(f"{cp} is not an object"); continue
+                if not c.get("name"): errors.append(f"{cp}.name is missing or empty")
+                rq = c.get("required")
+                if not isinstance(rq, bool): errors.append(f"{cp}.required is missing or not boolean")
+                if not c.get("description"): errors.append(f"{cp}.description is missing or empty")
+                for opt in ["allowed_values", "notes"]:
+                    val = c.get(opt)
+                    if val is not None and not isinstance(val, list):
+                        errors.append(f"{cp}.{opt} is present but not a list")
+
+    missing_core = [c for c in CORE_IDS if c not in found_core]
+    if missing_core:
+        errors.append(f"missing core schema ids: {', '.join(missing_core)}")
+
+    ssr = data.get("schema_selection_rules")
+    if ssr is not None and not isinstance(ssr, list):
+        warnings.append("schema_selection_rules is present but not a list")
+
+    return errors, warnings
+
 def check_trigger_rules(data, json_dir):
     errors, warnings = [], []
     sigs = data.get("trigger_signals", [])
@@ -214,12 +266,14 @@ def check_trigger_rules(data, json_dir):
 EXECUTION_LAYER_PATHS = {
     "04_templates/table-templates/table-template-index.json",
     "05_context/writing-standards/global-component-conventions.json",
+    "05_context/writing-standards/table-format-schemas.json",
     "05_context/optimization-standards/retrospect-trigger-rules.json",
 }
 
 SPECIAL_VALIDATORS = {
     "table-template-index.json": check_template_index,
     "global-component-conventions.json": check_conventions,
+    "table-format-schemas.json": check_table_format_schemas,
     "retrospect-trigger-rules.json": check_trigger_rules,
 }
 
