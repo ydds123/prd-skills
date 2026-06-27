@@ -4,6 +4,7 @@
 > Purpose: PRD 产品行为默认值库 — 为 PRD 中反复出现的字段、控件、列表、操作、状态、异常提供可复用的默认产品行为规则
 > Governed by: `../../01_workflow/workflow-protocol.md` (load in Node 3) and `../../03_gates/gates-and-retrospective.md` (per-patch confirm→write)
 > Version: v1.1.0
+> Machine-readable defaults: `global-component-conventions.json` — Agent loads JSON first for field-length/input/selection/list/action defaults, then reads this Markdown file for evolution rules, promotion criteria, patch-proposal format, and boundary explanation.
 
 ---
 

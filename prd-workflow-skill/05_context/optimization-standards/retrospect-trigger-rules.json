@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "05_context/optimization-standards/retrospect-trigger-rules.md",
+    "purpose": "Machine-readable retrospect trigger and escalation rules for the Retrospect Trigger Detector"
+  },
+  "trigger_signals": [
+    {
+      "id": "user_correction",
+      "name": "User Correction",
+      "description": "User explicitly contradicts or corrects the Agent",
+      "typical_expressions": ["不对", "不是这个意思", "你理解错了", "我刚才说的是", "我之前说过", "怎么又", "不要这样", "这个不能这么写", "应该放到", "这里应该是", "你漏了", "这里少了"],
+      "default_level": "T1",
+      "actions": ["append_user_correction_to_run_log"],
+      "judge_reusable_gap": true
+    },
+    {
+      "id": "retrospect_intent",
+      "name": "Retrospect Intent",
+      "description": "User explicitly asks to improve the Skill",
+      "typical_expressions": ["优化下skill", "完善下skill", "写进Skill", "这个要沉淀", "下次遇到这种情况", "以后都要", "这里应该有门禁", "这个应该作为模板", "这是skill待完善吗"],
+      "default_level": "T2",
+      "actions": ["append_retrospect_status_to_run_log", "mark_needs_retrospect_candidate"],
+      "judge_reusable_gap": false
+    },
+    {
+      "id": "ai_self_discovery",
+      "name": "AI Self-Discovery",
+      "description": "Agent discovers a gap during its own review or sweep",
+      "scenarios": ["checklist item should have caught this but didn't", "Node 3 missed a gate item", "Node 4 caught something that should have been caught earlier", "content consistency sweep finds recurring stale references from the same root cause"],
+      "level_by_severity": [
+        { "severity": "P2_P3", "level": "T1" },
+        { "severity": "P1_systemic", "level": "T2" },
+        { "severity": "P0_gate_failure", "level": "T3" }
+      ]
+    },
+    {
+      "id": "high_risk_signals",
+      "name": "High-Risk Signals",
+      "keywords": ["P0", "P1", "阻塞", "漏了", "没覆盖", "不一致", "前后矛盾", "旧说法", "术语混用", "范围冲突", "权限冲突", "状态冲突", "数据口径冲突", "门禁失效", "checklist未覆盖"],
+      "level_by_context": [
+        { "context": "linked_to_P0_gate_failure", "level": "T3" },
+        { "context": "P1_systemic", "level": "T2" }
+      ]
+    }
+  ],
+  "escalation_levels": [
+    {
+      "level": "T0",
+      "meaning": "No action",
+      "trigger": "Single stylistic preference or local PRD fix",
+      "action": "do_not_enter_retrospect_candidate"
+    },
+    {
+      "level": "T1",
+      "meaning": "Observe",
+      "trigger": "User correction x1; same root cause x1; P2/P3 self-discovery",
+      "action": ["write_user_correction_to_run_log", "write_retrospect_status_to_run_log"],
+      "mark": "观察中"
+    },
+    {
+      "level": "T2",
+      "meaning": "Retrospect candidate",
+      "trigger": "Same root cause x2; P1 systemic; user expresses retrospect intent",
+      "action": ["write_to_run_log", "mark_needs_retrospect_candidate"],
+      "next_step": "Agent asks user at Node 5 whether to enter retrospect"
+    },
+    {
+      "level": "T3",
+      "meaning": "Mandatory retrospect proposal",
+      "trigger": "Same root cause x3+; any P0 gate failure",
+      "action": ["write_to_run_log", "mark_needs_retrospect", "generate_08_retrospect_proposal"],
+      "note": "T3 forces generation of the retrospect PROPOSAL, not application of patches. Per-patch user confirmation is still required."
+    }
+  ],
+  "escalation_rules": [
+    "T3 forces generation of the retrospect PROPOSAL, not application of patches.",
+    "Per-patch user confirmation is still required at every level.",
+    "A one-time preference must never auto-escalate to a universal rule."
+  ],
+  "root_causes": [
+    { "id": "missing_knowledge", "label": "缺知识", "meaning": "Missing business knowledge, industry context", "patch_target": "context / examples" },
+    { "id": "missing_method", "label": "缺方法", "meaning": "Missing analysis method, workflow rule, judgment path", "patch_target": "workflow-protocol / SKILL" },
+    { "id": "missing_template", "label": "缺模板", "meaning": "Missing table template, output slot, fixed structure", "patch_target": "writing-standards" },
+    { "id": "missing_gate", "label": "缺门禁", "meaning": "Gate should have blocked but didn't, check should have run but didn't", "patch_target": "gates / checklist" },
+    { "id": "missing_example", "label": "缺案例", "meaning": "Rule exists but lacks example → Agent applies it incorrectly", "patch_target": "examples" },
+    { "id": "one_off", "label": "偶发", "meaning": "One-off execution deviation", "patch_target": "run-log only, no patch" }
+  ],
+  "human_confirm_boundary": {
+    "auto_allowed": [
+      "write_user_correction_to_run_log",
+      "write_retrospect_status_to_run_log",
+      "mark_needs_retrospect_candidate",
+      "mark_needs_retrospect",
+      "generate_08_retrospect_proposal_at_T3"
+    ],
+    "forbidden_without_confirmation": [
+      "apply_patch_to_any_skill_file",
+      "elevate_one_time_preference_to_rule",
+      "batch_confirm_all_patches"
+    ]
+  },
+  "checkpoint_triggers": [
+    "after_user_correction",
+    "after_each_node_completes",
+    "after_revision_completes",
+    "after_content_consistency_sweep"
+  ]
+}

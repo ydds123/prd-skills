@@ -3,6 +3,7 @@
 > Belongs to: `04_templates/table-templates/`  
 > Source: PRD 需求自查清单 V3.3 · Sheet 07  
 > Version: v1.0.0
+> Machine-readable routing: `table-template-index.json` — Agent loads JSON first for keyword→template matching, then reads this Markdown file for routing logic and maintenance rules.
 
 当 checklist 的 `suggested_format` 字段指向一个表格模板时，Agent 通过本索引定位到正确的 .md 文件。本索引是唯一真相来源——JSON 的 `template_ref` 字段仅作提示。
 

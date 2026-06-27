@@ -4,6 +4,7 @@
 > Purpose: Define the trigger signals, escalation levels, and boundaries for the Retrospect Trigger Detector  
 > Governed by: `../../03_gates/gates-and-retrospective.md` — all Skill file modifications still require per-patch user confirmation  
 > Version: v1.0.0
+> Machine-readable trigger config: `retrospect-trigger-rules.json` — Agent loads JSON first for trigger-signal matching, level determination, root-cause classification, and auto/human boundaries, then reads this Markdown file for core principles, integration flow, and relationship to existing mechanisms.
 
 ---
 

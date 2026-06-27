@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "05_context/writing-standards/global-component-conventions.md",
+    "purpose": "Machine-readable product-behavior defaults for PRD writing — field lengths, input handling, selection controls, list display, and action rules"
+  },
+  "field_length_defaults": [
+    { "id": "name_field", "label": "名称类字段", "min": 1, "max": 32, "unit": "字符", "examples": ["模板名称", "分组名称", "规则名称", "配置名称"], "fallback": "若历史系统或外部系统已有长度限制，以业务来源为准" },
+    { "id": "title_field", "label": "标题类字段", "min": 1, "max": 64, "unit": "字符", "examples": ["消息标题", "公告标题", "任务标题"], "fallback": null },
+    { "id": "summary_field", "label": "摘要类字段", "min": 0, "max": 100, "unit": "字符", "examples": ["消息摘要", "列表摘要", "说明摘要"], "fallback": "可为空时写 0～100" },
+    { "id": "code_field", "label": "编码类字段", "min": 1, "max": 32, "unit": "字符", "examples": ["编号", "编码", "外部系统标识"], "fallback": "若来源系统已有规则，以来源系统为准" },
+    { "id": "tag_label_field", "label": "标签名称", "min": 1, "max": 16, "unit": "字符", "examples": ["标签", "分类短名"], "fallback": "避免列表和卡片展示拥挤" },
+    { "id": "short_note_field", "label": "短说明字段", "min": 0, "max": 200, "unit": "字符", "examples": ["备注", "原因", "说明"], "fallback": null },
+    { "id": "multi_line_remark", "label": "多行备注字段", "min": 0, "max": 500, "unit": "字符", "examples": ["审批意见", "驳回原因", "处理备注"], "fallback": null },
+    { "id": "long_text_field", "label": "长文本字段", "min": 1, "max": 1000, "unit": "字符", "examples": ["消息正文", "规则描述", "处理说明"], "fallback": "超过 1000 字符需单独说明必要性" }
+  ],
+  "input_handling_defaults": [
+    { "id": "trim_whitespace", "rule": "保存时自动去除首尾空格", "applies_to": ["单行文本", "名称类字段"] },
+    { "id": "keep_inner_spaces", "rule": "中间连续空格默认保留，编码类字段除外", "applies_to": ["单行文本", "多行文本"] },
+    { "id": "empty_string_as_unfilled", "rule": "去除首尾空格后为空，按未填写处理", "applies_to": ["所有字段类型"] },
+    { "id": "no_linebreak_in_singleline", "rule": "单行文本不允许换行；多行文本允许换行", "applies_to": ["单行文本", "多行文本"] },
+    { "id": "common_special_symbols", "rule": "默认允许中文、英文、数字和常见符号；高风险业务字段需单独限制", "applies_to": ["所有字段类型"] },
+    { "id": "name_unique_check", "rule": "名称类字段如用于配置对象，默认同一业务域内不允许重复", "applies_to": ["名称类字段"] },
+    { "id": "case_handling", "rule": "中文业务字段不区分大小写；编码类字段是否区分需显式说明", "applies_to": ["名称类字段", "编码类字段"] },
+    { "id": "preserve_on_failure", "rule": "保存失败或校验失败时，默认保留用户已输入内容", "applies_to": ["所有输入控件"] }
+  ],
+  "selection_control_defaults": [
+    { "id": "dropdown_single", "label": "下拉单选", "defaults": ["支持清空（必选字段除外）", "选项超过 7 项默认支持模糊搜索", "必须说明选项来源"], "must_specify": ["选项来源", "是否必选"] },
+    { "id": "dropdown_multi", "label": "下拉多选", "defaults": ["支持多选标签回显", "选项超过 7 项默认支持模糊搜索"], "must_specify": ["是否支持全选"] },
+    { "id": "cascading", "label": "级联选择", "must_specify": ["层级", "取值来源", "默认展开层级", "搜索范围"] },
+    { "id": "tree_select", "label": "树形选择", "must_specify": ["父级是否可选", "勾选父级是否等于全选子级"] },
+    { "id": "remote_search", "label": "远程搜索", "must_specify": ["搜索字段", "最小触发字符数", "无结果反馈"] },
+    { "id": "enum_options", "label": "枚举选项", "must_specify": ["选项来源（系统内置 / 字典配置 / 接口返回 / 当前业务对象）"] },
+    { "id": "stale_options", "label": "失效选项", "rule": "历史已选但当前失效的选项，详情和列表中仍展示原值；编辑时是否允许保留需显式说明" },
+    { "id": "dropdown_naming", "label": "控件命名", "rule": "不得只写'下拉选择'，必须明确是'下拉单选'还是'下拉多选'" }
+  ],
+  "list_display_defaults": [
+    { "id": "empty_value", "label": "空值展示", "default": "--" },
+    { "id": "text_truncation", "label": "长文本截断", "default": "列表长文本默认超过 20 字符截断；是否 hover/点击展示全文需显式说明" },
+    { "id": "default_sort", "label": "默认排序", "default": "默认按最近更新时间倒序；新数据在上，旧数据在下。若业务对象有优先级，以业务优先级规则为准" },
+    { "id": "pagination", "label": "分页", "default": "默认分页展示；具体每页条数不作为 PRD 全局硬规则，除非业务要求" },
+    { "id": "list_refresh", "label": "列表刷新", "default": "新增/编辑/删除/启停成功后，默认刷新当前列表" },
+    { "id": "status_field", "label": "状态字段", "must_specify": ["状态枚举", "展示文案", "是否可筛选"] },
+    { "id": "action_column", "label": "操作列", "must_specify": ["按钮显示条件", "禁用条件", "隐藏条件"] },
+    { "id": "post_delete_position", "label": "删除后列表定位", "rule": "删除当前页最后一条后如何展示，需显式说明" }
+  ],
+  "action_defaults": [
+    { "id": "create", "label": "新增", "rule": "保存成功后返回列表还是停留当前页，需显式说明" },
+    { "id": "edit", "label": "编辑", "rule": "保存前校验必填、唯一性、格式；成功后刷新来源页面" },
+    { "id": "delete", "label": "删除", "rule": "默认二次确认；删除影响范围必须说明" },
+    { "id": "toggle", "label": "启用/停用", "rule": "默认不删除历史数据，只改变后续是否生效" },
+    { "id": "cancel", "label": "取消", "rule": "默认不保存当前变更；有未保存内容时是否二次确认需说明" },
+    { "id": "batch", "label": "批量操作", "must_specify": ["可选范围", "是否跨页生效", "部分失败处理"] },
+    { "id": "one_click", "label": "一键操作", "must_specify": ["是否可撤销", "是否二次确认"] },
+    { "id": "high_risk", "label": "高风险操作", "must_specify": ["确认文案", "影响范围", "是否可恢复"] }
+  ],
+  "high_risk_rule": "凡是不可逆、影响多人、影响历史数据、影响流程状态的操作，必须有二次确认。",
+  "override_rule": {
+    "allowed_when": ["external_system_constraint", "regulatory_requirement", "legacy_system_behavior", "domain_specific_need"],
+    "must_state": ["which_default_is_overridden", "reason", "replacement_rule"],
+    "silent_divergence_forbidden": true
+  }
+}

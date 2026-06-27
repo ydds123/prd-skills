@@ -1,0 +1,173 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/table-templates/table-template-index.md",
+    "purpose": "Route checklist suggested_format keywords to table templates or non-template rendering formats — machine-readable routing layer"
+  },
+  "template_routes": [
+    {
+      "id": "rule_table",
+      "keywords": ["规则表", "业务规则表", "默认值表", "操作控制表", "反馈规则表", "二次确认规则表", "弹窗行为规则表", "排序规则表", "查询规则表", "筛选规则表", "分页规则表", "展示规则表", "图表展示规则表", "控件规则表", "初始化规则表", "空态规则表", "失败态规则表", "重复处理表", "冲突处理表", "权限异常表", "数量规则表", "上传规则表", "交互状态表", "加载状态表"],
+      "template_file": "rule-table.md",
+      "use_case": "任何"条件 → 动作 → 结果"模式的规则描述"
+    },
+    {
+      "id": "field_rule_table",
+      "keywords": ["字段规则表", "字段总表", "列表字段总览", "时间控件", "日期", "时间相关字段"],
+      "template_file": "field-rule-table.md",
+      "use_case": "表单字段、列表字段、详情字段的定义"
+    },
+    {
+      "id": "validation_rule_table",
+      "keywords": ["校验规则表", "必填校验", "重复校验", "格式校验"],
+      "template_file": "validation-rule-table.md",
+      "use_case": "保存/提交/审批前的校验规则"
+    },
+    {
+      "id": "data_caliber_table",
+      "keywords": ["数据口径表", "数据来源表", "统计口径表", "指标定义", "单位精度表"],
+      "template_file": "data-caliber-table.md",
+      "use_case": "数据来源、计算口径、更新频率、单位精度"
+    },
+    {
+      "id": "exception_handling_table",
+      "keywords": ["异常规则表", "异常兜底", "空态处理", "失败态处理", "冲突处理", "权限不足处理"],
+      "template_file": "exception-handling-writing.md",
+      "use_case": "异常场景的系统处理、用户提示、恢复机制"
+    },
+    {
+      "id": "acceptance_criteria_table",
+      "keywords": ["验收标准表"],
+      "template_file": "acceptance-criteria-table.md",
+      "use_case": "需求完成判定、测试验收、业务验收"
+    },
+    {
+      "id": "self_test_case_table",
+      "keywords": ["自测用例表"],
+      "template_file": "self-test-case-table.md",
+      "use_case": "研发交付前最小冒烟用例"
+    },
+    {
+      "id": "risk_acceptance_table",
+      "keywords": ["风险接受表", "待确认事项表"],
+      "template_file": "risk-acceptance-table.md",
+      "use_case": "P1 风险接受记录、待确认项不阻塞记录"
+    }
+  ],
+  "non_template_formats": [
+    {
+      "id": "scqa_problem_definition",
+      "suggested_format": "SCQA说明 / 问题定义表",
+      "meaning": "用 SCQA 叙事定义问题",
+      "rendering": "PRD 背景章节的引导性写作"
+    },
+    {
+      "id": "scope_table",
+      "suggested_format": "范围表 / 非目标表",
+      "meaning": "本期范围与排除项",
+      "rendering": "用 Markdown 表格呈现，参考 field-rule-table 的表结构思路"
+    },
+    {
+      "id": "goal_table",
+      "suggested_format": "目标表 / 成功标准表",
+      "meaning": "本期目标与可验证成功标准",
+      "rendering": "用 Markdown 表格呈现"
+    },
+    {
+      "id": "role_table",
+      "suggested_format": "角色职责表",
+      "meaning": "角色名称、职责、参与环节",
+      "rendering": "用 Markdown 表格呈现，参考 rule-table 的条件→动作模式"
+    },
+    {
+      "id": "permission_matrix",
+      "suggested_format": "权限矩阵",
+      "meaning": "角色 × 页面 × 操作 × 数据范围",
+      "rendering": "用 Markdown 表格呈现，参考 rule-table 的条件→动作模式"
+    },
+    {
+      "id": "flowchart",
+      "suggested_format": "流程图 / 状态机图 / 关系图 / 页面流转图",
+      "meaning": "图形化表达",
+      "rendering": "Mermaid"
+    },
+    {
+      "id": "step_table",
+      "suggested_format": "步骤表 / 流程步骤",
+      "meaning": "流程的步骤化描述",
+      "rendering": "用 Markdown 表格，参考 interaction-logic-writing.md"
+    },
+    {
+      "id": "pyramid_structure",
+      "suggested_format": "金字塔结构",
+      "meaning": "结论先行的章节顺序",
+      "rendering": "写作风格指导，非表格"
+    },
+    {
+      "id": "glossary",
+      "suggested_format": "术语表",
+      "meaning": "核心术语与缩写统一",
+      "rendering": "用 Markdown 表格呈现"
+    },
+    {
+      "id": "review_conclusion",
+      "suggested_format": "评审结论卡",
+      "meaning": "P0/P1 统计 + 是否可进入评审",
+      "rendering": "审核报告的汇总表格"
+    },
+    {
+      "id": "overreach_check",
+      "suggested_format": "越界检查表",
+      "meaning": "PRD 是否写了不该写的技术/设计细节",
+      "rendering": "审核检查清单，不输出到 PRD"
+    },
+    {
+      "id": "capability_boundary",
+      "suggested_format": "能力边界表",
+      "meaning": "本期已支持 vs 暂不支持 vs 未来规划",
+      "rendering": "用 Markdown 表格呈现"
+    },
+    {
+      "id": "changelog",
+      "suggested_format": "变更记录表",
+      "meaning": "版本号、变更点、原因、确认人",
+      "rendering": "PRD 文档头部元信息表格"
+    },
+    {
+      "id": "impact_table",
+      "suggested_format": "影响范围表 / 上下游影响 / 存量影响 / 历史数据处理",
+      "meaning": "本功能变更对上下游和历史数据的影响",
+      "rendering": "用 Markdown 表格呈现，参考 rule-table"
+    },
+    {
+      "id": "example_table",
+      "suggested_format": "示例表 / 正反例",
+      "meaning": "复杂规则的正例和反例",
+      "rendering": "嵌入对应规则表下方"
+    },
+    {
+      "id": "tip_text_table",
+      "suggested_format": "提示文案表",
+      "meaning": "各类提示的文案和展示位置",
+      "rendering": "用 Markdown 表格呈现"
+    },
+    {
+      "id": "chart_animation",
+      "suggested_format": "图表动效说明",
+      "meaning": "动效的业务含义",
+      "rendering": "仅当动效承载业务状态时写，否则不进入 PRD"
+    },
+    {
+      "id": "chart_default_query",
+      "suggested_format": "图表默认查询规则",
+      "meaning": "图表首次打开时的默认查询范围",
+      "rendering": "用 rule-table 呈现"
+    }
+  ],
+  "agent_rules": [
+    "When checklist suggested_format matches template_routes keywords → open the mapped template_file and fill it.",
+    "When checklist suggested_format matches non_template_formats → follow the rendering guidance in that entry.",
+    "When suggested_format matches both template_routes and non_template_formats → apply both.",
+    "This JSON is the machine-readable routing layer. The source Markdown file explains the routing logic and maintenance rules."
+  ]
+}
