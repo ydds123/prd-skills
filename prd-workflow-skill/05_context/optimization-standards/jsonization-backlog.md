@@ -90,3 +90,4 @@ Before creating any P1 or P2 JSON file, the Agent must:
 3. Explain which parts remain in Markdown.
 4. Get user confirmation before writing.
 5. Avoid creating duplicate truth sources.
+6. Run `scripts/validate-json-execution-layer.py` before and after to ensure the existing JSON execution layer remains valid.
