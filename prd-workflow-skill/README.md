@@ -417,9 +417,11 @@ prd-workflow-skill/
 │  └─ hook_config.example.json              # hooks可选配置参考，非运行强依赖
 ├─ scripts/                                 # 构建与维护脚本
 │  ├─ build_checklist.py                    # 从Excel构建V3.3 checklist JSON（含自动清理）
-│  └─ fill_template_refs.py                 # 为checklist条目填充template_ref字段
+│  ├─ fill_template_refs.py                 # 为checklist条目填充template_ref字段
+│  └─ validate-json-execution-layer.py      # JSON执行层校验：解析、meta、source解析、结构检查
 ├─ evals/                                   # 触发路由正例/负例，不参与日常输出
-│  └─ trigger-evals.json                    # 触发路由正例+负例，用于回归验证
+│  ├─ trigger-evals.json                    # 触发路由正例+负例，用于回归验证
+│  └─ table-format-evals.json               # 通用表格schema匹配eval（5个case）
 ├─ 00_meta/                                 # 项目身份、蓝图路线图
 │  └─ blueprint-roadmap.md                  # 蓝图vs现状对照，分阶段建设计划
 ├─ 01_workflow/                             # 流程协议：状态机、节点规则、草案边界、一致性回扫
@@ -431,8 +433,9 @@ prd-workflow-skill/
 ├─ 04_templates/                            # 输出模板：契约、run-log、表格空白模板
 │  ├─ output-contracts.md                   # 任务文件夹结构、背景卡/决策账本/审核报告模板
 │  ├─ run-log.md                            # Run Log模板（运行时间线、修订根因、痛点、触发状态）
-│  └─ table-templates/                       # 表格空白模板（9类），供checklist的suggested_format路由
-│     ├─ table-template-index.md            # 模板→文件路由索引（suggested_format关键词映射）
+│  └─ table-templates/                       # 表格模板（8类），供checklist的suggested_format路由
+│     ├─ table-template-index.md            # 模板→文件路由索引（suggested_format关键词映射，含Lazy Loading规则）
+│     ├─ table-template-index.json          # 机器可读路由层：关键词→template_file+schema_file
 │     ├─ rule-table.md                      # 业务规则表（条件→动作→结果）
 │     ├─ field-rule-table.md                # 字段规则表（表单/列表/详情字段定义）
 │     ├─ validation-rule-table.md           # 校验规则表（必填/重复/格式校验）
@@ -440,16 +443,30 @@ prd-workflow-skill/
 │     ├─ exception-handling-writing.md      # 异常处理表（空态/失败/冲突/权限不足）
 │     ├─ acceptance-criteria-table.md       # 验收标准表
 │     ├─ self-test-case-table.md            # 研发自测用例表
-│     └─ risk-acceptance-table.md           # 风险接受表+待确认事项表
-└─ 05_context/                              # 标准与知识
+│     ├─ risk-acceptance-table.md           # 风险接受表+待确认事项表
+│     └─ schemas/                            # 表格模板schema（8个），固定列集+必填字段+usage_rules
+│        ├─ rule-table.schema.json
+│        ├─ field-rule-table.schema.json
+│        ├─ validation-rule-table.schema.json
+│        ├─ data-caliber-table.schema.json
+│        ├─ exception-handling.schema.json
+│        ├─ acceptance-criteria-table.schema.json
+│        ├─ self-test-case-table.schema.json
+│        └─ risk-acceptance-table.schema.json
+└─ 05_context/                              # 标准与知识（Markdown解释 + JSON执行层）
    ├─ prd-standards/                        # PRD质量标准+V3.3完整性清单
    │  ├─ prd-quality-standard.md            # PRD根标准、五不清单、复杂度等级、P0-P3
    │  └─ checklist-v3.3.json                # V3.3 66项操作完整性清单（Node 3/4共用）
-   ├─ writing-standards/                    # 表格格式规范、交互逻辑写作规范
-   │  ├─ table-format-conventions.md        # 查询/列表/表单表格的固定列集规范
+   ├─ writing-standards/                    # 表格格式规范、交互逻辑写作、全局组件默认值
+   │  ├─ table-format-conventions.md        # 查询/列表/表单表格的固定列集规范（解释、反例、范例）
+   │  ├─ table-format-schemas.json           # 5种通用表格列schema（机器可读：列名→必填→描述→允许值）
+   │  ├─ global-component-conventions.md    # 字段长度/输入/选择/列表/行为全局默认值（解释）
+   │  ├─ global-component-conventions.json  # 全局默认值执行层（机器可读：40+项默认值+覆盖规则）
    │  └─ interaction-logic-writing.md       # 交互逻辑表（步骤→触发→动作→响应→规则）
-   └─ optimization-standards/               # 复盘触发信号、T0-T3分级、根因分类
-      └─ retrospect-trigger-rules.md        # 信号定义、升级规则、自动/人工边界
+   └─ optimization-standards/               # 复盘触发信号、T0-T3分级、根因分类、JSON化路线图
+      ├─ retrospect-trigger-rules.md        # 信号定义、升级规则、自动/人工边界（解释）
+      ├─ retrospect-trigger-rules.json      # 触发信号/升级/根因/确认边界执行层（机器可读）
+      └─ jsonization-backlog.md             # JSON化路线图：已完成/P1/P2候选、标准、执行边界
 ```
 
 ---
@@ -472,6 +489,19 @@ prd-workflow-skill/
 ### 细则下沉
 
 质量标准、流程协议、门禁规则、输出模板、复盘规则、写作表格模板，都放进对应目录中，按需加载。
+
+---
+
+### JSON 执行层与 Markdown 分离
+
+`05_context/` 和 `04_templates/table-templates/` 下的部分文件已拆分为 JSON 执行层 + Markdown 解释层：
+
+```text
+JSON 负责执行：路由、匹配、过滤、校验、默认值读取、触发判断。
+Markdown 负责解释：为什么这样设计、边界是什么、例子是什么、反例是什么。
+```
+
+Agent 应先读 JSON 获取机械答案，再按需读 Markdown 获取解释。禁止预加载全量 schema 和全量 Markdown 模板。
 
 ---
 
@@ -558,6 +588,8 @@ PRD 写作、评审、修订、复盘都必须能追溯到：
 * Retrospect Trigger Detector
 * 条件复盘沉淀
 * 可选 hooks 检测
+* JSON 执行层（表格路由、schema 校验、全局默认值、触发规则）
+* 表格模板 Lazy Loading（按需加载 matched schema + matched Markdown）
 
 当前版本不承诺：
 
