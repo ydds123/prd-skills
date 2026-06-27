@@ -357,14 +357,15 @@ Rules:
 `output-contracts.md` defines the PRD output structure.
 `05_context/prd-standards/checklist-v3.3.json` defines what must be checked, activated, and satisfied.
 
-Full PRD writing runs on a five-file engine:
+Full PRD writing runs on a six-file engine:
 
 ```text
 01_workflow/workflow-protocol.md decides when and how the writing process runs;
 05_context/prd-standards/prd-quality-standard.md defines the quality baseline and blocking logic;
 05_context/prd-standards/checklist-v3.3.json decides what must be extracted;
 04_templates/output-contracts.md decides where extracted content lands;
-04_templates/table-templates/table-template-index.md decides which table template renders it.
+04_templates/table-templates/table-template-index.md decides which table template renders it;
+05_context/writing-standards/global-component-conventions.md provides reusable default behavior for fields, controls, lists, actions, and feedback.
 ```
 
 output-contracts.md is not a standalone template. It is the landing layer

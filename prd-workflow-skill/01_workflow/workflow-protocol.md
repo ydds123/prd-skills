@@ -115,8 +115,8 @@ Goal: expand the accepted frame into a complete PRD body.
 4. Identify which checklist items apply: filter by `complexity` (L1-L4 matches the PRD's complexity level) and `condition` (domain-specific conditions like "has multi-role" or "has delete action").
 5. For each applicable item, use `question`, `pass_criteria`, and `failure_signal` as the writing guide. The `suggested_format` field tells you which table template to use (see `04_templates/table-templates/`).
 6. Load `05_context/writing-standards/global-component-conventions.md`. When writing field validation, component behavior, list display, or action rules, apply global defaults unless the PRD states a justified exception.
-6. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
-7. Do not dump the checklist into the PRD. Use it as a silent writing guide.
+7. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
+8. Do not dump the checklist into the PRD. Use it as a silent writing guide.
 
 Write:
 
