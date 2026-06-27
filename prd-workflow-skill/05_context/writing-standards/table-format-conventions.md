@@ -4,6 +4,7 @@
 > Governed by: `../prd-standards/prd-quality-standard.md` §5.3 "不留猜疑"
 > Evidence: first PRD run — query/filter/field/form tables were reworked across 8 revision rounds due to missing format standards
 > Version: v1.0.0
+> Machine-readable schemas: `table-format-schemas.json` — Agent loads JSON first for stable table column schemas, then reads this Markdown file for rationale, anti-patterns, and examples.
 
 For default field lengths, input handling, selection behavior, list display, and action defaults, see `global-component-conventions.md`.
 

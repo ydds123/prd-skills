@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "05_context/writing-standards/table-format-conventions.md",
+    "purpose": "Machine-readable stable column schemas for general-purpose PRD table formats — query/filter, list/display, form/modal, business rule, and scope/feature-inventory tables"
+  },
+  "schemas": [
+    {
+      "id": "query_filter_table",
+      "name": "查询条件表",
+      "source_section": "查询条件表",
+      "purpose": "定义 Web 端列表页或管理页的查询/筛选条件字段",
+      "columns": [
+        { "name": "查询字段", "required": true, "description": "查询条件的业务字段名", "allowed_values": [], "notes": ["必须使用业务语义命名，如'消息模板'而非'template_name'"] },
+        { "name": "组件类型", "required": true, "description": "查询控件的前端组件类型", "allowed_values": ["单行文本输入框", "下拉单选", "下拉多选", "日期范围选择", "标签页", "级联选择"], "notes": ["级联选择需补充层级、取值来源、默认展开层级、搜索范围", "不得只写'下拉选择'，必须明确是'下拉单选'还是'下拉多选'"] },
+        { "name": "查询精度", "required": true, "description": "匹配方式", "allowed_values": ["精确匹配", "模糊匹配", "范围匹配"], "notes": [] },
+        { "name": "说明", "required": true, "description": "补充约束、默认值、交互行为等", "allowed_values": [], "notes": ["模糊匹配字段：建议补充长度限制和空格处理规则", "下拉选项字段：必须说明选项来源和是否可清空"] }
+      ],
+      "notes": ["查询条件表不承载列表展示规则", "查询字段和数据列表字段的命名不应强行共享"],
+      "anti_patterns_ref": "table-format-conventions.md"
+    },
+    {
+      "id": "list_display_table",
+      "name": "列表字段表",
+      "source_section": "列表字段表",
+      "purpose": "定义列表页每列的数据来源、展示规则和空值处理",
+      "columns": [
+        { "name": "字段", "required": true, "description": "列表列名，业务语义命名", "allowed_values": [], "notes": [] },
+        { "name": "字段含义", "required": true, "description": "该列代表的业务含义", "allowed_values": [], "notes": [] },
+        { "name": "数据来源", "required": true, "description": "该列数据的取值字段或计算来源", "allowed_values": [], "notes": ["格式：系统/模块.字段名，如'模板配置.消息类型 display_name'"] },
+        { "name": "展示规则", "required": true, "description": "该列的展示格式、截断规则、hover 行为", "allowed_values": [], "notes": ["长文本需说明截断长度和是否 hover 展示全文", "状态字段需说明颜色/标记规则"] },
+        { "name": "空值展示", "required": true, "description": "数据为空时的展示方式", "allowed_values": [], "notes": ["默认展示'--'", "特殊空值含义需单独说明"] },
+        { "name": "备注", "required": false, "description": "补充说明或引用规则编号", "allowed_values": [], "notes": [] }
+      ],
+      "notes": ["列表字段必须说明数据来源、展示规则、空值展示；不能只写字段名和说明", "操作列必须说明按钮显示、禁用、隐藏条件", "列表默认排序规则需补充在说明或交互逻辑中"],
+      "anti_patterns_ref": "table-format-conventions.md"
+    },
+    {
+      "id": "form_modal_field_table",
+      "name": "表单/弹窗字段表",
+      "source_section": "表单字段表 / 弹窗表单",
+      "purpose": "定义新增/编辑表单或弹窗中每个字段的控件类型、必填性和说明",
+      "columns": [
+        { "name": "字段名称", "required": true, "description": "表单字段的业务名称", "allowed_values": [], "notes": [] },
+        { "name": "字段类型", "required": true, "description": "表单控件的组件类型", "allowed_values": ["单行文本输入框", "多行文本输入框", "下拉单选", "下拉多选", "多选列表", "日期选择", "时间选择", "日期时间选择", "开关", "单选框", "复选框"], "notes": ["不得只写'下拉选择'，必须明确是'下拉单选'还是'下拉多选'", "级联/树形/远程搜索需补充来源和交互规则"] },
+        { "name": "是否必填", "required": true, "description": "该字段是否必填", "allowed_values": ["是", "否"], "notes": [] },
+        { "name": "引导文案", "required": true, "description": "输入框内的 placeholder 文案", "allowed_values": [], "notes": ["格式：'请输入...'或'请选择...'"] },
+        { "name": "字段说明", "required": true, "description": "字段的业务约束、长度限制、校验规则、选项来源", "allowed_values": [], "notes": [] }
+      ],
+      "notes": ["表单超过 8 个字段时应按业务语义分组", "分组标题需明确业务含义"],
+      "anti_patterns_ref": "table-format-conventions.md"
+    },
+    {
+      "id": "business_rule_table",
+      "name": "业务规则表",
+      "source_section": "业务规则表",
+      "purpose": "定义业务规则的触发条件、处理逻辑和结果",
+      "columns": [
+        { "name": "规则", "required": true, "description": "规则的业务描述或唯一标识", "allowed_values": [], "notes": ["可使用 R001/R002 等编号"] },
+        { "name": "说明", "required": true, "description": "规则的具体行为和约束", "allowed_values": [], "notes": [] },
+        { "name": "用例", "required": true, "description": "具体场景举例，帮助研发和测试理解规则", "allowed_values": [], "notes": [] }
+      ],
+      "notes": ["简单规则用 3 列表；复杂规则可扩展为 9 列表（触发条件、规则对象、系统处理、结果、异常、角色、备注等）"],
+      "anti_patterns_ref": "table-format-conventions.md"
+    },
+    {
+      "id": "scope_feature_inventory_table",
+      "name": "范围与功能清单表",
+      "source_section": "范围表 / 功能清单表",
+      "purpose": "定义本期范围、功能清单的模块和功能点",
+      "columns": [
+        { "name": "所属端", "required": true, "description": "该功能涉及的端", "allowed_values": ["Web 端", "App 端", "系统侧"], "notes": ["如果多端共享，使用' / '分隔，如'Web 端 / App 端'", "所属端只标记涉及端，不作为一级分组依据"] },
+        { "name": "模块", "required": true, "description": "功能所属的业务模块", "allowed_values": [], "notes": [] },
+        { "name": "功能点", "required": true, "description": "具体功能名称", "allowed_values": [], "notes": [] },
+        { "name": "功能说明", "required": true, "description": "功能的简要描述和范围", "allowed_values": [], "notes": [] }
+      ],
+      "notes": ["功能清单按功能域/业务对象纵向组织，所属端不作为一级分组依据", "范围表（本期做/本期不做）使用目标|成功标准 vs 非目标|说明 列结构"],
+      "anti_patterns_ref": "table-format-conventions.md"
+    }
+  ],
+  "schema_selection_rules": [
+    "查询/筛选条件 → query_filter_table",
+    "列表/数据展示列 → list_display_table",
+    "新增/编辑表单、弹窗表单 → form_modal_field_table",
+    "业务规则、启停规则、通用规则 → business_rule_table",
+    "功能清单、范围表 → scope_feature_inventory_table"
+  ],
+  "notes": [
+    "This JSON defines stable column schemas for general-purpose table formats.",
+    "Each table template under 04_templates/table-templates/ may have richer column sets — this file covers the common shared formats only.",
+    "Individual table template schemas (rule-table, field-rule-table, etc.) are a separate P1 task tracked in jsonization-backlog.md."
+  ]
+}
