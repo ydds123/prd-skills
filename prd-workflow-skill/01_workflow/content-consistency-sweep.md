@@ -26,7 +26,7 @@ Skip when:
 
 Do NOT run all consistency checks every time. Determine the fix's blast radius and run only the affected dimensions or cross-cutting checks.
 
-| Fix touched | Sweep dimensions to run |
+| Fix touched | Affected dimensions / cross-cutting checks |
 |------------|------------------------|
 | Scope / non-goals (§2, §4) | 1.范围 + 5.状态(if scope changed states) + 7.数据(if scope changed data sources) |
 | Roles (§5) | 2.角色 + 3.权限 + 9.验收(role-based test cases) |
@@ -39,12 +39,12 @@ Do NOT run all consistency checks every time. Determine the fix's blast radius a
 | Terminology / naming (anywhere) | 10.术语 |
 | Full §10 rewrite (role matrix + operation control + permission exception) | 2.角色 + 3.权限 + 4.流程 + 8.异常 + 9.验收 + 10.术语 + 0.约束侵蚀 |
 | Template detail table column changed (e.g. 跳转入口 renamed) | 10.术语(match against §8.3.5 reference table) + 4.流程(verify flow target consistency) |
-| Rules involving state reversal, flow rollback, permission exception, unlock, void recovery, or re-submission | 5.状态 + 6.规则 + 4.流程 + **约束侵蚀**(cross-cutting) |
+| Rules involving state reversal, flow rollback, permission exception, unlock, void recovery, or re-submission | 5.状态 + 6.规则 + 4.流程 + 0.约束侵蚀(cross-cutting gate) |
 | **Added/deleted an item in an enumerated set** (e.g. new message type, new role, new state, new exception case) | **11.枚举完备性**(re-verify the set's coverage against its domain) + 10.术语(sync all cross-references to the updated count) |
 
 ## Enumeration Completeness — Cross-Cutting Check
 
-Not a numbered consistency dimension — a method that applies whenever the PRD contains an **enumerated set** that claims to cover a domain.
+Not a standard consistency dimension — a cross-cutting method that applies whenever the PRD contains an **enumerated set** that claims to cover a domain.
 
 The V3.3 checklist checks whether each *member* of the set is written well. It cannot check whether the *set itself* is missing members. This is the blind spot: "each item is thorough, but one was never listed."
 
