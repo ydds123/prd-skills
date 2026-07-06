@@ -24,12 +24,12 @@ Skip when:
 
 ## Blast Radius — Select Dimensions
 
-Do NOT run all 10 dimensions every time. Determine the fix's blast radius and run only the affected dimensions.
+Do NOT run all consistency checks every time. Determine the fix's blast radius and run only the affected dimensions or cross-cutting checks.
 
 | Fix touched | Sweep dimensions to run |
 |------------|------------------------|
 | Scope / non-goals (§2, §4) | 1.范围 + 5.状态(if scope changed states) + 7.数据(if scope changed data sources) |
-| Roles (§5) | 2.角色 + 3.权限 + us9.验收(role-based test cases) |
+| Roles (§5) | 2.角色 + 3.权限 + 9.验收(role-based test cases) |
 | Permissions (§10) | 3.权限 + 8.异常(permission exception handling) + 9.验收(permission test cases) |
 | States / flows (§6, §8.1.4.1, §8.1.9) | 4.流程 + 5.状态 + 8.异常(flow exceptions) + 0.约束侵蚀 |
 | Rules (§8.1.4, §8.1.6, §8.1.8) | 6.规则 + 5.状态(if rules alter state) + 9.验收(rule-based criteria) + 0.约束侵蚀(if rules touch constraint boundaries) |
@@ -44,7 +44,7 @@ Do NOT run all 10 dimensions every time. Determine the fix's blast radius and ru
 
 ## Enumeration Completeness — Cross-Cutting Check
 
-Not a 10-dimension check — a method that applies whenever the PRD contains an **enumerated set** that claims to cover a domain.
+Not a numbered consistency dimension — a method that applies whenever the PRD contains an **enumerated set** that claims to cover a domain.
 
 The V3.3 checklist checks whether each *member* of the set is written well. It cannot check whether the *set itself* is missing members. This is the blind spot: "each item is thorough, but one was never listed."
 
@@ -86,9 +86,9 @@ Trigger when:
 | Variables in a variable dictionary | All variables referenced in template bodies | A variable used in a body but never defined in the dict |
 | Query filter options | All enumerable values of the filtered field | "许可审批待处理" missing from the dropdown list |
 
-## 10 Consistency Dimensions
+## Consistency Dimensions and Cross-Cutting Checks
 
-### 0. 约束侵蚀检查 (Constraint Erosion Check — cross-cutting)
+### 0. Cross-Cutting Gate: 约束侵蚀检查 (Constraint Erosion Check)
 
 Not a dimension with a fixed checklist — a judgment question applied whenever a fix touches rules that cross constraint boundaries.
 
