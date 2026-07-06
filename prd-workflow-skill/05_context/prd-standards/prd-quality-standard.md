@@ -81,6 +81,23 @@ Gold rule: Pyramid principle and MECE are the output foundation, but output qual
 | No guessing | Triggers, entries, inputs, outputs, states, feedback, acceptance, and self-tests are executable. | Readers ask "is this what you meant?" |
 | Accurate information | Facts, assumptions, estimates, pending items, data sources, and system capability boundaries are separated. | Unconfirmed content becomes implementation truth. |
 
+## Constraint Integrity
+
+Local reasonableness is not enough to pass a rule. When a PRD introduces an exception, reversal, unlock, recovery, re-submission, or override, the writer must also judge whether the system's constraint structure still holds after the rule is allowed.
+
+A constraint is any boundary that keeps the system predictable. The main ones:
+
+- **Main rule boundary**: the primary rule that governs normal behavior. An exception must not silently become the new default or reverse-erode the main rule.
+- **State irreversibility**: a state designed to be terminal or one-way. A reversal or recovery action must not reopen it without explicit redesign of the state machine.
+- **Permission boundary**: who can do what. A field unlock or role bypass must not create a path around the original permission model.
+- **Flow direction**: the intended sequence of states and actions. A rollback or re-submission must not reverse the flow direction without redefining what "forward" means.
+- **Responsibility attribution**: who owns a task or decision at each stage. A reassignment that bypasses normal ownership must not cause responsibility drift.
+- **Data caliber**: what a metric or field means and how it is computed. A rule change that alters what is counted, when, or by whom must not pollute existing caliber definitions.
+
+The PRD must not only prove that the current action is reasonable — it must also show that after the action is allowed, these constraints still hold. If this cannot be confirmed, the rule must be marked as 待确认 or escalated as a P1/P0 risk. Smooth prose that makes the rule sound harmless is not a substitute for constraint analysis.
+
+This is a judgment disposition, not a checklist. The question is always: "After this rule is allowed, do the system's existing constraints still stand?" If the answer is not clearly yes, stop and analyze.
+
 ## Must-Writes
 
 Every PRD must include:

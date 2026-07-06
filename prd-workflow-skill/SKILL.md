@@ -20,7 +20,11 @@ Retrospect is conditional, not a required stage. It is triggered by explicit use
 
 A good PRD fixes product judgment into a shared answer that the team can execute, verify, and trace. The reader should not need to come back to the PM for confirmation.
 
-Judge every output by four criteria: clear boundary, explicit judgment, no guessing, and accurate information. Load [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md) before writing, reviewing, or revising PRD content. When expanding PRD details, use [Global Component Conventions](05_context/writing-standards/global-component-conventions.md) as the default-value layer for reusable field, control, list, action, and feedback behavior.
+Judge every output by four criteria: clear boundary, explicit judgment, no guessing, and accurate information.
+
+Beyond output quality, apply one judgment disposition: **locally reasonable does not mean globally permissible.** When a PRD introduces a rule, exception, reversal, unlock, recovery, or re-submission, the agent must judge whether allowing it would erode the system's constraint structure — undermining main rules, reopening irreversible states, bypassing permission boundaries, reversing flow direction, drifting responsibility attribution, or polluting data caliber. A design that works at the current node but risks systemic erosion cannot pass without explicit constraint analysis. If constraint integrity cannot be confirmed, mark the rule as 待确认 or P1/P0 risk; do not bury the uncertainty in smooth prose.
+
+Load [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md) before writing, reviewing, or revising PRD content. When expanding PRD details, use [Global Component Conventions](05_context/writing-standards/global-component-conventions.md) as the default-value layer for reusable field, control, list, action, and feedback behavior.
 
 Apply the standard across input, processing, and output. Details live in the quality reference.
 

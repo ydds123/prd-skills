@@ -31,14 +31,15 @@ Do NOT run all 10 dimensions every time. Determine the fix's blast radius and ru
 | Scope / non-goals (§2, §4) | 1.范围 + 5.状态(if scope changed states) + 7.数据(if scope changed data sources) |
 | Roles (§5) | 2.角色 + 3.权限 + us9.验收(role-based test cases) |
 | Permissions (§10) | 3.权限 + 8.异常(permission exception handling) + 9.验收(permission test cases) |
-| States / flows (§6, §8.1.4.1, §8.1.9) | 4.流程 + 5.状态 + 8.异常(flow exceptions) |
-| Rules (§8.1.4, §8.1.6, §8.1.8) | 6.规则 + 5.状态(if rules alter state) + 9.验收(rule-based criteria) |
+| States / flows (§6, §8.1.4.1, §8.1.9) | 4.流程 + 5.状态 + 8.异常(flow exceptions) + 0.约束侵蚀 |
+| Rules (§8.1.4, §8.1.6, §8.1.8) | 6.规则 + 5.状态(if rules alter state) + 9.验收(rule-based criteria) + 0.约束侵蚀(if rules touch constraint boundaries) |
 | Data (§8.1.7, §9) | 7.数据 + 6.规则(if data drives rules) |
 | Exceptions (§8.x.10, §8.x.7, §8.x.8) | 8.异常 + 9.验收(exception test cases) |
 | Acceptance / self-test (§11, §12) | 9.验收 |
 | Terminology / naming (anywhere) | 10.术语 |
-| Full §10 rewrite (role matrix + operation control + permission exception) | 2.角色 + 3.权限 + 4.流程 + 8.异常 + 9.验收 + 10.术语 |
+| Full §10 rewrite (role matrix + operation control + permission exception) | 2.角色 + 3.权限 + 4.流程 + 8.异常 + 9.验收 + 10.术语 + 0.约束侵蚀 |
 | Template detail table column changed (e.g. 跳转入口 renamed) | 10.术语(match against §8.3.5 reference table) + 4.流程(verify flow target consistency) |
+| Rules involving state reversal, flow rollback, permission exception, unlock, void recovery, or re-submission | 5.状态 + 6.规则 + 4.流程 + **约束侵蚀**(cross-cutting) |
 | **Added/deleted an item in an enumerated set** (e.g. new message type, new role, new state, new exception case) | **11.枚举完备性**(re-verify the set's coverage against its domain) + 10.术语(sync all cross-references to the updated count) |
 
 ## Enumeration Completeness — Cross-Cutting Check
@@ -86,6 +87,27 @@ Trigger when:
 | Query filter options | All enumerable values of the filtered field | "许可审批待处理" missing from the dropdown list |
 
 ## 10 Consistency Dimensions
+
+### 0. 约束侵蚀检查 (Constraint Erosion Check — cross-cutting)
+
+Not a dimension with a fixed checklist — a judgment question applied whenever a fix touches rules that cross constraint boundaries.
+
+**When to apply:** The fix touches state reversal, flow rollback, permission exception, field unlock, void recovery, re-submission after completion, or task reassignment.
+
+**Method:** For each constraint boundary the fix crosses, ask a single question:
+
+> After this fix is applied, does the system's constraint structure still hold?
+
+Specifically, look for:
+- A fix that makes a state reversible that the original PRD designed as terminal.
+- A fix that adds a permission bypass that was not present before the fix.
+- A fix that allows flow to go backward where the original design only allowed forward.
+- A fix that weakens a main rule by broadening its exception without re-verifying the rule's boundary.
+- A fix that shifts responsibility attribution or data caliber without updating downstream sections.
+
+**Severity:** A confirmed constraint erosion is P0. A plausible but unconfirmed erosion is P1 — mark for PM confirmation, do not auto-fix.
+
+**Auto-fix boundary:** Constraint erosion findings are never auto-fixable. They always require PM confirmation because they change what the system guarantees.
 
 ### 1. 范围一致性 (Scope Consistency)
 

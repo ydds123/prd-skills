@@ -99,6 +99,8 @@ Required actions:
 
 Do not include exception flows, empty-state handling, permission matrices, data specs, acceptance criteria, self-test cases, API details, or implementation-like content unless the user explicitly asks.
 
+**Constraint-structure marking (when applicable):** If the draft involves state reversal, flow rollback, permission exception, field unlock, void-then-restore, or re-submission after completion, the draft skeleton must flag which system constraint boundaries are touched — even if full rule analysis is deferred to Node 3. The draft does not need to resolve whether the constraint holds, but it must not present such rules as harmless main-flow steps without noting the constraint boundary they cross.
+
 **Draft check** (inline, not separate gate): If strategy, scope, or main flow are uncertain, pause for confirmation. If they are already confirmed in source material, continue and state the basis.
 
 → Human confirms scope and main flow are correct. Do not expand to full PRD before this confirmation.
@@ -143,6 +145,8 @@ Write:
 - development self-test cases
 - pending items and accepted risks
 
+For any rule that touches system constraint boundaries — such as state reversal, flow rollback, permission exception, field unlock, void recovery, re-submission after completion, or task reassignment that bypasses normal ownership — the PRD must explicitly address whether the system's constraint structure still holds after the rule is allowed. Refer to [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md) §Constraint Integrity for what constraint structure means. If constraint integrity cannot be confirmed, mark the rule 待确认 or record it in the risk-acceptance table. Do not use polished prose to make a constraint violation look benign.
+
 **After Fill Details completes (or after each revision round ends):**
 
 1. Update `09-run-log.md` Node 完成记录 for Node 3: which checklist items were applied (by complexity and condition filters), how many gate items were addressed vs. skipped.
@@ -183,6 +187,7 @@ Required actions:
   - Example: C56 (空态处理) is `hierarchy: "extended", priority: "P0"` → missing = P0 block, not P1.
 - check clear boundary, explicit judgment, no guessing, and accurate information
 - classify findings as P0/P1/P2/P3
+- **constraint-erosion check**: for every rule, exception, reversal, unlock, recovery, or re-submission the PRD introduces, ask: "if this is allowed, do the system's existing constraints still hold?" Flag any design where local reasonableness masks systemic erosion of main rules, irreversible states, permission boundaries, flow direction, responsibility attribution, or data caliber — even if the PRD text is otherwise well-written. A finding of this type is at minimum P1; if the PRD text makes the erosion invisible through smooth wording, escalate to P0.
 - produce minimum fix set
 - say whether the PRD can enter review or final output
 
