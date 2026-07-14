@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "version": "1.0.0",
+    "source": "SKILL.md",
+    "purpose": "Define positive, negative, and near-neighbor routing examples for static Skill routing contract checks"
+  },
   "name": "prd-workflow-trigger-evals",
   "version": "0.1.0",
   "positive": [

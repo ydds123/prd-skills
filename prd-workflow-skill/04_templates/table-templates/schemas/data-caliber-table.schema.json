@@ -1,7 +1,8 @@
 {
   "meta": {
     "version": "1.0.0",
-    "source": "04_templates/table-templates/data-caliber-table.md",
+    "authority": "authoritative",
+    "human_reference": "04_templates/table-templates/data-caliber-table.md",
     "purpose": "Machine-readable column schema for list data source, report data source, dashboard metric, and statistical caliber tables"
   },
   "template_id": "data_caliber_table",

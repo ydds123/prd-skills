@@ -16,30 +16,11 @@ For PRD draft v0, only write strategy layer, scope layer, and main-flow skeleton
 
 ## PRD Task Folder
 
-```text
-YYYY-MM-DD-{prd-name}/
-├─ 任务说明.md
-├─ 00-上下文证据.md
-├─ 01-背景理解卡.md
-├─ 02-决策账本.md
-├─ 03-可写状态判断.md
-├─ 04-PRD草案v0.md
-├─ 05-完整PRDv1.md
-├─ 06-审核报告.md
-├─ 07-修订记录.md
-├─ 08-复盘建议.md
-├─ 09-run-log.md
-└─ assets/
-```
+Read `01_workflow/workflow-manifest.json` for the authoritative artifact names, creation nodes, conditional outputs, and completion conditions. This file defines the content shape of those artifacts; it does not maintain a second task-folder tree.
 
-Minimum first-run files:
+Create only the outputs declared for nodes that have actually run. The JSON contracts and commands for the review record and gate receipt are defined in `05_context/prd-standards/content-quality-gate.md`; do not hand-write or manually refresh the gate receipt.
 
-- `任务说明.md`: task goal, source links, current status, next action
-- `00-上下文证据.md`: source materials and evidence notes
-- `09-run-log.md`: created from `04_templates/run-log.md` template at Boot — running timeline, user correction evidence, revision root causes, pain point log
-- `04-PRD草案v0.md`: the draft Markdown file (created at Node 2)
-
-Use additional files only when that stage has actually happened.
+After `seal` and `validate`, output a plain-language decision sheet using `04_templates/content-gate-test-conclusion.md`. This is the primary user-review artifact. It must put the conclusion first, show only the business decisions the user must make, separate fixes the workflow can apply directly, explain the next actions, and define completion. Technical evidence is linked in an optional final section and is not required reading.
 
 ## Background Understanding Card
 
@@ -230,32 +211,21 @@ flowchart TD
 #### 8.1.2 查询条件
 
 仅适用于存在查询区的功能域。不适用时删除本节。
-
-| 查询字段 | 组件类型        | 查询精度 | 说明 |
-| ---- | ----------- | ---- | -- |
-|      | 精准筛选 / 模糊筛选 |      |    |
+按 `query_filter_table` contract 输出。
 
 #### 8.1.3 列表字段
 
 仅适用于存在列表的功能域。不适用时删除本节。
-
-| 字段 | 字段含义 | 数据来源 | 展示规则 | 空值展示 | 备注 |
-| -- | ---- | ---- | ---- | ---- | -- |
-|    |      |      |      |      |    |
+按 `list_display_table` contract 输出。
 
 #### 8.1.4 表单 / 详情字段
 
 根据功能形态选择“表单字段”或“详情字段”。不适用时删除本节。
-
-| 字段名称 | 字段含义 | 数据来源 | 字段状态             | 备注 |
-| ---- | ---- | ---- | ---------------- | -- |
-|      |      |      | 只读 / 可编辑 / 用户可配置 |    |
+新增/编辑表单按 `form_modal_field_table` contract 输出；跨页面字段定义按 `field_rule_table` contract 输出。
 
 #### 8.1.5 业务规则
 
-| 规则编号 | 规则对象 | 触发条件 | 规则说明 | 系统处理 | 处理后结果 | 异常处理 | 适用角色 | 备注 |
-| ---- | ---- | ---- | ---- | ---- | ----- | ---- | ---- | -- |
-| R001 |      |      |      |      |       |      |      |    |
+按 `business_rule_table` contract 输出。
 
 #### 8.1.6 状态流转
 
@@ -268,22 +238,19 @@ flowchart TD
 #### 8.1.7 数据与口径
 
 仅适用于有字段来源、变量、统计口径、快照、状态数据的功能域。不适用时删除本节。
+按 `data_caliber_table` contract 输出。
 
-| 数据 / 变量 / 口径 | 数据来源 | 使用位置 | 缺失处理 |
-| ------------ | ---- | ---- | ---- |
-|              |      |      |      |
+#### 8.1.8 操作流程
 
-#### 8.1.8 交互逻辑
+每项操作按 `operation-flow-writing.md` 展开：
 
-| 步骤 | 触发起点 | 用户动作 | 系统响应 | 业务规则 |
-| -- | ---- | ---- | ---- | ---- |
-| 1  |      |      |      |      |
+##### 8.1.8.1 {操作名称}
 
-#### 8.1.9 异常处理
+主路径（正常路径）
 
-| 触发条件 | 处理逻辑 | 引导提示 | 恢复机制 |
-| ---- | ---- | ---- | ---- |
-|      |      |      |      |
+1. {角色执行操作，系统返回结果。}
+
+在对应步骤后按需使用 `exception_handling_table` 和 `key_decision_table`。没有关键决策点时不创建空表。
 
 ### 8.2 {功能域二}
 
@@ -303,23 +270,16 @@ flowchart TD
 
 ### 10.1 {功能域一}
 
-| 编号 | 验收项 | 预期结果 |
-| -- | --- | ---- |
-| A1 |     |      |
+按 `acceptance_criteria_table` contract 输出。
 
 ### 10.2 {功能域二}
 
-| 编号 | 验收项 | 预期结果 |
-| -- | --- | ---- |
-| B1 |     |      |
+按 `acceptance_criteria_table` contract 输出。
 
 ## 11. 研发自测清单
 
 自测清单与验收标准编号层级对齐，自上而下覆盖主流程、分支、边界和异常。
-
-| 编号 | 自测点 |
-| -- | --- |
-| D1 |     |
+按 `self_test_case_table` contract 输出。
 
 ## 12. 待业务复核项
 
@@ -350,7 +310,7 @@ Rules:
 - Use top-level cross-domain chapters only when the rule truly applies across multiple functional domains.
 - Keep “结论先行” as the first substantive section after document information.
 - Keep acceptance criteria and self-test cases aligned by functional domain or flow.
-- Field limits, input handling, selection behavior, list display, and action defaults must follow `05_context/writing-standards/global-component-conventions.md` unless a justified business exception is stated.
+- Component behavior, field semantic defaults, list display, and action defaults must follow the authoritative `05_context/writing-standards/component-specifications.json` unless a higher-priority business rule is stated with evidence.
 
 ## Checklist-driven Full PRD Writing
 
@@ -364,8 +324,8 @@ Full PRD writing runs on a six-file engine:
 05_context/prd-standards/prd-quality-standard.md defines the quality baseline and blocking logic;
 05_context/prd-standards/checklist-v3.3.json decides what must be extracted;
 04_templates/output-contracts.md decides where extracted content lands;
-04_templates/table-templates/table-template-index.md decides which table template renders it;
-05_context/writing-standards/global-component-conventions.md provides reusable default behavior for fields, controls, lists, actions, and feedback.
+04_templates/table-templates/table-template-index.json routes each content purpose to one authoritative table schema;
+05_context/writing-standards/component-specifications.json provides the authoritative component behavior, field semantic defaults, required PRD decisions, list rules, and action defaults; its Markdown file is generated for reading only.
 ```
 
 output-contracts.md is not a standalone template. It is the landing layer
@@ -388,7 +348,7 @@ Before writing Full PRD details:
    - use `question` to identify what must be answered;
    - use `pass_criteria` to judge whether the PRD has written enough;
    - use `failure_signal` to avoid common omissions;
-   - use `suggested_format` to select the output form through `04_templates/table-templates/table-template-index.md`;
+   - use `suggested_format` to select exactly one table contract through `04_templates/table-templates/table-template-index.json`;
    - use `priority` and `hierarchy` to determine whether omission blocks output.
 5. Every applicable `hierarchy: gate` item must be addressed or explicitly marked `不适用` with a reason.
 6. Do not dump checklist items into the PRD. The checklist is a silent extraction and quality guide.
@@ -442,7 +402,7 @@ first. Do not extract all 12 slots for every domain.
 | 台账型 | 页面定义、查询条件、列表字段、新增/编辑表单、业务规则、实际支持的操作流程、导入导出契约、异常、验收 | 无证据的状态流转、未支持操作、纯技术校验 |
 | 列表管理型 | 查询条件、列表字段、操作规则、异常处理 | 状态流转、变量字典 |
 | 表单配置型 | 表单字段、校验规则、保存规则、业务规则 | 查询条件、列表字段 |
-| 流程状态型 | 主流程、状态流转、节点规则、交互逻辑、异常分支 | 列表字段、变量字典 |
+| 流程状态型 | 主流程、状态流转、节点规则、操作流程、异常分支 | 列表字段、变量字典 |
 | 消息通知型 | 触发事件、模板内容、变量字典、接收人解析、生成规则 | 查询条件、列表字段 |
 | 数据口径型 | 指标定义、数据来源、计算规则、空值处理 | 状态流转、权限矩阵 |
 | 系统联动型 | 触发条件、系统处理、上下游依赖、失败兜底 | 表单字段、列表字段 |
@@ -465,8 +425,8 @@ Use applicable checklist items to activate subsections:
 | 状态流转 | approval, enable/disable, publish, close, terminate, state-change items | state machine diagram / state transition table |
 | 权限与责任 | role boundary, permission boundary, data permission items | role-permission matrix |
 | 数据与口径 | data source, variables, statistics, calculation, snapshot, missing value items | data caliber table |
-| 交互逻辑 | click before/during/after, popup behavior, page navigation, result feedback items | interaction logic table |
-| 异常处理 | empty, failure, duplicate, conflict, permission-denied, irreversible cases | exception handling table |
+| 操作流程 | click before/during/after, popup behavior, page navigation, result feedback items | numbered main path + branch/exception table + key-decision table |
+| 异常处理 | empty, failure, duplicate, conflict, permission-denied, irreversible cases | branch/exception table placed under the related main-path step |
 | 验收点映射 | acceptance criteria items | acceptance table in section 10 |
 | 自测点映射 | self-test items | self-test table in section 11 |
 

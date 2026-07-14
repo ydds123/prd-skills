@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "05_context/prd-standards/content-quality-gate.md",
+    "purpose": "Forward-test scenarios for the deterministic PRD content quality gate"
+  },
+  "scenarios": [
+    {"id": "pass-complete-review", "expected": "pass"},
+    {"id": "block-stale-prd-hash", "expected": "block"},
+    {"id": "block-reseal-without-review-revision", "expected": "block"},
+    {"id": "block-open-p0", "expected": "block"},
+    {"id": "block-unaccepted-p1", "expected": "block"},
+    {"id": "pass-complete-p1-risk-acceptance", "expected": "pass"},
+    {"id": "block-missing-checklist-disposition", "expected": "block"},
+    {"id": "block-pending-review", "expected": "incomplete"},
+    {"id": "block-p0-risk-acceptance", "expected": "block"},
+    {"id": "block-same-writer-reviewer-context", "expected": "block"},
+    {"id": "block-changed-checklist", "expected": "block"},
+    {"id": "require-human-review-conclusion", "expected": "human_conclusion_output"}
+  ]
+}

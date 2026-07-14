@@ -26,15 +26,20 @@ from typing import Optional
 
 
 SKILL_ROOT = Path(__file__).resolve().parent.parent
-CURRENT_TASK_FILE = SKILL_ROOT.parent / '.prd-workflow' / 'current-task.json'
+CURRENT_TASK_FILE = Path(
+    os.environ.get(
+        'PRD_WORKFLOW_CURRENT_TASK',
+        str(Path.home() / '.claude' / '.prd-workflow' / 'current-task.json'),
+    )
+).expanduser().resolve()
 
 
-def find_run_log() -> Optional[Path]:
+def find_run_log(current_task_file: Path = CURRENT_TASK_FILE) -> Optional[Path]:
     """Locate 09-run-log.md via current-task.json pointer."""
-    if not CURRENT_TASK_FILE.exists():
+    if not current_task_file.exists():
         return None
     try:
-        data = json.loads(CURRENT_TASK_FILE.read_text(encoding='utf-8'))
+        data = json.loads(current_task_file.read_text(encoding='utf-8'))
         task_folder = data.get('task_folder', '')
         run_log_path = data.get('run_log_path', '')
         if run_log_path and Path(run_log_path).exists():
@@ -231,7 +236,7 @@ def write_run_log(path: Path, lines: list[str]):
     path.write_text(''.join(lines), encoding='utf-8')
 
 
-def run(detection: dict) -> dict:
+def run(detection: dict, current_task_file: Path = CURRENT_TASK_FILE) -> dict:
     """Main entry — consume detector JSON, write to run-log, return result."""
     level = detection.get('trigger_level', 'T0')
     signal_type = detection.get('signal_type', '')
@@ -239,7 +244,7 @@ def run(detection: dict) -> dict:
     if level == 'T0' and signal_type != 'user_correction':
         return {'written': False, 'reason': 'T0 — not entering retrospect', 'run_log_path': None}
 
-    run_log = find_run_log()
+    run_log = find_run_log(current_task_file)
     if not run_log:
         return {'written': False, 'reason': 'No 09-run-log.md found — is .prd-workflow/current-task.json set?', 'run_log_path': None}
 
@@ -270,6 +275,8 @@ def main():
         description='Append retrospect event to 09-run-log.md')
     parser.add_argument('--input', '-i', default=None,
                         help='Path to detector JSON output file. If not given, reads from stdin.')
+    parser.add_argument('--current-task-file', default=str(CURRENT_TASK_FILE),
+                        help='Path to the active task pointer JSON.')
     args = parser.parse_args()
 
     if args.input:
@@ -281,7 +288,7 @@ def main():
             sys.exit(0)
         detection = json.loads(raw)
 
-    result = run(detection)
+    result = run(detection, Path(args.current_task_file).expanduser().resolve())
     json.dump(result, sys.stdout, ensure_ascii=False, indent=2)
     sys.stdout.write('\n')
 

@@ -1,125 +1,41 @@
 ---
 name: prd-workflow
-description: Orchestrate an end-to-end B-end PRD workflow with write-before alignment, decision ledger, two-phase PRD writing, independent quality review, revision, and retrospective improvement proposals. Use when the user asks to write, review, revise, or systematize PRDs through a controlled workflow, especially when they mention PRD 工作流, 写前对齐, 决策账本, 质量门禁, 修订闭环, or skill 复盘. Do not use for a simple one-shot PRD draft only; use a dedicated PRD writer if available. Do not use for a standalone PRD review only; use a dedicated PRD reviewer if available.
+description: Orchestrate an end-to-end B-end PRD workflow with write-before alignment, decision ledger, two-phase PRD writing, independent quality review, deterministic content-gate validation, revision, and retrospective improvement proposals. Use when the user asks to write, review, revise, or systematize PRDs through a controlled workflow, especially when they mention PRD 工作流, 写前对齐, 决策账本, 质量门禁, 修订闭环, or skill 复盘. Do not use for a simple one-shot PRD draft only; use a dedicated PRD writer if available. Do not use for a standalone PRD review only; use a dedicated PRD reviewer if available.
 ---
 
 # PRD Workflow
 
-You are a PRD workflow orchestrator for B-end product managers.
+把需求判断固化为可执行、可验证、可追溯的 B 端 PRD。不要从模糊请求直接生成完整 PRD，也不要把未确认假设写成事实。
 
-Do not generate a full PRD from a vague request. Move the requirement through 4 gated nodes, with human confirmation at exactly 2 points:
+## 路由
 
-1. **write-before alignment** — align background, scope, and key decisions; human confirms direction
-2. **draft body** — write strategy + scope + main-flow skeleton only; human confirms the frame
-3. **fill details** — expand the accepted frame into a complete PRD
-4. **independent review** — a separate role reviews, subtracts, and classifies issues; human decides fixes
+- 模糊新需求：先执行写前对齐。
+- 已有充分上下文并要求完整推进：执行全部节点。
+- 已有 PRD 仅要求审查：改用独立 PRD 审查 Skill。
+- 仅要求一次性初稿：改用轻量 PRD 写作 Skill。
+- 要求复盘或优化工作流：读取本次 `09-run-log.md` 后提出补丁；未经逐项确认不得修改复用规则。
 
-Retrospect is conditional, not a required stage. It is triggered by explicit user request, repeated quality problems, or T3 Retrospect Trigger signals.
+## 强制流程
 
-## Core Standard
+1. 读取 `01_workflow/workflow-manifest.json`，以其中节点、输入、输出、人工确认和完成条件为准。
+2. Boot：创建或复用可写任务目录，登记上下文证据，并按 `04_templates/run-log.md` 创建 `09-run-log.md`。不可写则停止。
+3. 依次执行 Node 1 至 Node 5。Node 1、Node 2、Node 4 的人工确认不可跳过；Node 3 或 Node 4.5 出现会改变主方向且无证据的判断时暂停确认。
+4. Node 3 写作时按 PRD 复杂度筛选 `05_context/prd-standards/checklist-v3.3.json`；表格只从 `04_templates/table-templates/table-template-index.json` 路由；表单字段先匹配 `05_context/writing-standards/component-specifications.json`；台账型功能同时读取 `05_context/writing-standards/ledger-feature-contract.json`。
+5. Node 4 必须由不同于写作者的审查上下文完成。先初始化 `06-内容质量审查.json`，逐项处置 Checklist，再由用户决定修正和 P1 风险接受。
+6. Node 4.5 按 `01_workflow/consistency-sweep-rules.json` 回扫，执行内容门禁 `seal` 和 `validate`，并输出大白话测试结论。门禁缺失、过期、阻断或未完成时不得进入最终输出。
+7. 每个节点完成前执行 `scripts/validate-run-log.py`；Node 5 同时要求最终 PRD 契约、内容门禁和 Run Log 全部通过。
 
-A good PRD fixes product judgment into a shared answer that the team can execute, verify, and trace. The reader should not need to come back to the PM for confirmation.
+Hook 只提供额外防护，未安装或平台不支持时仍必须内联执行全部门禁。激活任务指针用 `scripts/manage-current-task.py`；Claude Hook 生命周期用 `scripts/manage-hooks.py`。
 
-Judge every output by four criteria: clear boundary, explicit judgment, no guessing, and accurate information.
+## 渐进读取
 
-Beyond output quality, apply one judgment disposition: **locally reasonable does not mean globally permissible.** When a PRD introduces a rule, exception, reversal, unlock, recovery, or re-submission, the agent must judge whether allowing it would erode the system's constraint structure — undermining main rules, reopening irreversible states, bypassing permission boundaries, reversing flow direction, drifting responsibility attribution, or polluting data caliber. A design that works at the current node but risks systemic erosion cannot pass without explicit constraint analysis. If constraint integrity cannot be confirmed, mark the rule as 待确认 or P1/P0 risk; do not bury the uncertainty in smooth prose.
+| 时机 | 读取 |
+|---|---|
+| 全程 | `01_workflow/workflow-manifest.json`、当前任务产物 |
+| Boot/Node 1 | `01_workflow/task-and-draft-rules.md`、`01_workflow/workflow-protocol.md`、PRD 质量标准 |
+| Node 2 | `04_templates/output-contracts.md` |
+| Node 3 | 仅加载适用 Checklist、组件、台账和表格契约 |
+| Node 4/4.5 | 内容质量门禁、一致性回扫规则及对应脚本 |
+| Retrospect | `03_gates/gates-and-retrospective.md`、优化规则和本次 Run Log |
 
-Load [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md) before writing, reviewing, or revising PRD content. When expanding PRD details, use [Global Component Conventions](05_context/writing-standards/global-component-conventions.md) as the default-value layer for reusable field, control, list, action, and feedback behavior. When a functional domain is ledger-oriented or includes batch import/export, also load [Ledger Feature Writing](05_context/writing-standards/ledger-feature-writing.md).
-
-Apply the standard across input, processing, and output. Details live in the quality reference.
-
-## Task Routing
-
-- Vague new requirement: `prd-thinking`; do not write yet.
-- Context is enough and user asks to write: run writable-state gate, then `prd-writer`.
-- Existing PRD to inspect: `prd-reviewer`; do not rewrite first.
-- Review feedback to apply: `prd-writer` revision mode.
-- Workflow, skill, template, or rules need improvement: `skill-retrospector`.
-- Pure method question: answer normally.
-
-Use workflow protocol, task rules, output contracts, and trigger evals when route boundaries matter.
-
-These route labels (`prd-thinking`, `prd-writer`, `prd-reviewer`, `skill-retrospector`) are logical roles, not physical sub-skill packages. Execute the role inline using the workflow, gates, templates, and context files already present in this Skill.
-
-## Workflow
-
-The workflow has one boot step, 4 gated execution nodes, an optional Content Consistency Sweep after fixes, and a conditional retrospect stage. Humans confirm at exactly 2 points: after alignment, and after the draft body.
-
-**Boot**: Create or reuse a dated PRD task folder. All outputs are file-backed. **Always create `09-run-log.md` from the template at `04_templates/run-log.md`** — this is the cross-node evidence log consumed by retrospect. If the task folder or `09-run-log.md` cannot be created or reused, stop and ask the user. Do not continue the file-backed workflow in chat-only mode. See [Task and Draft Rules](01_workflow/task-and-draft-rules.md).
-
-```
-input_received
-→ [boot] task_folder
-→ [1] alignment → human confirms direction
-→ [2] draft_body → human confirms scope & main flow
-→ [3] fill_details
-→ [4] review → human decides what to fix
-→ [retrospect] conditional — user request, repeated quality issues, or T3 trigger
-```
-
-### Node 1: Write-before Alignment
-
-The agent reads all materials, drills through solutions to find the real problem, produces a background understanding card and a decision ledger. Every decision entry must carry a recommendation and rationale — listing options without a recommendation is invalid. The decision ledger is append-only and remains open across the entire PRD lifecycle: later user corrections, full-PRD discoveries, review fixes, and sweep findings that change product judgment must append to it. The alignment is done when background, problem, scope, non-goals, upstream/downstream dependencies, and key decisions are clear enough. If not, the agent stops and asks at most 3 high-leverage questions.
-
-Outputs: task folder, context evidence, background card, decision ledger, writable-state judgment.
-
-→ Human confirms direction. Agent must not write PRD body before this confirmation.
-
-### Node 2: Draft Body
-
-The agent writes only the strategy layer, scope layer, and main-flow skeleton. Do not expand exceptions, permissions, states, data specs, acceptance criteria, or self-test cases yet. This is a sketch — the goal is to confirm the frame before filling the muscles.
-
-Output: draft v0.
-
-→ Human confirms scope and main flow are correct.
-
-### Node 3: Fill Details
-
-The agent first loads `05_context/prd-standards/checklist-v3.3.json` (V3.3) and identifies applicable items by filtering on `complexity` (matching the PRD's L1-L4 level) and `condition`. For each applicable item, the `question` / `pass_criteria` / `failure_signal` fields guide writing; the `suggested_format` field drives table template selection (resolved via `04_templates/table-templates/table-template-index.md`). Every gate item must be addressed or marked "不适用". Do not dump the 66-item checklist into the PRD — it is a silent writing guide. If a P1 risk is accepted rather than fixed, it must be recorded in a risk-acceptance table. See the full Node 3 protocol in [Workflow Protocol](01_workflow/workflow-protocol.md).
-
-Output: complete PRD v1.
-
-### Node 4: Independent Review
-
-A separate agent role reviews the full PRD. The reviewer explicitly switches context — loads `05_context/prd-standards/prd-quality-standard.md` and `05_context/prd-standards/checklist-v3.3.json` (V3.3), adopts a skeptical default stance, and is no longer the writer. The reviewer subtracts first — asking "if we skip this, what breaks?" — then checks each applicable checklist item against `question` / `pass_criteria` / `failure_signal`, classifies findings as P0/P1/P2/P3, and applies the V3.3 gate formula: P0 > 0 blocks; P1 > 0 blocks unless the PM explicitly accepts the risk and records it in a 风险接受表. Writer self-review is not allowed. See the full review protocol in [Workflow Protocol](01_workflow/workflow-protocol.md).
-
-→ Human decides which fixes to apply.
-
-After fixes are applied, the agent runs a Content Consistency Sweep (Node 4.5) to verify the fix did not create cross-section contradictions or stale references — sweeping only the fix's blast radius across 10 consistency dimensions — then produces a revised PRD, revision summary, unresolved items, accepted risks, and sweep report. The PRD is final when: no unmarked assumptions, no invented capabilities, no future plans mixed into scope, no unresolved P0, no unaccepted P1, and no P0 consistency contradictions.
-
-### Retrospect Trigger Detector
-
-After user corrections, node completion, PRD revision, and content consistency sweep, the agent runs a Retrospect Trigger Check (see `05_context/optimization-standards/retrospect-trigger-rules.md`). Before marking a node complete, validate the evidence file with `scripts/validate-run-log.py`; a failed check blocks node completion. The check may use `hooks/retrospect_trigger.py` as a detector — it outputs structured signals to stdout. The agent or recorder records qualified observations to `09-run-log.md`, marks retrospective candidates (T2), and triggers skill retrospect proposals (T3). The trigger check must never modify reusable Skill files without explicit per-patch user confirmation. All Skill modifications remain governed by `03_gates/gates-and-retrospective.md`.
-
-### Retrospect (Conditional)
-
-Triggered when a repeated quality problem appears or the user asks to improve the workflow. **First, read `09-run-log.md` in the task folder as primary evidence** — analyze root cause distribution from 修订记录 and 痛点日志 (same root cause ≥ 2 → must propose patch; ≥ 3 → P0). Classify the failure, propose a bounded patch, **ask the user per-patch whether to adopt**, and apply confirmed patches to the target reusable Skill files immediately. **After all patches are resolved, append to `09-run-log.md` 复盘消费 section.** See [Workflow Protocol](01_workflow/workflow-protocol.md) §5 for the full evidence→analysis→patch→write loop, and [Gates and Retrospective](03_gates/gates-and-retrospective.md) for the confirm→write mechanism.
-
-## Forbidden Behaviors
-
-PRD body must follow the 五不清单 and additional constraints in [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md). In particular:
-
-- No PRD before writable-state checking.
-- No full PRD from a vague one-line request.
-- No unconfirmed assumption as fact.
-- No technical implementation, code logic, API fields, database tables, colors, pixels, or font sizes — unless explicitly requested.
-- No marketing fluff or vague qualifiers ("optimize," "friendly," "reasonable") without measurable criteria.
-- No writer self-approval as final gate.
-- No "final PRD" with P0 issues.
-- No automatic reusable rule updates without human confirmation.
-- No inventing missing repository files, templates, examples, gates, or sub-skills merely because a blueprint mentions them.
-- No treating planned directory structures as implemented capabilities.
-
-## Output Protocol
-
-Default order:
-
-1. Task folder and context files (boot)
-2. Background card + decision ledger + writable-state judgment (Node 1)
-3. PRD draft v0 or blocking questions (Node 2)
-4. Complete PRD v1 (Node 3)
-5. Independent review report + revision summary (Node 4)
-6. Retrospective patch proposal (conditional)
-
-Keep final PRD language precise, structured, and traceable. Mark unknowns as `待确认`; do not hide them inside polished prose.
-
+最终交付必须语言准确、边界明确、无隐藏假设，并给出“能否继续、用户要判断什么、工作流会直接修什么”。

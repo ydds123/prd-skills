@@ -1,7 +1,8 @@
 {
   "meta": {
     "version": "1.0.0",
-    "source": "04_templates/table-templates/risk-acceptance-table.md",
+    "authority": "authoritative",
+    "human_reference": "04_templates/table-templates/risk-acceptance-table.md",
     "purpose": "Machine-readable column schema for temporarily accepted P1 risks, unconfirmed items, historical data deferred processing, and exception scenario deferral tables"
   },
   "template_id": "risk_acceptance_table",

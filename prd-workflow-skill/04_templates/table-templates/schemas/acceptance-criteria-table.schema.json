@@ -1,7 +1,8 @@
 {
   "meta": {
     "version": "1.0.0",
-    "source": "04_templates/table-templates/acceptance-criteria-table.md",
+    "authority": "authoritative",
+    "human_reference": "04_templates/table-templates/acceptance-criteria-table.md",
     "purpose": "Machine-readable column schema for requirement completion, test acceptance, business acceptance, and go-live acceptance tables"
   },
   "template_id": "acceptance_criteria_table",

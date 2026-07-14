@@ -1,8 +1,9 @@
 {
   "meta": {
     "version": "1.0.0",
-    "source": "04_templates/table-templates/field-rule-table.md",
-    "purpose": "Machine-readable column schema for form field, list field, detail field, and config field tables"
+    "authority": "authoritative",
+    "human_reference": "04_templates/table-templates/field-rule-table.md",
+    "purpose": "Canonical cross-page field definition contract; not used for query, list display, or create/edit forms"
   },
   "template_id": "field_rule_table",
   "columns": [
@@ -32,7 +33,16 @@
         "下拉多选",
         "多选列表",
         "单行文本输入框",
-        "多行文本输入框"
+        "多行文本输入框",
+        "数值输入框",
+        "日期选择",
+        "时间选择",
+        "日期时间选择",
+        "日期范围选择",
+        "开关",
+        "单选框",
+        "复选框",
+        "文件上传"
       ],
       "notes": [
         "不得只写下拉选择，必须明确下拉单选还是下拉多选"
@@ -65,7 +75,7 @@
       "description": "字符长度限制或格式约束",
       "allowed_values": [],
       "notes": [
-        "默认名称类字段 1-32 字符，见 global-component-conventions.json"
+        "组件行为和字段语义默认值见 component-specifications.json"
       ]
     },
     {

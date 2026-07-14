@@ -1,143 +1,44 @@
-# Table Format Conventions
+# PRD 表格使用规范
 
 > Belongs to: `05_context/writing-standards/`
-> Governed by: `../prd-standards/prd-quality-standard.md` §5.3 "不留猜疑"
-> Evidence: first PRD run — query/filter/field/form tables were reworked across 8 revision rounds due to missing format standards
-> Version: v1.0.0
-> Machine-readable schemas: `table-format-schemas.json` — Agent loads JSON first for stable table column schemas, then reads this Markdown file for rationale, anti-patterns, and examples.
+> Canonical routing: `../../04_templates/table-templates/table-template-index.json`
+> Generated human view: `../../04_templates/table-templates/table-template-index.md`
 
-For default field lengths, input handling, selection behavior, list display, and action defaults, see `global-component-conventions.md`.
+固定表头、必填列和适用场景只在表格契约索引及其 `schema_file` 中定义。本文件解释如何选择和填写，不重复维护列结构。
 
----
+## 使用顺序
 
-Every table in a PRD that R&D or QA depends on must use a fixed column set. Do not let the column set drift by section.
+1. 根据内容目的在 `table-template-index.json` 中匹配一个 contract ID。
+2. 读取该路由的 `schema_file`，按固定列输出。
+3. 需要示例或反例时再读取 `template_file`。
+4. 无法唯一匹配时停止输出并修正路由，不自行拼接两套表头。
 
-## Query / Filter Tables
+## 常用契约
 
-For any list page or search panel that has filter controls:
+- 查询条件：`query_filter_table`
+- 列表字段：`list_display_table`
+- 新增/编辑表单：`form_modal_field_table`
+- 业务规则：`business_rule_table`
+- 分支与异常：`exception_handling_table`
+- 关键决策点：`key_decision_table`
+- 范围与功能清单：`scope_feature_inventory_table`
 
-```
-查询字段 | 组件类型 | 查询精度 | 说明
-```
+其他验收、自测、校验、数据口径、风险接受和跨页面字段定义，按索引中的专用 contract 使用。
 
-| Column | Content |
-|--------|---------|
-| 查询字段 | The field name as shown to the user |
-| 组件类型 | Input component: 单行文本输入框 / 下拉单选 / 下拉多选 / 日期范围选择 / 标签页 / 级联选择 — and any special behaviors (e.g. "超过 7 项支持模糊搜索") |
+## 查询条件与列表字段
 
-**控件有内部层级结构时，说明列必须写清层级关系、默认展开状态和搜索范围。**
+查询条件描述用户如何找到数据；列表字段描述系统如何展示数据。两者目的不同，不得复制同一表头。查询条件需要写清组件、匹配方式和选项来源；列表字段需要写清数据来源、展示规则和空值规则。
 
-| 控件特征 | 说明列必须覆盖 |
-|---------|-------------|
-| 有父子层级（如"模块→消息类型"、"部门→人员"、"省→市→区"） | 层级关系：共几级，每级的取值来源 |
-| 默认折叠 | 默认展开到第几级，或默认全部折叠 |
-| 支持模糊搜索 | 搜索范围：仅最末级 / 所有层级 |
-| 树形选择 | 是否支持勾选父级（勾选父级=全选子级 / 父级仅作分类不可选） |
+## 新增/编辑表单
 
-级联选择不是独立组件类型——它是下拉单选/下拉多选的**结构变体**。组件类型写"下拉单选（级联）"或"下拉多选（级联）"，内部结构全部落在说明列。
-| 查询精度 | Match mode: 精确匹配 / 模糊匹配 / 范围匹配 |
-| 说明 | Constraints: character limits, whitespace trimming rules, default value, option source ("写死选项" / "引用系统模块字段"), empty handling |
+“字段规则”描述数据来源、联动、单位、唯一性和依赖；“表单内容规则”描述允许和禁止的内容、长度或值域、格式和规范化处理。两列不得混写。
 
-Do not merge 组件类型 and 说明 into a single column. Component choice and business constraints are different decisions.
+每个表单字段必须匹配 `component-specifications.json` 中的一个组件，并补齐该组件全部 `must_specify`。组件存在字段语义档位时，按业务含义选择，不用统一字符上限覆盖所有文本字段。
 
-## List / Display Tables
+## 操作流程
 
-For any list page or data table:
+操作流程不使用表格契约描述正常路径，也不再使用五列交互表。统一按 `operation-flow-writing.md` 输出连续编号主路径，并在对应步骤后按需使用分支与异常、关键决策点契约。
 
-```
-字段 | 字段含义 | 数据来源 | 展示规则 | 空值展示 | 备注
-```
+## 空单元格
 
-| Column | Content |
-|--------|---------|
-| 字段 | Column name as shown in the list header |
-| 字段含义 | What business information this column conveys |
-| 数据来源 | Where the data comes from: which system/table/API field, or computed (with formula). Use dotted notation to trace the source chain (e.g. "作业票基础信息.作业票类型名称"). If static/system-generated, say so. |
-| 展示规则 | Format, truncation threshold, merge rules, special rendering (e.g. "超过 20 字符截断并追加…，hover 展示全文"), sorting capability. If the column supports click navigation, state the target. |
-| 空值展示 | What to show when the source data is empty/null/missing. Not the same as format — this is the fallback display. |
-| 备注 | Any constraints, linkage rules, or special notes |
-
-**Why this replaces the old `字段 | 说明` two-column format**: the old format collapsed source, format, truncation, and empty state into one prose cell. R&D had to parse the description to extract what they needed. The new format makes each dimension explicit — a blank cell is a visible gap, not a buried omission.
-
-If the list has action buttons, add an `操作` column at the end.
-
-## Query Controls vs List Columns — Naming Non-Sharing Principle
-
-Query tables (§X.Y.2) and list field tables (§X.Y.3) serve different purposes and must not share row names or structures:
-
-| | Query / Filter Table | List / Display Table |
-|---|---|---|
-| Purpose | How the user finds data | How the system presents data |
-| Column set | 查询字段 \| 组件类型 \| 查询精度 \| 说明 | 字段 \| 字段含义 \| 数据来源 \| 展示规则 \| 空值展示 \| 备注 |
-| Merging dimensions | Allowed — a cascading dropdown can combine two fields into one UX control (e.g. "模块消息" = 模块 → 消息类型) | Forbidden — each column must correspond to a single data source with its own independent format and empty state |
-| Example of violation | — | "模块消息" column that merges 所属模块 and 消息类型 into a single display cell — should be two columns |
-
-**Rule**: if a query table row and a list table row have the same name, verify whether this is a legitimate merge (UX design) or an illegitimate copy. If the list row merges two data sources that have independent origins, split it.
-
-### Example
-
-| 字段 | 字段含义 | 数据来源 | 展示规则 | 空值展示 | 备注 |
-|------|---------|---------|---------|---------|------|
-| 消息类型 | 该模板对应的消息触发类型 | 系统内置消息类型枚举，取 display_name | 格式："模块名称 > 消息类型名称"（如"特殊作业 > 提交审批"） | — | 模块名称为第一级分类 |
-| 启用状态 | 模板当前是否启用 | 系统内置模板配置.启用状态 | 启用展示绿色"已启用"，停用展示灰色"已停用" | — | 停用后不触发消息 |
-| 最近更新时间 | 模板或分组最近一次维护时间 | 取模板维护记录.操作时间 或 分组维护记录.操作时间（取最新） | YYYY-MM-DD HH:mm | -- | 保存后自动更新 |
-
-## Form / Modal Field Tables
-
-For any create or edit form:
-
-```
-字段名称 | 字段类型 | 是否必填 | 引导文案 | 字段规则 | 表单内容规则
-```
-
-| Column | Content |
-|--------|---------|
-| 字段名称 | Field label |
-| 字段类型 | Component: 单行文本输入框 / 下拉单选 / 下拉多选 / 多选列表 / 日期选择器 — and any special behaviors |
-| 是否必填 | 是 / 否 |
-| 引导文案 | Placeholder text shown in the empty field |
-| 字段规则 | Data source, linkage, unit, option source/range, uniqueness, and dependency on other fields |
-| 表单内容规则 | Allowed and forbidden input/selection content, length, numeric syntax, and format constraints |
-
-## Business Rule Tables
-
-For rule sets that govern a feature's behavior:
-
-```
-规则 | 说明 | 用例
-```
-
-| Column | Content |
-|--------|---------|
-| 规则 | The rule expressed as a statement |
-| 说明 | Why this rule exists and how it is enforced |
-| 用例 | A concrete example showing the rule in action |
-
-The 用例 column is the single most effective way to prevent ambiguity. If a rule is ambiguous without an example, the 用例 is not optional.
-
-## Scope / Feature Inventory Tables
-
-For feature lists that span modules and endpoints:
-
-```
-所属端 | 模块 | 功能点 | 功能说明
-```
-
-| Column | Content |
-|--------|---------|
-| 所属端 | Web 端 / App 端 / 系统侧 |
-| 模块 | The functional domain or business object the feature belongs to |
-| 功能点 | The specific feature name |
-| 功能说明 | What this feature does in one sentence |
-
-System-side capabilities (automated triggers, message generation, state computation) belong under `系统侧`, not shoehorned into a user-facing endpoint.
-
-## Anti-patterns
-
-| Don't | Why | Do instead |
-|-------|-----|------------|
-| Merge component type into 说明 as prose | Component choice and business rules get mixed together, hard to scan | Keep 组件类型 as its own column |
-| Use prose paragraphs where a table would work | Prose hides missing fields — it's easy to write "supports filtering" without specifying which fields, what component, or what match mode | Use the fixed table format; a blank cell is a visible gap |
-| Let the same table type have different column sets in different sections | R&D and QA build different mental models for each variation, leading to inconsistent implementation | Pick one column set per table type and use it everywhere |
-| Write "下拉选择" without specifying 单选 or 多选 | R&D cannot implement "a dropdown" — they need to know whether the user can pick one option or many. Multi-select requires checkboxes, single-select does not. | Always write "下拉单选" or "下拉多选" — never the bare "下拉选择" |
-| Use "下拉单选" for a cascading tree of options without explaining the structure | R&D knows it's a dropdown but doesn't know there are two levels (e.g. 模块→消息类型), whether it's collapsed by default, or whether searching hits both levels. | Write "下拉单选（级联）" in 组件类型; put hierarchy, expansion state, and search scope in 说明 |
+固定列不等于允许无意义留空。确实不适用时写“不适用”并说明原因；缺少业务结论时标记待确认，不用空单元格掩盖遗漏。

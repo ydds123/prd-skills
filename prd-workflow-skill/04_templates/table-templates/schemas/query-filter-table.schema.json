@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "authority": "authoritative",
+    "purpose": "Canonical query and filter table contract",
+    "human_reference": "04_templates/table-templates/query-filter-table.md"
+  },
+  "template_id": "query_filter_table",
+  "columns": [
+    {"name": "查询字段", "required": true, "description": "查询条件的业务名称", "allowed_values": [], "notes": []},
+    {"name": "组件类型", "required": true, "description": "承载查询条件的组件类型", "allowed_values": [], "notes": ["组件名称必须匹配 component-specifications.json"]},
+    {"name": "匹配方式", "required": true, "description": "查询值与数据的匹配方式", "allowed_values": ["精确匹配", "包含匹配", "模糊匹配", "范围匹配"], "notes": []},
+    {"name": "可选内容/数据来源", "required": true, "description": "允许选择或输入的内容及来源", "allowed_values": [], "notes": ["动态选项不得在 PRD 中固化为永久枚举"]},
+    {"name": "说明", "required": true, "description": "默认值、清空、联动、搜索等补充规则", "allowed_values": [], "notes": []}
+  ],
+  "required_columns": ["查询字段", "组件类型", "匹配方式", "可选内容/数据来源", "说明"],
+  "optional_columns": [],
+  "usage_rules": ["列表或搜索区域存在查询条件时使用", "同一查询条件只占一行"],
+  "anti_patterns_ref": "04_templates/table-templates/query-filter-table.md"
+}

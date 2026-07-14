@@ -1,0 +1,47 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "05_context/writing-standards/component-specifications.md",
+    "purpose": "Evaluate component routing and complete form-content rule generation"
+  },
+  "evals": [
+    {
+      "id": "multi_line_short_note",
+      "input": "为非必填的备注字段生成表单内容规则，组件是多行文本输入框，没有额外业务限制。",
+      "expected_component_id": "multi_line_text",
+      "expected_semantic_profile": "short_note",
+      "required_patterns": ["200", "允许", "换行", "首尾空格", "首尾空行", "中间空格", "处理后为空", "每个换行计1个字符"],
+      "forbidden_patterns": ["最多输入200个字符即可"]
+    },
+    {
+      "id": "multi_line_operation_opinion",
+      "input": "为驳回原因生成表单内容规则，组件是多行文本输入框且必填。",
+      "expected_component_id": "multi_line_text",
+      "expected_semantic_profile": "operation_opinion",
+      "required_patterns": ["500", "必填", "换行", "处理后为空"],
+      "forbidden_patterns": ["200"]
+    },
+    {
+      "id": "numeric_frequency",
+      "input": "为接触频率生成表单内容规则，单位h/天，只允许非负小数。",
+      "expected_component_id": "numeric_input",
+      "required_patterns": ["非负", "小数", "h/天", "+-*/", "范围"],
+      "forbidden_patterns": ["单行文本"]
+    },
+    {
+      "id": "dropdown_single_dictionary",
+      "input": "为用品分类生成表单内容规则，使用HSE字典下拉单选。",
+      "expected_component_id": "dropdown_single",
+      "required_patterns": ["HSE字典", "一个", "模糊搜索", "不接受自定义文本"],
+      "forbidden_patterns": ["文本输入"]
+    },
+    {
+      "id": "business_evidence_override",
+      "input": "历史系统明确备注最多512字符，为该多行文本字段生成规则。",
+      "expected_component_id": "multi_line_text",
+      "expected_override": "真实系统和原型证据",
+      "required_patterns": ["512", "换行", "空格", "处理后为空"],
+      "forbidden_patterns": ["200", "500"]
+    }
+  ]
+}

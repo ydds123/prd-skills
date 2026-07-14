@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "authority": "authoritative",
+    "purpose": "Canonical consistency dimensions, change-to-dimension routing, repair boundaries, and evidence priority"
+  },
+  "dimensions": [
+    {"id": "constraint", "name": "约束侵蚀", "cross_cutting": true},
+    {"id": "scope", "name": "范围一致性", "cross_cutting": false},
+    {"id": "role", "name": "角色一致性", "cross_cutting": false},
+    {"id": "permission", "name": "权限一致性", "cross_cutting": false},
+    {"id": "flow", "name": "流程一致性", "cross_cutting": false},
+    {"id": "state", "name": "状态一致性", "cross_cutting": false},
+    {"id": "rule", "name": "规则一致性", "cross_cutting": false},
+    {"id": "data", "name": "数据一致性", "cross_cutting": false},
+    {"id": "exception", "name": "异常一致性", "cross_cutting": false},
+    {"id": "acceptance", "name": "验收一致性", "cross_cutting": false},
+    {"id": "terminology", "name": "术语一致性", "cross_cutting": false},
+    {"id": "enumeration", "name": "枚举完备性", "cross_cutting": true}
+  ],
+  "change_routes": [
+    {"id": "scope_change", "name": "范围或非目标变化", "required_dimensions": ["scope", "state", "data"]},
+    {"id": "role_change", "name": "角色变化", "required_dimensions": ["role", "permission", "acceptance"]},
+    {"id": "permission_change", "name": "权限变化", "required_dimensions": ["permission", "exception", "acceptance", "constraint"]},
+    {"id": "state_or_flow_change", "name": "状态或流程变化", "required_dimensions": ["flow", "state", "exception", "constraint"]},
+    {"id": "rule_change", "name": "业务规则变化", "required_dimensions": ["rule", "acceptance"]},
+    {"id": "constraint_boundary_change", "name": "状态逆转、流程回退、权限例外、解锁、恢复或重新提交", "required_dimensions": ["constraint", "state", "rule", "flow"]},
+    {"id": "data_change", "name": "字段、数据来源或数据口径变化", "required_dimensions": ["data", "rule"]},
+    {"id": "exception_change", "name": "分支或异常变化", "required_dimensions": ["exception", "acceptance"]},
+    {"id": "acceptance_change", "name": "验收或自测变化", "required_dimensions": ["acceptance"]},
+    {"id": "terminology_change", "name": "术语、编号、锚点或命名变化", "required_dimensions": ["terminology"]},
+    {"id": "enumerated_set_change", "name": "枚举集合新增、删除或宣称完整覆盖", "required_dimensions": ["enumeration", "terminology"]},
+    {"id": "full_permission_section_change", "name": "权限章节整体改写", "required_dimensions": ["role", "permission", "flow", "exception", "acceptance", "terminology", "constraint"]}
+  ],
+  "repair_boundaries": {
+    "auto_fix": ["术语统一", "旧说法替换", "连续编号修正", "断裂引用修正", "由已确认规则补齐验收或自测", "版本号同步"],
+    "pm_confirmation": ["本期范围", "角色权限", "状态可逆性", "默认值", "异常恢复", "数据口径", "风险接受", "约束边界变化"],
+    "forbidden": ["把未确认业务规则补成事实", "把未确认系统能力写成本期支持", "虚构外部依赖或数据来源", "接受 P0 风险", "未经确认修改可复用 Skill 规则"]
+  },
+  "evidence_priority": ["用户最新确认", "当前 PRD 已确认详细规则", "当前 PRD 总体结论", "外部原始材料", "历史版本"],
+  "not_required_change_types": ["no_content_change", "typo_only", "format_only", "layout_only"]
+}

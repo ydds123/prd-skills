@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "authority": "authoritative",
+    "purpose": "Canonical scope and feature inventory table contract",
+    "human_reference": "04_templates/table-templates/scope-feature-inventory-table.md"
+  },
+  "template_id": "scope_feature_inventory_table",
+  "columns": [
+    {"name": "所属端", "required": true, "description": "功能涉及的终端", "allowed_values": ["Web 端", "App 端", "系统侧"], "notes": ["多端用 / 分隔"]},
+    {"name": "模块", "required": true, "description": "功能所属模块", "allowed_values": [], "notes": []},
+    {"name": "功能点", "required": true, "description": "具体功能名称", "allowed_values": [], "notes": []},
+    {"name": "功能说明", "required": true, "description": "本期支持范围和边界", "allowed_values": [], "notes": []}
+  ],
+  "required_columns": ["所属端", "模块", "功能点", "功能说明"],
+  "optional_columns": [],
+  "usage_rules": ["仅列本期真实支持的功能"],
+  "anti_patterns_ref": "04_templates/table-templates/scope-feature-inventory-table.md"
+}

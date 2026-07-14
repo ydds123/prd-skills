@@ -1,24 +1,22 @@
 interface:
-  display_name: "PRD Workflow Skill"
+  display_name: "PRD Workflow"
   short_description: "Run a gated B-end PRD workflow"
-  default_prompt: "Use $prd-workflow to move this requirement through write-before alignment, decision ledger, two-phase PRD writing, independent review, revision, and retrospective improvement proposals."
+  default_prompt: "Use $prd-workflow to align, draft, review, revise, validate, and deliver this PRD through the governed workflow."
 compatibility:
   canonical_format: "agent-skills"
   adapter_targets:
     - "openai"
     - "claude"
-    - "generic"
   activation:
     mode: "manual"
     paths: []
   execution:
     context: "inline"
-    shell: "bash"
+    shell: "platform-default"
   trust:
     source_tier: "local"
     remote_inline_execution: "forbid"
     remote_metadata_policy: "allow-metadata-only"
   degradation:
-    openai: "semantic-source"
-    claude: "semantic-source"
-    generic: "neutral-source"
+    openai: "No package-managed native hook; execute mandatory gates inline."
+    claude: "Optional managed hooks; execute mandatory gates inline when absent."

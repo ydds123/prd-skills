@@ -1,7 +1,8 @@
 {
   "meta": {
     "version": "1.0.0",
-    "source": "04_templates/table-templates/self-test-case-table.md",
+    "authority": "authoritative",
+    "human_reference": "04_templates/table-templates/self-test-case-table.md",
     "purpose": "Machine-readable column schema for dev delivery self-test, PM smoke-check, and AI implementation self-check tables"
   },
   "template_id": "self_test_case_table",

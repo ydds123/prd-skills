@@ -29,38 +29,9 @@ If the project already has a task or run root, use the local convention and stat
 
 ## Folder Structure
 
-```text
-YYYY-MM-DD-{PRD名称}/
-├─ 任务说明.md
-├─ 00-上下文证据.md
-├─ 01-背景理解卡.md
-├─ 02-决策账本.md
-├─ 03-可写状态判断.md
-├─ 04-PRD草案v0.md
-├─ 05-完整PRDv1.md
-├─ 06-审核报告.md
-├─ 07-修订记录.md
-├─ 08-复盘建议.md
-├─ 09-run-log.md
-└─ assets/
-```
+The authoritative artifact names, creation nodes, conditional outputs, and required Run Log records are defined in `01_workflow/workflow-manifest.json`. Build the task folder from the current node's `outputs`; do not maintain a second hard-coded artifact tree in this document.
 
-| Path | Purpose | Create when |
-|---|---|---|
-| `任务说明.md` | Task goal, source links, status, next action | Always |
-| `00-上下文证据.md` | Source materials, code/page evidence, assumptions, unresolved source gaps | Always |
-| `01-背景理解卡.md` | Background understanding card | After thinking |
-| `02-决策账本.md` | Full-lifecycle append-only decision ledger. Created at Node 1 with initial decisions, then appended whenever later user corrections, full PRD writing, review, revision, or sweep introduces a new product judgment. | After thinking (initial) / any subsequent stage (append) |
-| `03-可写状态判断.md` | Writable-state judgment and blocking questions | Before draft |
-| `04-PRD草案v0.md` | First PRD draft Markdown | When writing a draft |
-| `05-完整PRDv1.md` | Full PRD expanded from accepted draft frame | After draft frame is accepted |
-| `06-审核报告.md` | Independent review report | After review |
-| `07-修订记录.md` | Revision summary, unresolved items, accepted risks | After revision |
-| `08-复盘建议.md` | Skill retrospective patch proposals | After retrospect |
-| `09-run-log.md` | Cross-node running timeline, user correction evidence, revision root causes, pain point log, node completion records, retrospect trigger status. References decision IDs but does not duplicate the decision ledger. | Always — created at Boot from `04_templates/run-log.md` template |
-| `assets/` | Screenshots, exported diagrams, source images | Only when assets exist |
-
-Do not create empty stage files just to look complete. A task folder should show the true workflow state. **Exception**: `09-run-log.md` is always created at Boot because it is written to throughout all subsequent nodes.
+Do not create empty stage files just to look complete. A task folder should show the true workflow state. Files declared by Boot are created when the task starts; conditional outputs are created only when their manifest trigger is met. Put screenshots, exported diagrams, and source images under `assets/` only when such assets exist.
 
 Task artifacts are user-facing files, so use Chinese filenames by default. Keep English filenames mainly for machine-facing skill package files such as `SKILL.md`, `manifest.json`, `agents/interface.yaml`, `evals/*.json`, and code scripts.
 

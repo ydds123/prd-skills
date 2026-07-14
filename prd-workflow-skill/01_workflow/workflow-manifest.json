@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "authority": "authoritative",
+    "purpose": "Canonical PRD workflow node, input, output, confirmation, completion, and Run Log contract"
+  },
+  "node_sequence": ["Boot", "Node 1", "Node 2", "Node 3", "Node 4", "Node 4.5", "Node 5"],
+  "required_completion_nodes": ["Node 1", "Node 2", "Node 3", "Node 4", "Node 4.5", "Node 5"],
+  "nodes": [
+    {
+      "id": "Boot",
+      "name": "任务初始化",
+      "inputs": ["用户请求", "已提供材料"],
+      "load_files": ["01_workflow/task-and-draft-rules.md", "04_templates/run-log.md"],
+      "outputs": ["任务说明.md", "00-上下文证据.md", "09-run-log.md"],
+      "human_confirmation": {"required": false, "condition": "无"},
+      "completion_conditions": ["任务目录可写", "09-run-log.md 已创建", "上下文证据已登记"],
+      "run_log": {"timeline_required": true, "completion_record_required": false}
+    },
+    {
+      "id": "Node 1",
+      "name": "写前对齐",
+      "inputs": ["任务说明.md", "00-上下文证据.md"],
+      "load_files": ["01_workflow/workflow-protocol.md", "05_context/prd-standards/prd-quality-standard.md"],
+      "outputs": ["01-背景理解卡.md", "02-决策账本.md", "03-可写状态判断.md"],
+      "human_confirmation": {"required": true, "condition": "确认需求方向、范围和关键决策后才能进入 Node 2"},
+      "completion_conditions": ["真实问题和角色明确", "范围与非目标明确", "关键决策有状态", "不存在可推翻主方向的阻塞问题"],
+      "run_log": {"timeline_required": true, "completion_record_required": true}
+    },
+    {
+      "id": "Node 2",
+      "name": "PRD 框架草案",
+      "inputs": ["Node 1 全部输出", "用户确认结果"],
+      "load_files": ["04_templates/output-contracts.md"],
+      "outputs": ["04-PRD草案v0.md"],
+      "human_confirmation": {"required": true, "condition": "确认范围和主流程框架后才能进入 Node 3"},
+      "completion_conditions": ["策略层已形成", "范围层已形成", "主流程骨架已形成", "未提前展开详细规则"],
+      "run_log": {"timeline_required": true, "completion_record_required": true}
+    },
+    {
+      "id": "Node 3",
+      "name": "细化完整 PRD",
+      "inputs": ["04-PRD草案v0.md", "用户确认结果", "02-决策账本.md"],
+      "load_files": ["05_context/prd-standards/checklist-v3.3.json", "04_templates/table-templates/table-template-index.json", "05_context/writing-standards/component-specifications.json"],
+      "outputs": ["05-完整PRDv1.md"],
+      "human_confirmation": {"required": false, "condition": "遇到会改变主方向且无证据的产品判断时暂停确认"},
+      "completion_conditions": ["适用 Checklist 项已落实或标记不适用", "全部待确认事实已显式标记", "最终 PRD 契约检查可执行"],
+      "run_log": {"timeline_required": true, "completion_record_required": true}
+    },
+    {
+      "id": "Node 4",
+      "name": "独立内容审查",
+      "inputs": ["05-完整PRDv1.md", "当前 Checklist"],
+      "load_files": ["05_context/prd-standards/prd-quality-standard.md", "05_context/prd-standards/checklist-v3.3.json", "05_context/prd-standards/content-quality-gate.md"],
+      "outputs": ["06-审核报告.md", "06-内容质量审查.json"],
+      "human_confirmation": {"required": true, "condition": "用户决定采用哪些修正和是否接受 P1 风险"},
+      "completion_conditions": ["写作者与审查者上下文不同", "全部 Checklist 项已处置", "发现项已分级并关联证据"],
+      "run_log": {"timeline_required": true, "completion_record_required": true}
+    },
+    {
+      "id": "Node 4.5",
+      "name": "修订与一致性回扫",
+      "inputs": ["用户确认的修正", "06-内容质量审查.json", "06-审核报告.md"],
+      "load_files": ["01_workflow/consistency-sweep-rules.json", "01_workflow/content-consistency-sweep.md"],
+      "outputs": ["07-修订记录.md", "06-content-gate.json", "10-内容质量门禁测试结论.md"],
+      "human_confirmation": {"required": false, "condition": "回扫发现需 PM 决策事项时暂停确认"},
+      "completion_conditions": ["变更影响范围已映射到必查维度", "内容门禁凭证有效", "人类可读测试结论已生成"],
+      "run_log": {"timeline_required": true, "completion_record_required": true}
+    },
+    {
+      "id": "Node 5",
+      "name": "最终输出",
+      "inputs": ["05-完整PRDv1.md", "06-content-gate.json", "10-内容质量门禁测试结论.md"],
+      "load_files": ["03_gates/gates-and-retrospective.md"],
+      "outputs": [],
+      "human_confirmation": {"required": false, "condition": "无"},
+      "completion_conditions": ["内容门禁结论为 pass", "不存在未标记假设和未处理阻断项", "Run Log 校验通过"],
+      "run_log": {"timeline_required": true, "completion_record_required": true}
+    }
+  ],
+  "conditional_outputs": [
+    {
+      "path": "08-Skill复盘沉淀建议.md",
+      "trigger": "用户要求复盘，或复盘触发状态达到需生成建议的等级",
+      "owner": "Retrospect"
+    }
+  ],
+  "retired_artifact_aliases": {
+    "06-内容质量门禁测试结论.md": "10-内容质量门禁测试结论.md",
+    "08-复盘建议.md": "08-Skill复盘沉淀建议.md"
+  },
+  "governed_reference_files": [
+    "SKILL.md",
+    "README.md",
+    "01_workflow/task-and-draft-rules.md",
+    "01_workflow/workflow-protocol.md",
+    "04_templates/output-contracts.md",
+    "04_templates/run-log.md"
+  ]
+}

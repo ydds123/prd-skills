@@ -1,37 +1,61 @@
 {
   "name": "prd-workflow",
-  "version": "0.2.0",
-  "updated_at": "2026-07-13",
+  "version": "0.7.0",
+  "updated_at": "2026-07-14",
   "status": "active",
   "maturity_tier": "production",
   "lifecycle_stage": "production",
   "context_budget_tier": "library",
   "owner": "local",
   "review_cadence": "quarterly",
-  "target_platforms": [
-    "openai",
-    "claude",
-    "generic",
-    "agent-skills-compatible"
+  "target_platforms": ["openai", "claude"],
+  "input_files": [
+    "user request and file-backed source materials",
+    "current task outputs declared by 01_workflow/workflow-manifest.json"
   ],
   "source_materials": [
-    "../prd-definition-quality-standard.md",
-    "../prd-workflow-skill-repository-design.md",
-    "../create-prd-skill/SKILL.md",
-    "../check-prd-skill/SKILL.md"
+    "01_workflow/workflow-manifest.json",
+    "05_context/prd-standards/checklist-v3.3.json",
+    "04_templates/table-templates/table-template-index.json",
+    "05_context/writing-standards/component-specifications.json",
+    "05_context/writing-standards/ledger-feature-contract.json",
+    "01_workflow/consistency-sweep-rules.json",
+    "04_templates/run-log.schema.json",
+    "skill-ir/examples/prd-workflow.json"
   ],
   "factory_components": [
-    "references",
+    "01_workflow",
+    "03_gates",
+    "04_templates",
+    "05_context",
+    "scripts",
+    "hooks",
     "evals",
-    "agents"
+    "agents",
+    "skill-ir",
+    "adapters",
+    "tests"
   ],
   "quality_gates": [
-    "alignment",
-    "draft-confirmation",
-    "review-blocking",
-    "ledger-contract",
-    "run-log-evidence"
+    "workflow-manifest",
+    "independent-content-review",
+    "deterministic-content-gate",
+    "consistency-sweep",
+    "final-prd-contract",
+    "run-log-evidence",
+    "resource-boundary",
+    "hook-lifecycle",
+    "platform-adapter-conformance",
+    "unified-regression"
   ],
+  "output_contract": "01_workflow/workflow-manifest.json",
+  "rollback_boundary": "Sync only files whose staged SHA-256 differs from the captured formal baseline; restore only Phase 3-owned targets from that baseline.",
+  "permissions": {
+    "network": "not required",
+    "file_read": "skill package and user-provided source files",
+    "file_write": "active PRD task folder; Claude settings only after explicit install command",
+    "subprocess": "local deterministic validation and optional Claude Stop hook gate check"
+  },
   "outputs": [
     "background understanding card",
     "decision ledger",
@@ -39,6 +63,9 @@
     "PRD draft v0",
     "PRD complete v1",
     "review report",
+    "machine-readable content review",
+    "content-gate receipt",
+    "human-readable content-gate test conclusion",
     "revision summary",
     "retrospective patch proposal"
   ]

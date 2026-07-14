@@ -1,7 +1,8 @@
 {
   "meta": {
     "version": "1.0.0",
-    "source": "04_templates/table-templates/validation-rule-table.md",
+    "authority": "authoritative",
+    "human_reference": "04_templates/table-templates/validation-rule-table.md",
     "purpose": "Machine-readable column schema for required-field, format, duplicate, pre-submit, and pre-approval validation tables"
   },
   "template_id": "validation_rule_table",

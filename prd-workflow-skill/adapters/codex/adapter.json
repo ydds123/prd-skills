@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "skill": "prd-workflow",
+  "entrypoint": "../../SKILL.md",
+  "skill_ir": "../../skill-ir/examples/prd-workflow.json",
+  "workflow_manifest": "../../01_workflow/workflow-manifest.json",
+  "generated_from": [
+    "skill-ir/examples/prd-workflow.json",
+    "agents/interface.yaml"
+  ],
+  "mandatory_fallback": "Execute every workflow gate inline when native hooks are absent or disabled.",
+  "target": "openai",
+  "runtime": "codex",
+  "interface_metadata": "../../agents/openai.yaml",
+  "hook_support": {
+    "managed_by_package": false,
+    "reason": "This package does not install a Codex-native hook."
+  }
+}

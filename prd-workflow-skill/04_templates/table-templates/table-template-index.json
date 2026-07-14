@@ -1,12 +1,47 @@
 {
   "meta": {
-    "version": "1.0.0",
-    "source": "04_templates/table-templates/table-template-index.md",
-    "purpose": "Route checklist suggested_format keywords to table templates or non-template rendering formats — machine-readable routing layer"
+    "version": "2.0.0",
+    "authority": "authoritative",
+    "generated_view": "04_templates/table-templates/table-template-index.md",
+    "purpose": "Canonical routing from PRD table purpose to one table contract"
   },
   "template_routes": [
     {
-      "id": "rule_table",
+      "id": "query_filter_table",
+      "keywords": [
+        "查询条件表",
+        "筛选条件表",
+        "查询字段"
+      ],
+      "template_file": "query-filter-table.md",
+      "use_case": "列表页或搜索区域的查询条件",
+      "schema_file": "schemas/query-filter-table.schema.json"
+    },
+    {
+      "id": "list_display_table",
+      "keywords": [
+        "列表字段表",
+        "展示字段表",
+        "列表字段总览"
+      ],
+      "template_file": "list-display-table.md",
+      "use_case": "列表页展示字段及其来源、展示和空值规则",
+      "schema_file": "schemas/list-display-table.schema.json"
+    },
+    {
+      "id": "form_modal_field_table",
+      "keywords": [
+        "表单字段表",
+        "新增表单",
+        "编辑表单",
+        "弹窗字段表"
+      ],
+      "template_file": "form-modal-field-table.md",
+      "use_case": "新增、编辑或弹窗表单字段",
+      "schema_file": "schemas/form-modal-field-table.schema.json"
+    },
+    {
+      "id": "business_rule_table",
       "keywords": [
         "规则表",
         "业务规则表",
@@ -34,7 +69,7 @@
         "加载状态表"
       ],
       "template_file": "rule-table.md",
-      "use_case": "任何「条件 → 动作 → 结果」模式的规则描述",
+      "use_case": "功能的原子化业务规则",
       "schema_file": "schemas/rule-table.schema.json"
     },
     {
@@ -42,7 +77,6 @@
       "keywords": [
         "字段规则表",
         "字段总表",
-        "列表字段总览",
         "时间控件",
         "日期",
         "时间相关字段"
@@ -79,6 +113,7 @@
     {
       "id": "exception_handling_table",
       "keywords": [
+        "分支与异常表",
         "异常规则表",
         "异常兜底",
         "空态处理",
@@ -87,8 +122,18 @@
         "权限不足处理"
       ],
       "template_file": "exception-handling-writing.md",
-      "use_case": "异常场景的系统处理、用户提示、恢复机制",
+      "use_case": "操作主路径中业务可达的分支与异常",
       "schema_file": "schemas/exception-handling.schema.json"
+    },
+    {
+      "id": "key_decision_table",
+      "keywords": [
+        "关键决策点表",
+        "业务决策表"
+      ],
+      "template_file": "key-decision-table.md",
+      "use_case": "会导向不同业务结果的关键判断",
+      "schema_file": "schemas/key-decision-table.schema.json"
     },
     {
       "id": "acceptance_criteria_table",
@@ -117,6 +162,17 @@
       "template_file": "risk-acceptance-table.md",
       "use_case": "P1 风险接受记录、待确认项不阻塞记录",
       "schema_file": "schemas/risk-acceptance-table.schema.json"
+    },
+    {
+      "id": "scope_feature_inventory_table",
+      "keywords": [
+        "范围表",
+        "功能清单表",
+        "范围与功能清单表"
+      ],
+      "template_file": "scope-feature-inventory-table.md",
+      "use_case": "跨模块或多端的本期功能范围",
+      "schema_file": "schemas/scope-feature-inventory-table.schema.json"
     }
   ],
   "non_template_formats": [
@@ -125,12 +181,6 @@
       "suggested_format": "SCQA说明 / 问题定义表",
       "meaning": "用 SCQA 叙事定义问题",
       "rendering": "PRD 背景章节的引导性写作"
-    },
-    {
-      "id": "scope_table",
-      "suggested_format": "范围表 / 非目标表",
-      "meaning": "本期范围与排除项",
-      "rendering": "用 Markdown 表格呈现，参考 field-rule-table 的表结构思路"
     },
     {
       "id": "goal_table",
@@ -160,7 +210,7 @@
       "id": "step_table",
       "suggested_format": "步骤表 / 流程步骤",
       "meaning": "流程的步骤化描述",
-      "rendering": "用 Markdown 表格，参考 interaction-logic-writing.md"
+      "rendering": "使用连续编号主路径；分支与异常、关键决策点分别使用对应 contract"
     },
     {
       "id": "pyramid_structure",
@@ -230,9 +280,11 @@
     }
   ],
   "agent_rules": [
-    "When checklist suggested_format matches template_routes keywords → open the mapped template_file and fill it.",
+    "Match each table purpose to exactly one template_routes entry; schema_file is the fixed-column authority.",
+    "For operation flows, write a numbered main path, then use exception_handling_table and key_decision_table only when applicable.",
+    "The legacy five-column interaction table is forbidden.",
     "When checklist suggested_format matches non_template_formats → follow the rendering guidance in that entry.",
     "When suggested_format matches both template_routes and non_template_formats → apply both.",
-    "This JSON is the machine-readable routing layer. The source Markdown file explains the routing logic and maintenance rules."
+    "table-template-index.md is generated from this JSON and must not be edited manually."
   ]
 }

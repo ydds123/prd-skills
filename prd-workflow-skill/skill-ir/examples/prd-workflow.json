@@ -1,0 +1,92 @@
+{
+  "schema_version": "2.0.0",
+  "name": "prd-workflow",
+  "title": "PRD Workflow",
+  "job_to_be_done": "Move a B-end requirement from evidence-backed alignment through staged writing, independent review, deterministic validation, and final delivery without hiding product decisions or skipping human confirmations.",
+  "trigger_surface": {
+    "description": "Orchestrate an end-to-end B-end PRD workflow with write-before alignment, decision ledger, two-phase PRD writing, independent quality review, deterministic content-gate validation, revision, and retrospective improvement proposals. Use when the user asks to write, review, revise, or systematize PRDs through a controlled workflow, especially when they mention PRD 工作流, 写前对齐, 决策账本, 质量门禁, 修订闭环, or skill 复盘. Do not use for a simple one-shot PRD draft only; use a dedicated PRD writer if available. Do not use for a standalone PRD review only; use a dedicated PRD reviewer if available.",
+    "should_trigger": [
+      "The user asks to run an end-to-end PRD workflow.",
+      "The user asks for write-before alignment, a decision ledger, gated review, or a revision loop.",
+      "The user asks to improve the reusable PRD workflow from a completed task's evidence."
+    ],
+    "should_not_trigger": [
+      "The user only wants a one-shot PRD draft.",
+      "The user only wants a standalone review of an existing PRD.",
+      "The user asks a general product-method question without requesting workflow execution."
+    ],
+    "edge_cases": [
+      "If source evidence is insufficient, stop at alignment and ask no more than three high-leverage questions.",
+      "If hooks are unavailable, run all required gates inline.",
+      "If a reusable-rule change is proposed, require explicit per-patch confirmation."
+    ]
+  },
+  "workflow": {
+    "steps": [
+      "Load 01_workflow/workflow-manifest.json and initialize the file-backed task.",
+      "Execute Node 1 through Node 5 in manifest order.",
+      "Apply Node 3 writing contracts only when applicable.",
+      "Run an independent Node 4 review and obtain the required human decision.",
+      "Run Node 4.5 consistency sweep, seal, validate, and plain-language conclusion.",
+      "Deliver only after content gate, final PRD contract, and Run Log validation pass."
+    ],
+    "decision_points": [
+      "Node 1 direction confirmation.",
+      "Node 2 scope and main-flow confirmation.",
+      "Node 4 fix and P1 risk-acceptance decision.",
+      "Any unsupported product judgment that would change the confirmed direction."
+    ],
+    "failure_modes": [
+      "Writing a full PRD before alignment is confirmed.",
+      "Treating an assumption as a fact.",
+      "Using writer self-review as the final quality gate.",
+      "Delivering with a missing, stale, blocked, or incomplete content gate.",
+      "Treating optional hooks as a replacement for inline validation."
+    ]
+  },
+  "resources": {
+    "references": [
+      "01_workflow/workflow-manifest.json",
+      "01_workflow/workflow-protocol.md",
+      "05_context/prd-standards/prd-quality-standard.md",
+      "05_context/prd-standards/checklist-v3.3.json",
+      "04_templates/table-templates/table-template-index.json",
+      "05_context/writing-standards/component-specifications.json",
+      "05_context/writing-standards/ledger-feature-contract.json",
+      "01_workflow/consistency-sweep-rules.json"
+    ],
+    "scripts": [
+      "scripts/run-regression-suite.py",
+      "scripts/prd-content-gate.py",
+      "scripts/validate-prd-contracts.py",
+      "scripts/validate-run-log.py",
+      "scripts/manage-current-task.py",
+      "scripts/manage-hooks.py",
+      "scripts/generate-platform-adapters.py"
+    ],
+    "assets": [
+      "04_templates/run-log.md",
+      "04_templates/content-gate-test-conclusion.md"
+    ],
+    "reports": []
+  },
+  "eval_plan": {
+    "trigger": ["evals/trigger-evals.json"],
+    "output": ["evals/content-gate-evals.json", "evals/ledger-feature-evals.json", "evals/run-log-evals.json"],
+    "adversarial": ["scripts/test-prd-content-gate.py", "scripts/test-validate-prd-contracts.py", "scripts/test-hook-lifecycle.py"],
+    "baseline": "scripts/run-regression-suite.py"
+  },
+  "risk": {
+    "output_risk": "high",
+    "execution_risk": "medium",
+    "trust_boundary": "team"
+  },
+  "governance": {
+    "owner": "local",
+    "maturity": "production",
+    "review_cadence": "quarterly",
+    "review_due": "2026-10-14"
+  },
+  "targets": ["openai", "claude"],
+  "source_files": ["SKILL.md", "manifest.json", "agents/interface.yaml", "01_workflow/workflow-manifest.json"]
+}

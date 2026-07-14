@@ -1,57 +1,26 @@
 {
-  "_description": "Example hook configurations for the retrospect trigger pipeline. These hooks are OPTIONAL enhancements — the core trigger mechanism also runs inline in workflow-protocol.md checkpoints.",
-  "_platform_note": "Adapt the command path and Python executable to your environment. This file is a reference, not a runtime dependency.",
-  "_pipeline": "Step 1: detector outputs JSON → Step 2: recorder writes it to 09-run-log.md",
-
-  "hooks": [
-    {
-      "name": "retrospect-detect-and-record-after-user-input",
-      "when": "after_user_input",
-      "command": "python prd-workflow-skill/hooks/retrospect_trigger.py --source user_prompt --node \"$CURRENT_NODE\" --text \"$USER_INPUT\" | python prd-workflow-skill/hooks/append_retrospect_event.py",
-      "purpose": "Detect user corrections or retrospective intent → automatically write to 09-run-log.md. Normal polish/formatting requests pass through as T0 without writing.",
-      "writes_files": true,
-      "writes_only": "09-run-log.md (user correction records + trigger state rows)",
-      "may_modify_skill_files": false,
-      "may_modify_prd_body": false,
-      "optional": true
-    },
-    {
-      "name": "retrospect-detect-and-record-after-review",
-      "when": "after_node_4_complete",
-      "command": "python prd-workflow-skill/hooks/retrospect_trigger.py --source review_result --node \"Node 4\" --text \"$REVIEW_FINDINGS\" | python prd-workflow-skill/hooks/append_retrospect_event.py",
-      "purpose": "After independent review, scan P0/P1 findings for gate failures → auto-write to run-log. T3 gate failures auto-mark needs_retrospect.",
-      "writes_files": true,
-      "writes_only": "09-run-log.md (user correction records + trigger state rows)",
-      "may_modify_skill_files": false,
-      "may_modify_prd_body": false,
-      "optional": true
-    },
-    {
-      "name": "retrospect-detect-and-record-after-sweep",
-      "when": "after_consistency_sweep",
-      "command": "python prd-workflow-skill/hooks/retrospect_trigger.py --source sweep_result --node \"Node 4.5\" --text \"$SWEEP_FINDINGS\" | python prd-workflow-skill/hooks/append_retrospect_event.py",
-      "purpose": "After content consistency sweep, auto-record recurring inconsistency patterns to run-log.",
-      "writes_files": true,
-      "writes_only": "09-run-log.md",
-      "may_modify_skill_files": false,
-      "may_modify_prd_body": false,
-      "optional": true
-    }
-  ],
-
-  "forbidden_behaviors": [
-    "hooks MUST NOT modify PRD body content",
-    "hooks MUST NOT modify any Skill reusable file",
-    "hooks MUST NOT bypass user confirmation for Skill changes",
-    "hooks MUST NOT auto-apply retrospective patches",
-    "hooks MUST NOT elevate a one-time preference to a universal rule without user confirmation",
-    "recorder writes ONLY to 09-run-log.md — never to PRD files or Skill files"
-  ],
-
-  "runtime_requirements": {
-    "python": ">=3.8",
-    "dependencies": "standard library only (argparse, json, re, datetime, pathlib)",
-    "network_access": "not required",
-    "prerequisite": ".prd-workflow/current-task.json must be set with task_folder and run_log_path fields"
-  }
+  "meta": {
+    "version": "2.0.0",
+    "authority": "reference",
+    "source": "scripts/manage-hooks.py",
+    "purpose": "Explain the two optional Claude hook events managed by prd-workflow"
+  },
+  "lifecycle": {
+    "preview": "python scripts/manage-hooks.py install --scope project --project-dir <project> --dry-run",
+    "install": "python scripts/manage-hooks.py install --scope project --project-dir <project>",
+    "check": "python scripts/manage-hooks.py check --scope project --project-dir <project>",
+    "uninstall_preview": "python scripts/manage-hooks.py uninstall --scope project --project-dir <project> --dry-run",
+    "uninstall": "python scripts/manage-hooks.py uninstall --scope project --project-dir <project>"
+  },
+  "managed_events": {
+    "UserPromptSubmit": "When an active task pointer exists, detect and append qualified correction or retrospect evidence to 09-run-log.md.",
+    "Stop": "Only when current_node is Node 5, validate the existing content-gate receipt and block stale or failed delivery."
+  },
+  "boundaries": [
+    "Hook installation is optional and requires an explicit command.",
+    "The installer preserves all settings and hooks it does not own.",
+    "Hooks never create or refresh a gate receipt.",
+    "Hooks never modify PRD body or reusable Skill rules.",
+    "Inline gates remain mandatory on Codex, on Claude without hooks, and when the task pointer is inactive."
+  ]
 }

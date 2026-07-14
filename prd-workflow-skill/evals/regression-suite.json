@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "authority": "authoritative",
+    "purpose": "Canonical mapping from deterministic regression commands to the eval assets they cover"
+  },
+  "tests": [
+    {
+      "id": "json-execution-layer",
+      "command": ["${PYTHON}", "scripts/validate-json-execution-layer.py"],
+      "covers_eval_files": []
+    },
+    {
+      "id": "component-specifications",
+      "command": ["${PYTHON}", "scripts/test-component-specifications.py"],
+      "covers_eval_files": ["evals/component-specifications-evals.json"]
+    },
+    {
+      "id": "table-contracts",
+      "command": ["${PYTHON}", "scripts/test-table-contracts.py"],
+      "covers_eval_files": ["evals/table-format-evals.json"]
+    },
+    {
+      "id": "run-log-contracts",
+      "command": ["${PYTHON}", "scripts/test-validate-run-log.py"],
+      "covers_eval_files": ["evals/run-log-evals.json"]
+    },
+    {
+      "id": "run-log-template",
+      "command": ["${PYTHON}", "scripts/validate-run-log.py", "04_templates/run-log.md"],
+      "covers_eval_files": []
+    },
+    {
+      "id": "content-gate",
+      "command": ["${PYTHON}", "scripts/test-prd-content-gate.py"],
+      "covers_eval_files": ["evals/content-gate-evals.json"]
+    },
+    {
+      "id": "human-test-conclusion",
+      "command": ["${PYTHON}", "scripts/test-validate-test-conclusion.py"],
+      "covers_eval_files": []
+    },
+    {
+      "id": "ledger-prd-contracts",
+      "command": ["${PYTHON}", "scripts/test-validate-prd-contracts.py"],
+      "covers_eval_files": ["evals/ledger-feature-evals.json"]
+    },
+    {
+      "id": "skill-routing-contract",
+      "command": ["${PYTHON}", "scripts/test-trigger-evals.py"],
+      "covers_eval_files": ["evals/trigger-evals.json"]
+    },
+    {
+      "id": "platform-adapters",
+      "command": ["${PYTHON}", "scripts/test-platform-adapters.py"],
+      "covers_eval_files": []
+    },
+    {
+      "id": "hook-lifecycle",
+      "command": ["${PYTHON}", "scripts/test-hook-lifecycle.py"],
+      "covers_eval_files": []
+    }
+  ]
+}

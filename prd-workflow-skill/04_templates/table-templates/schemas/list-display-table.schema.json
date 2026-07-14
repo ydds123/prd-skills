@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "authority": "authoritative",
+    "purpose": "Canonical list display table contract",
+    "human_reference": "04_templates/table-templates/list-display-table.md"
+  },
+  "template_id": "list_display_table",
+  "columns": [
+    {"name": "字段", "required": true, "description": "列表展示字段名称", "allowed_values": [], "notes": []},
+    {"name": "数据来源", "required": true, "description": "字段取值或计算来源", "allowed_values": [], "notes": []},
+    {"name": "展示规则", "required": true, "description": "格式、截断、排序、跳转等展示规则", "allowed_values": [], "notes": []},
+    {"name": "空值规则", "required": true, "description": "字段为空时的展示或处理方式", "allowed_values": [], "notes": []}
+  ],
+  "required_columns": ["字段", "数据来源", "展示规则", "空值规则"],
+  "optional_columns": [],
+  "usage_rules": ["列表一行定义一个展示字段", "操作列也作为字段描述"],
+  "anti_patterns_ref": "04_templates/table-templates/list-display-table.md"
+}

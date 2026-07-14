@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "authority": "authoritative",
+    "purpose": "Canonical create and edit form field table contract",
+    "human_reference": "04_templates/table-templates/form-modal-field-table.md"
+  },
+  "template_id": "form_modal_field_table",
+  "columns": [
+    {"name": "字段", "required": true, "description": "表单字段的业务名称", "allowed_values": [], "notes": []},
+    {"name": "组件类型", "required": true, "description": "字段使用的交互组件", "allowed_values": [], "notes": ["必须匹配 component-specifications.json"]},
+    {"name": "必填", "required": true, "description": "字段是否必填", "allowed_values": ["是", "否"], "notes": []},
+    {"name": "引导文案", "required": true, "description": "字段为空时的引导文案", "allowed_values": [], "notes": []},
+    {"name": "字段规则", "required": true, "description": "数据来源、联动、单位、唯一性和字段依赖", "allowed_values": [], "notes": []},
+    {"name": "表单内容规则", "required": true, "description": "允许和禁止的内容、长度或值域、格式及规范化处理", "allowed_values": [], "notes": ["补齐组件 must_specify"]}
+  ],
+  "required_columns": ["字段", "组件类型", "必填", "引导文案", "字段规则", "表单内容规则"],
+  "optional_columns": [],
+  "usage_rules": ["新增和编辑共用规则时合并描述", "字段规则与表单内容规则不得混写"],
+  "anti_patterns_ref": "04_templates/table-templates/form-modal-field-table.md"
+}

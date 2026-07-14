@@ -1,7 +1,8 @@
 {
   "meta": {
-    "version": "3.3.1",
-    "source": "PRD需求自查清单 V3.3",
+    "version": "3.3.2",
+    "authority": "authoritative",
+    "purpose": "Canonical PRD quality checklist and content-gate rule source",
     "governed_by": "05_context/prd-standards/prd-quality-standard.md",
     "total_items": 66,
     "hierarchies": {
@@ -153,7 +154,7 @@
       "suggested_format": "流程图 + 规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C10",
@@ -185,7 +186,7 @@
       "suggested_format": "业务规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C12",
@@ -201,7 +202,7 @@
       "suggested_format": "默认值表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": "rule-table"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C13",
@@ -217,7 +218,7 @@
       "suggested_format": "操作控制表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "rule-table"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C14",
@@ -233,7 +234,7 @@
       "suggested_format": "数据来源表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "data-caliber-table"
+      "template_ref": "data_caliber_table"
     },
     {
       "id": "C15",
@@ -249,7 +250,7 @@
       "suggested_format": "统计口径表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": "data-caliber-table"
+      "template_ref": "data_caliber_table"
     },
     {
       "id": "C16",
@@ -265,7 +266,7 @@
       "suggested_format": "异常规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C17",
@@ -281,7 +282,7 @@
       "suggested_format": "反馈规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C18",
@@ -297,7 +298,7 @@
       "suggested_format": "待确认事项表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": "risk-acceptance-table"
+      "template_ref": "risk_acceptance_table"
     },
     {
       "id": "C19",
@@ -313,7 +314,7 @@
       "suggested_format": "验收标准表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": "验收标准表模板"
+      "template_ref": "acceptance_criteria_table"
     },
     {
       "id": "C20",
@@ -329,7 +330,7 @@
       "suggested_format": "自测用例表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "自测用例表模板"
+      "template_ref": "self_test_case_table"
     },
     {
       "id": "C21",
@@ -354,14 +355,14 @@
       "module": "文本输入",
       "item": "文本输入规则",
       "condition": "有文本框、名称、标题、备注、说明等字段",
-      "question": "是否写清长度、格式、特殊字符、空格、重复规则？",
-      "pass_criteria": "字段长度、格式、字符限制、空格处理、重复处理和提示文案明确。",
-      "failure_signal": "只写“输入名称/备注”，没有长度和格式限制。",
+      "question": "是否按组件规范写清该文本组件的全部必需规则，并结合字段语义明确长度？",
+      "pass_criteria": "字段已匹配单行或多行文本组件；组件的must_specify均有答案；长度来自明确字段语义或更高优先级证据；允许内容、换行、空格/空行处理、处理后为空、重复处理（适用时）和提示文案明确。",
+      "failure_signal": "只写“最多N个字符”或“输入名称/备注”，没有说明组件要求的换行、空格、空值、格式或重复规则。",
       "suggested_location": "是什么 / 表单字段规则",
       "suggested_format": "字段规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C23",
@@ -377,7 +378,7 @@
       "suggested_format": "校验规则表",
       "priority": "P0",
       "complexity": "L1-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C24",
@@ -393,7 +394,7 @@
       "suggested_format": "校验规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C25",
@@ -409,7 +410,7 @@
       "suggested_format": "上传规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C26",
@@ -425,7 +426,7 @@
       "suggested_format": "字段规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C27",
@@ -441,7 +442,7 @@
       "suggested_format": "控件规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C28",
@@ -457,7 +458,7 @@
       "suggested_format": "数量规则表",
       "priority": "P2",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C29",
@@ -473,7 +474,7 @@
       "suggested_format": "字段总表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "field-rule-table"
+      "template_ref": "field_rule_table"
     },
     {
       "id": "C30",
@@ -489,7 +490,7 @@
       "suggested_format": "表格字段总览",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "field-rule-table"
+      "template_ref": "field_rule_table"
     },
     {
       "id": "C31",
@@ -505,7 +506,7 @@
       "suggested_format": "排序规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C32",
@@ -521,7 +522,7 @@
       "suggested_format": "展示规则表",
       "priority": "P2",
       "complexity": "L1-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C33",
@@ -537,7 +538,7 @@
       "suggested_format": "查询规则表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C34",
@@ -569,7 +570,7 @@
       "suggested_format": "分页规则表",
       "priority": "P2",
       "complexity": "L1-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C36",
@@ -601,7 +602,7 @@
       "suggested_format": "交互状态表",
       "priority": "P1",
       "complexity": "L1-L4",
-      "template_ref": "rule-table"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C38",
@@ -617,7 +618,7 @@
       "suggested_format": "二次确认规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C39",
@@ -633,7 +634,7 @@
       "suggested_format": "弹窗行为规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C40",
@@ -681,7 +682,7 @@
       "suggested_format": "加载状态表",
       "priority": "P2",
       "complexity": "L2-L4",
-      "template_ref": "rule-table"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C43",
@@ -697,7 +698,7 @@
       "suggested_format": "筛选规则表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C44",
@@ -729,7 +730,7 @@
       "suggested_format": "统计口径表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": "data-caliber-table"
+      "template_ref": "data_caliber_table"
     },
     {
       "id": "C46",
@@ -745,7 +746,7 @@
       "suggested_format": "单位精度表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "data-caliber-table"
+      "template_ref": "data_caliber_table"
     },
     {
       "id": "C47",
@@ -761,7 +762,7 @@
       "suggested_format": "图表展示规则表",
       "priority": "P2",
       "complexity": "L3-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C48",
@@ -793,7 +794,7 @@
       "suggested_format": "初始化规则表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C50",
@@ -905,7 +906,7 @@
       "suggested_format": "空态规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C57",
@@ -921,7 +922,7 @@
       "suggested_format": "失败态规则表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "规则表模板"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C58",
@@ -937,7 +938,7 @@
       "suggested_format": "重复处理表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "rule-table"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C59",
@@ -953,7 +954,7 @@
       "suggested_format": "冲突处理表",
       "priority": "P1",
       "complexity": "L3-L4",
-      "template_ref": "rule-table"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C60",
@@ -969,7 +970,7 @@
       "suggested_format": "权限异常表",
       "priority": "P0",
       "complexity": "L2-L4",
-      "template_ref": "rule-table"
+      "template_ref": "business_rule_table"
     },
     {
       "id": "C61",
@@ -1049,7 +1050,7 @@
       "suggested_format": "风险接受表",
       "priority": "P1",
       "complexity": "L2-L4",
-      "template_ref": "风险接受表模板"
+      "template_ref": "risk_acceptance_table"
     },
     {
       "id": "C66",
@@ -1241,56 +1242,69 @@
   },
   "gate_rules": {
     "review_conclusion": {
-      "logic": "V3.3 review conclusion formula",
       "rules": [
         {
-          "condition": "P0_block > 0",
-          "conclusion": "不可进入评审",
-          "action": "block"
+          "id": "block_open_p0",
+          "metric": "open_p0",
+          "operator": ">",
+          "value": 0,
+          "result": "block"
         },
         {
-          "condition": "P1_risk_unaccepted > 0",
-          "conclusion": "默认不建议进入评审",
-          "action": "block_unless_accepted"
+          "id": "block_unaccepted_p1",
+          "metric": "open_p1",
+          "operator": ">",
+          "value": 0,
+          "result": "block"
         },
         {
-          "condition": "pending_check > 0",
-          "conclusion": "检查未完成",
-          "action": "warn"
+          "id": "incomplete_pending_check",
+          "metric": "pending_check",
+          "operator": ">",
+          "value": 0,
+          "result": "incomplete"
         },
         {
-          "condition": "pending_supplement > 0",
-          "conclusion": "需补充",
-          "action": "warn"
-        },
-        {
-          "condition": "all_clear",
-          "conclusion": "可进入评审",
-          "action": "pass"
+          "id": "incomplete_pending_supplement",
+          "metric": "pending_supplement",
+          "operator": ">",
+          "value": 0,
+          "result": "incomplete"
         }
-      ]
+      ],
+      "default_result": "pass",
+      "allowed_results": ["block", "incomplete", "pass"]
     },
     "priority_rules": {
       "P0": {
+        "rank": 0,
         "severity": "致命问题",
         "behavior": "必须阻塞",
         "fix_rule": "必须修正，不能仅标记风险接受"
       },
       "P1": {
+        "rank": 1,
         "severity": "高风险问题",
         "behavior": "默认阻塞",
         "fix_rule": "优先修正；如PM接受风险须记录原因、责任人、后续动作"
       },
       "P2": {
+        "rank": 2,
         "severity": "质量问题",
         "behavior": "不默认阻塞",
         "fix_rule": "建议评审前修正；反复出现时进入模板/Skill迭代"
       },
       "P3": {
+        "rank": 3,
         "severity": "优化建议",
         "behavior": "不阻塞",
         "fix_rule": "不影响交付时处理"
       }
+    },
+    "risk_acceptance": {
+      "allowed_severities": ["P1"],
+      "forbidden_severities": ["P0"],
+      "required_fields": ["accepted_by", "accepted_at", "reason", "owner", "follow_up", "deadline"]
     }
   }
 }

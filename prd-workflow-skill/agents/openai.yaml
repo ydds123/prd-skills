@@ -1,0 +1,6 @@
+interface:
+  display_name: "PRD Workflow"
+  short_description: "Run a gated B-end PRD workflow"
+  default_prompt: "Use $prd-workflow to align, draft, review, revise, validate, and deliver this PRD through the governed workflow."
+policy:
+  allow_implicit_invocation: true

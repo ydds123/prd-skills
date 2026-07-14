@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "authority": "authoritative",
+    "purpose": "Deterministic ledger-feature PRD section, table, operation-order, flow, and batch-import evidence contract",
+    "human_reference": "05_context/writing-standards/ledger-feature-writing.md"
+  },
+  "required_sections": [
+    {"suffix": "功能说明", "table_contract": null},
+    {"suffix": "查询条件", "table_contract": "query_filter_table"},
+    {"suffix": "列表字段", "table_contract": "list_display_table"},
+    {"suffix": "新增/编辑表单", "table_contract": "form_modal_field_table"},
+    {"suffix": "业务规则", "table_contract": "business_rule_table"},
+    {"suffix": "操作流程", "table_contract": null}
+  ],
+  "canonical_operation_order": ["新增/编辑", "批量导入", "查询/查看", "启用/停用", "导出", "删除"],
+  "operation_flow": {
+    "main_path_heading": "主路径（正常路径）",
+    "branch_contract": "exception_handling_table",
+    "decision_contract": "key_decision_table",
+    "require_continuous_numbering": true,
+    "decision_table_only_when_present": true
+  },
+  "batch_import": {
+    "required_evidence": [
+      {"id": "template_file", "any_terms": ["模板文件名", "导入模板文件名"]},
+      {"id": "data_sheet", "all_terms": ["数据 Sheet"]},
+      {"id": "header_position", "all_terms": ["表头位置"]},
+      {"id": "data_start", "all_terms": ["数据起始行"]},
+      {"id": "validation_order", "any_terms": ["校验顺序", "顺序执行"]},
+      {"id": "atomicity", "any_terms": ["原子处理", "全部校验通过后写入", "整批不导入"]},
+      {"id": "failure_carrier", "any_terms": ["导入预览", "页面结果", "失败文件"]}
+    ],
+    "atomicity_values": ["file", "row", "field"],
+    "failure_carrier_values": ["preview", "page", "failure_file"],
+    "feedback_evidence": {
+      "all_terms": ["行号", "字段", "原因"],
+      "action_terms": ["下一步", "修改动作", "行动建议", "重新导入"]
+    }
+  }
+}

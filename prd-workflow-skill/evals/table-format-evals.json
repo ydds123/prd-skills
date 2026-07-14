@@ -1,8 +1,8 @@
 {
   "meta": {
-    "version": "1.1.0",
-    "source": "05_context/writing-standards/table-format-schemas.json",
-    "purpose": "Evaluate whether Agent applies table-format-schemas.json when writing common PRD tables"
+    "version": "2.0.0",
+    "source": "04_templates/table-templates/table-template-index.json",
+    "purpose": "Evaluate whether Agent applies canonical table contracts when writing common PRD tables"
   },
   "evals": [
     {
@@ -12,7 +12,8 @@
       "expected_columns": [
         "查询字段",
         "组件类型",
-        "查询精度",
+        "匹配方式",
+        "可选内容/数据来源",
         "说明"
       ],
       "forbidden_patterns": [
@@ -27,11 +28,9 @@
       "expected_schema_id": "list_display_table",
       "expected_columns": [
         "字段",
-        "字段含义",
         "数据来源",
         "展示规则",
-        "空值展示",
-        "备注"
+        "空值规则"
       ],
       "forbidden_patterns": [
         "查询精度",

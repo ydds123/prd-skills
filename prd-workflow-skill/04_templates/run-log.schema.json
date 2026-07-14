@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "authority": "authoritative",
+    "purpose": "Canonical Run Log section, table, node, timestamp, and retrospective evidence contract",
+    "human_reference": "04_templates/run-log.md"
+  },
+  "workflow_manifest": "01_workflow/workflow-manifest.json",
+  "timestamp_format": "YYYY-MM-DD HH:mm:ss",
+  "root_causes": ["缺知识", "缺方法", "缺模板", "缺门禁", "缺案例", "偶发"],
+  "severity_values": ["P0", "P1", "P2", "P3"],
+  "trigger_levels": ["T0", "T1", "T2", "T3"],
+  "trigger_level_thresholds": [
+    {"min_count": 1, "level": "T1"},
+    {"min_count": 2, "level": "T2"},
+    {"min_count": 3, "level": "T3"}
+  ],
+  "required_sections": [
+    {"heading": "运行时间线", "columns": ["时间", "节点", "动作", "发现 / 决策"]},
+    {"heading": "修订记录", "columns": ["轮次", "时间", "触发", "修改范围", "根因分类", "checklist 模块", "关联决策编号"]},
+    {"heading": "痛点日志", "columns": ["发现时机", "痛点", "初版为什么漏了", "涉及 checklist 模块", "严重程度"]},
+    {"heading": "Node 完成记录", "columns": ["节点", "开始时间", "完成时间", "checklist 模块加载", "阻断遗漏数", "备注"]},
+    {"heading": "用户指正记录", "columns": ["时间", "所在节点", "用户原话（摘要）", "指正类型", "涉及内容", "AI 判断", "关联决策编号", "是否进入复盘候选"]},
+    {"heading": "复盘触发状态", "columns": ["触发编号", "根因分类", "出现次数", "最近证据", "当前等级", "建议动作"]}
+  ],
+  "optional_sections": [
+    {"heading": "复盘消费记录", "aliases": ["复盘消费"], "columns": ["时间", "消费的痛点", "产出的 patch", "是否已写入"]}
+  ]
+}

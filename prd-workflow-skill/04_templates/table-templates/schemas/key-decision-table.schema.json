@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "authority": "authoritative",
+    "purpose": "Canonical key decision table contract for operation flows",
+    "human_reference": "04_templates/table-templates/key-decision-table.md"
+  },
+  "template_id": "key_decision_table",
+  "columns": [
+    {"name": "关键决策点", "required": true, "description": "会导向不同业务结果的判断", "allowed_values": [], "notes": []},
+    {"name": "前置条件", "required": true, "description": "执行判断前必须成立的条件", "allowed_values": [], "notes": []},
+    {"name": "判断结果", "required": true, "description": "不同判断结果对应的业务去向", "allowed_values": [], "notes": ["应完整写出是/否或各枚举结果"]}
+  ],
+  "required_columns": ["关键决策点", "前置条件", "判断结果"],
+  "optional_columns": [],
+  "usage_rules": ["没有真实业务分流时不创建空表", "普通必填和格式校验不属于关键决策点"],
+  "anti_patterns_ref": "04_templates/table-templates/key-decision-table.md"
+}

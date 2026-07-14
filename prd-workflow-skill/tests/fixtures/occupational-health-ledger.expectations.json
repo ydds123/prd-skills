@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "authority": "authoritative",
+    "role": "fixture",
+    "purpose": "Confirmed contract expectations for occupational-health ledger modules 8.2 and 8.3"
+  },
+  "modules": {
+    "8.2": {
+      "batch_import": {
+        "atomicity": "file",
+        "failure_carrier": "preview"
+      }
+    },
+    "8.3": {
+      "batch_import": {
+        "atomicity": "file",
+        "failure_carrier": "preview"
+      }
+    }
+  }
+}

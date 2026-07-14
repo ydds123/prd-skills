@@ -1,13 +1,29 @@
 {
   "meta": {
-    "version": "1.0.0",
-    "source": "04_templates/run-log.md",
-    "purpose": "Evaluate run-log timestamp precision, table integrity, and root-cause aggregation",
+    "version": "2.0.0",
+    "source": "04_templates/run-log.schema.json",
+    "purpose": "Evaluate Run Log required sections, node closure, timestamp precision, enums, and root-cause aggregation",
     "related_sources": [
+      "04_templates/run-log.md",
+      "scripts/validate-run-log.py",
+      "scripts/test-validate-run-log.py",
       "hooks/append_retrospect_event.py"
     ]
   },
   "evals": [
+    {
+      "id": "required_sections_contract",
+      "input": "拿任意一张结构正确的 Markdown 表格冒充运行日志。",
+      "required_assertions": [
+        "validate-run-log.py 返回非零退出码",
+        "明确指出缺少必需章节",
+        "不能以存在 Markdown 表格作为通过条件"
+      ],
+      "forbidden_assertions": [
+        "检测到表格即通过"
+      ],
+      "why": "Run Log 是否成立取决于完整证据结构，而不是是否存在任意表格。"
+    },
     {
       "id": "timestamp_contract",
       "input": "记录一次发生于任务时区的用户指正事件。",
@@ -53,11 +69,11 @@
     },
     {
       "id": "node_closure_gate",
-      "input": "节点准备完成，但运行日志中存在日期级时间和重复触发编号。",
+      "input": "节点准备完成，但运行日志中缺少 Node 4.5、存在日期级时间和重复触发编号。",
       "required_assertions": [
         "validate-run-log.py 返回非零退出码",
         "节点完成被阻断",
-        "修正为秒级时间并合并重复触发编号后才允许完成"
+        "补齐 Node 4.5、修正为秒级时间并合并重复触发编号后才允许完成"
       ],
       "forbidden_assertions": [
         "仅在审核报告中提示但仍完成节点"

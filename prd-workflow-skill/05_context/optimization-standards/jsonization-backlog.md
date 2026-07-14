@@ -22,7 +22,8 @@ Do not replace Markdown with JSON wholesale. Split JSON only when the content ne
 | JSON File | Source Markdown | Status | Role |
 |---|---|---|---|
 | `04_templates/table-templates/table-template-index.json` | `04_templates/table-templates/table-template-index.md` | Completed | Machine-readable routing from checklist `suggested_format` to table templates or rendering formats |
-| `05_context/writing-standards/global-component-conventions.json` | `05_context/writing-standards/global-component-conventions.md` | Completed | Machine-readable default-value layer for field length, input handling, selection control, list display, and action behavior |
+| `04_templates/run-log.schema.json` | `04_templates/run-log.md` | Completed | Authoritative Run Log sections, headers, nodes, timestamp precision, enums, and escalation thresholds |
+| `05_context/writing-standards/component-specifications.json` | generated `05_context/writing-standards/component-specifications.md` | Completed | Authoritative component registry, field semantic defaults, required PRD decisions, list rules, and action behavior |
 | `05_context/optimization-standards/retrospect-trigger-rules.json` | `05_context/optimization-standards/retrospect-trigger-rules.md` | Completed | Machine-readable trigger, escalation, root-cause, and human-confirm boundary configuration |
 
 ---
@@ -31,7 +32,7 @@ Do not replace Markdown with JSON wholesale. Split JSON only when the content ne
 
 | Batch | Scope | Status | Notes |
 |---|---|---|---|
-| Batch 1 | Table Output Closure | Completed | `table-format-schemas.json` added; `04_templates/table-templates/schemas/*.schema.json` added (8 files); `table-template-index.json` routes now point to concrete `schema_file`; validator checks schema file existence and table template schema structure; `evals/table-format-evals.json` added |
+| Batch 1 | Table Output Closure | Completed | `table-template-index.json` is the canonical route source; each route points to one authoritative `schema_file`; generated Markdown and template examples are checked for drift; `evals/table-format-evals.json` covers common contracts |
 
 ---
 
@@ -40,7 +41,6 @@ Do not replace Markdown with JSON wholesale. Split JSON only when the content ne
 | Source Markdown | Suggested JSON | Purpose | Why JSON-worthy | Boundary |
 |---|---|---|---|---|
 | `01_workflow/content-consistency-sweep.md` | `01_workflow/content-consistency-sweep.rules.json` | Machine-readable consistency sweep rules | Contains blast-radius mapping, consistency dimensions, enumeration completeness rules, and auto-fix boundaries | Keep Markdown for method explanation, examples, and sweep rationale |
-| `04_templates/run-log.md` | `04_templates/run-log.schema.json` | Machine-readable run-log writing structure | Contains fixed sections and write timing for timeline, revision records, pain points, user corrections, node completion, and retrospect trigger status | Do not convert task instance `09-run-log.md` to JSON |
 | `03_gates/gates-and-retrospective.md` | `03_gates/gate-rules.json` | Machine-readable gate and confirmation rules | Contains blocking levels, patch categories, auto-fix / PM-confirm / forbidden boundaries | Keep Markdown for behavior explanation and human-confirm loop |
 
 ---
