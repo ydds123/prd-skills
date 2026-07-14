@@ -42,6 +42,10 @@ When a user correction, review finding, full-PRD discovery, or sweep finding cha
 Decision changes go to `02-决策账本.md`.
 Process evidence goes to `09-run-log.md`.
 
+All `09-run-log.md` time fields use the task timezone and the exact format `YYYY-MM-DD HH:mm:ss`. Automated writers use the runtime local timezone. Never degrade run evidence to date-only or minute-only values.
+
+Before any node is marked complete, run `python <skill-root>/scripts/validate-run-log.py <task-folder>/09-run-log.md`. Validation failure blocks node completion. Existing logs created before this contract may use `--allow-legacy-date` only when the file contains an explicit migration note; new tasks must run in strict mode.
+
 ## Node Rules
 
 ### 0. Task Folder (Boot)
@@ -124,7 +128,7 @@ Do not preload all table template schemas or Markdown templates. Load `table-tem
 This protects the context window and prevents unrelated table schemas from influencing the current PRD output.
 
 6. Table template reading order: (1) `table-template-index.json` for routing → (2) match route by `suggested_format` → (3) load only the matched `schema_file` → (4) use schema for fixed columns and required fields → (5) load only the matched Markdown template when examples, anti-patterns, or boundary rules are needed. Do not load unrelated schemas or templates.
-7. Load `05_context/writing-standards/global-component-conventions.md`. When writing field validation, component behavior, list display, or action rules, apply global defaults unless the PRD states a justified exception.
+7. Load `05_context/writing-standards/global-component-conventions.md`. When writing field validation, component behavior, list display, or action rules, apply global defaults unless the PRD states a justified exception. If the domain is ledger-oriented or includes batch import/export, also load `05_context/writing-standards/ledger-feature-writing.md` and run its completion check.
 8. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
 9. Do not dump the checklist into the PRD. Use it as a silent writing guide.
 
@@ -155,7 +159,7 @@ For any rule that touches system constraint boundaries — such as state reversa
 
 **Table format conventions** (see `05_context/writing-standards/table-format-conventions.md`):
 - Query condition tables: 查询字段 | 组件类型 | 查询精度 | 说明
-- Form field tables: 字段名称 | 字段类型 | 是否必填 | 引导文案 | 字段说明
+- Form field tables: 字段名称 | 字段类型 | 是否必填 | 引导文案 | 字段规则 | 表单内容规则
 - Each core function MUST include an interaction logic table (步骤 | 触发起点 | 用户动作 | 系统响应 | 业务规则) and an exception handling table (触发条件 | 处理逻辑 | 引导提示 | 恢复机制).
 
 **Multi-endpoint consistency check** (if the PRD covers Web + App):
@@ -283,3 +287,4 @@ Patch proposals must include observed failure, run evidence from `09-run-log.md`
 Execute the per-patch confirm→write loop defined in [Gates and Retrospective](03_gates/gates-and-retrospective.md) §复盘确认→写入闭环.
 
 **After retrospect completes:** Update `09-run-log.md` 复盘消费 section: which 痛点 were consumed, which patches were produced, and whether each patch was written to its target file.
+

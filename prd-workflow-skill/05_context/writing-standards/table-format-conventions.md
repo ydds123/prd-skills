@@ -87,7 +87,7 @@ Query tables (§X.Y.2) and list field tables (§X.Y.3) serve different purposes 
 For any create or edit form:
 
 ```
-字段名称 | 字段类型 | 是否必填 | 引导文案 | 字段说明
+字段名称 | 字段类型 | 是否必填 | 引导文案 | 字段规则 | 表单内容规则
 ```
 
 | Column | Content |
@@ -96,7 +96,8 @@ For any create or edit form:
 | 字段类型 | Component: 单行文本输入框 / 下拉单选 / 下拉多选 / 多选列表 / 日期选择器 — and any special behaviors |
 | 是否必填 | 是 / 否 |
 | 引导文案 | Placeholder text shown in the empty field |
-| 字段说明 | Validation rules, character limits, uniqueness constraints, linkage rules, "保存时自动去除首尾空格" rules, dependency on other fields |
+| 字段规则 | Data source, linkage, unit, option source/range, uniqueness, and dependency on other fields |
+| 表单内容规则 | Allowed and forbidden input/selection content, length, numeric syntax, and format constraints |
 
 ## Business Rule Tables
 

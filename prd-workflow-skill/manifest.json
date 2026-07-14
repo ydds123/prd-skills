@@ -1,7 +1,7 @@
 {
   "name": "prd-workflow",
-  "version": "0.1.0",
-  "updated_at": "2026-06-19",
+  "version": "0.2.0",
+  "updated_at": "2026-07-13",
   "status": "active",
   "maturity_tier": "production",
   "lifecycle_stage": "production",
@@ -28,7 +28,9 @@
   "quality_gates": [
     "alignment",
     "draft-confirmation",
-    "review-blocking"
+    "review-blocking",
+    "ledger-contract",
+    "run-log-evidence"
   ],
   "outputs": [
     "background understanding card",

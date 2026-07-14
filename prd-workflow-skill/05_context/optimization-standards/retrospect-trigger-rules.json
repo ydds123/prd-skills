@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "source": "05_context/optimization-standards/retrospect-trigger-rules.md",
     "purpose": "Machine-readable retrospect trigger and escalation rules for the Retrospect Trigger Detector"
   },
@@ -76,7 +76,10 @@
   "escalation_rules": [
     "T3 forces generation of the retrospect PROPOSAL, not application of patches.",
     "Per-patch user confirmation is still required at every level.",
-    "A one-time preference must never auto-escalate to a universal rule."
+    "A one-time preference must never auto-escalate to a universal rule.",
+    "Trigger state rows aggregate by governed root cause, not by source or workflow node.",
+    "Occurrence count escalates at 1=T1, 2=T2, and 3+=T3; an explicit higher severity is preserved.",
+    "The aggregate row keeps latest evidence while user correction records preserve the full event trail."
   ],
   "root_causes": [
     { "id": "missing_knowledge", "label": "缺知识", "meaning": "Missing business knowledge, industry context", "patch_target": "context / examples" },
@@ -99,6 +102,12 @@
       "elevate_one_time_preference_to_rule",
       "batch_confirm_all_patches"
     ]
+  },
+  "aggregation": {
+    "key": "root_cause",
+    "stable_ids": { "missing_knowledge": "TR-missing-knowledge", "missing_method": "TR-missing-method", "missing_template": "TR-missing-template", "missing_gate": "TR-missing-gate", "missing_example": "TR-missing-example", "one_off": "TR-one-off" },
+    "count_levels": { "1": "T1", "2": "T2", "3_or_more": "T3" },
+    "evidence_policy": "latest_in_aggregate_full_history_in_user_corrections"
   },
   "checkpoint_triggers": [
     "after_user_correction",

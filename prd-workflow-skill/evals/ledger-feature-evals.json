@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "05_context/writing-standards/ledger-feature-writing.md",
+    "purpose": "Evaluate ledger-oriented PRD structure, reachable-state reasoning, form/import consistency, and batch-import semantics"
+  },
+  "evals": [
+    {
+      "id": "ledger_operation_order",
+      "input": "为一个设备台账写详细功能规则，支持新增编辑、批量导入、查询查看、启停、导出和删除。",
+      "required_assertions": [
+        "按新增/编辑、批量导入、查询/查看、启用/停用、导出、删除的顺序组织",
+        "每个操作包含主路径、分支与异常表格，并仅在存在真实判断时写关键决策点表格"
+      ],
+      "forbidden_assertions": [
+        "增加未被需求支持的审批或发布流程"
+      ],
+      "why": "Stable operation order lowers cross-section search cost without inventing unsupported operations."
+    },
+    {
+      "id": "form_field_rule_split",
+      "input": "为新增设备弹窗写字段表，设备说明最多512个字符，巡检频率只能输入非负整数。",
+      "required_assertions": [
+        "字段规则描述组件层行为",
+        "表单内容规则分别描述512字符限制和非负整数合法性",
+        "不把多个独立校验揉成一个含糊规则"
+      ],
+      "forbidden_assertions": [
+        "只写单行文本或数字输入而不描述合法内容"
+      ],
+      "why": "Component behavior and business-valid content answer different implementation questions."
+    },
+    {
+      "id": "reachable_state_by_entry",
+      "input": "页面新增时部门和岗位只展示状态正常的数据；批量导入时部门和岗位按文本匹配。",
+      "required_assertions": [
+        "页面新增不编写状态非正常分支，因为前置选择范围已排除",
+        "批量导入单独校验文本能否匹配状态正常的部门和岗位"
+      ],
+      "forbidden_assertions": [
+        "在页面新增中仍写所选岗位状态非正常"
+      ],
+      "why": "Exception coverage follows reachable states for each entry path."
+    },
+    {
+      "id": "batch_import_atomicity",
+      "input": "批量导入要求文件内任一行错误时整批不导入，不生成失败明细文件。",
+      "required_assertions": [
+        "明确全量校验通过后才写入",
+        "任一行失败则零行写入",
+        "在页面反馈错误行号、字段、原因和下一步",
+        "不生成失败明细文件"
+      ],
+      "forbidden_assertions": [
+        "正确行先导入",
+        "部分成功",
+        "下载失败明细"
+      ],
+      "why": "Atomicity and failure carrier must be explicit and must follow confirmed scope."
+    },
+    {
+      "id": "dynamic_dictionary_prompt",
+      "input": "导入中的作业方式和职业定岗来自可维护字典，用户填入无法匹配的值。",
+      "required_assertions": [
+        "校验以导入时系统字典为准",
+        "提示定位行号和字段并建议按模板下拉值修正后重新导入",
+        "示例值与规则分离"
+      ],
+      "forbidden_assertions": [
+        "在提示语中列死全部字典值",
+        "要求联系某个项目专属角色维护字典"
+      ],
+      "why": "Prompts stay valid when dictionary values change."
+    },
+    {
+      "id": "online_offline_boundary",
+      "input": "业务人员每月线下确认人数，确认后的结果由经办人录入线上台账。",
+      "required_assertions": [
+        "保留线下确认作为业务上下文",
+        "线上流程从结果录入开始",
+        "线下动作不强行设计系统实体、页面异常或状态"
+      ],
+      "forbidden_assertions": [
+        "把线下确认虚构成线上审批任务"
+      ],
+      "why": "Business flow and system flow overlap but are not identical."
+    }
+  ]
+}

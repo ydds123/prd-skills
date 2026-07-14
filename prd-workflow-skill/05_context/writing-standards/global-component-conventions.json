@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "source": "05_context/writing-standards/global-component-conventions.md",
     "purpose": "Machine-readable product-behavior defaults for PRD writing — field lengths, input handling, selection controls, list display, and action rules"
   },
@@ -24,9 +24,12 @@
     { "id": "case_handling", "rule": "中文业务字段不区分大小写；编码类字段是否区分需显式说明", "applies_to": ["名称类字段", "编码类字段"] },
     { "id": "preserve_on_failure", "rule": "保存失败或校验失败时，默认保留用户已输入内容", "applies_to": ["所有输入控件"] }
   ],
+  "numeric_input_defaults": [
+    { "id": "numeric_contract", "must_specify": ["是否允许负数", "是否允许小数及小数位数", "最小值/最大值", "是否允许0", "单位展示"], "default": "除非业务明确允许，不接受计算表达式或把单位写入数值" }
+  ],
   "selection_control_defaults": [
-    { "id": "dropdown_single", "label": "下拉单选", "defaults": ["支持清空（必选字段除外）", "选项超过 7 项默认支持模糊搜索", "必须说明选项来源"], "must_specify": ["选项来源", "是否必选"] },
-    { "id": "dropdown_multi", "label": "下拉多选", "defaults": ["支持多选标签回显", "选项超过 7 项默认支持模糊搜索"], "must_specify": ["是否支持全选"] },
+    { "id": "dropdown_single", "label": "下拉单选", "defaults": ["支持按选项名称模糊搜索", "支持清空（必选字段除外）", "必须说明选项来源"], "must_specify": ["选项来源", "是否必选"] },
+    { "id": "dropdown_multi", "label": "下拉多选", "defaults": ["支持按选项名称模糊搜索", "支持多选标签回显"], "must_specify": ["是否支持全选"] },
     { "id": "cascading", "label": "级联选择", "must_specify": ["层级", "取值来源", "默认展开层级", "搜索范围"] },
     { "id": "tree_select", "label": "树形选择", "must_specify": ["父级是否可选", "勾选父级是否等于全选子级"] },
     { "id": "remote_search", "label": "远程搜索", "must_specify": ["搜索字段", "最小触发字符数", "无结果反馈"] },
@@ -50,7 +53,8 @@
     { "id": "delete", "label": "删除", "rule": "默认二次确认；删除影响范围必须说明" },
     { "id": "toggle", "label": "启用/停用", "rule": "默认不删除历史数据，只改变后续是否生效" },
     { "id": "cancel", "label": "取消", "rule": "默认不保存当前变更；有未保存内容时是否二次确认需说明" },
-    { "id": "batch", "label": "批量操作", "must_specify": ["可选范围", "是否跨页生效", "部分失败处理"] },
+    { "id": "batch", "label": "批量操作", "must_specify": ["处理粒度", "是否跨页生效", "部分失败处理", "结果反馈"] },
+    { "id": "batch_import", "label": "批量导入", "must_specify": ["模板结构", "字段填写方式", "校验顺序", "覆盖策略", "失败信息载体", "文件/行/字段写入原子性", "动态字典处理"] },
     { "id": "one_click", "label": "一键操作", "must_specify": ["是否可撤销", "是否二次确认"] },
     { "id": "high_risk", "label": "高风险操作", "must_specify": ["确认文案", "影响范围", "是否可恢复"] }
   ],

@@ -81,7 +81,7 @@ Primary types:
 
 | Type | Meaning | Later PRD emphasis |
 |---|---|---|
-| 台账型功能 | Maintains records, lists, details, create/edit/delete, search, and configuration. | Object definition, list fields, CRUD boundary, lifecycle, ownership, and basic operations. |
+| 台账型功能 | Maintains records, lists, details, configuration, import/export, and supported operations. | Object definition, record granularity, query/list/form contracts, supported-operation boundary, reachable exceptions, batch-processing semantics, ownership, and acceptance. |
 | 业务型功能 | Drives a business process, decision, approval, collaboration, or state transition. | Roles, business rules, process branches, state changes, exceptions, and responsibility. |
 | 统计型功能 | Presents metrics, aggregates, rankings, dashboards, or analysis views. | Metric definition, statistical口径, time range, dimensions, freshness, and interpretation. |
 

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "source": "05_context/writing-standards/table-format-conventions.md",
     "purpose": "Machine-readable stable column schemas for general-purpose PRD table formats — query/filter, list/display, form/modal, business rule, and scope/feature-inventory tables"
   },
@@ -39,13 +39,14 @@
       "id": "form_modal_field_table",
       "name": "表单/弹窗字段表",
       "source_section": "表单字段表 / 弹窗表单",
-      "purpose": "定义新增/编辑表单或弹窗中每个字段的控件类型、必填性和说明",
+      "purpose": "定义新增/编辑表单或弹窗中每个字段的组件、必填性、数据来源和内容合法性",
       "columns": [
         { "name": "字段名称", "required": true, "description": "表单字段的业务名称", "allowed_values": [], "notes": [] },
         { "name": "字段类型", "required": true, "description": "表单控件的组件类型", "allowed_values": ["单行文本输入框", "多行文本输入框", "下拉单选", "下拉多选", "多选列表", "日期选择", "时间选择", "日期时间选择", "开关", "单选框", "复选框"], "notes": ["不得只写'下拉选择'，必须明确是'下拉单选'还是'下拉多选'", "级联/树形/远程搜索需补充来源和交互规则"] },
         { "name": "是否必填", "required": true, "description": "该字段是否必填", "allowed_values": ["是", "否"], "notes": [] },
         { "name": "引导文案", "required": true, "description": "输入框内的 placeholder 文案", "allowed_values": [], "notes": ["格式：'请输入...'或'请选择...'"] },
-        { "name": "字段说明", "required": true, "description": "字段的业务约束、长度限制、校验规则、选项来源", "allowed_values": [], "notes": [] }
+        { "name": "字段规则", "required": true, "description": "数据来源、联动关系、单位、选项来源/范围、唯一性及字段依赖", "allowed_values": [], "notes": ["不要混入允许/禁止输入内容"] },
+        { "name": "表单内容规则", "required": true, "description": "允许或禁止输入/选择的内容、长度、数值语法和格式限制", "allowed_values": [], "notes": ["数值字段必须明确符号、小数、范围和单位", "下拉字段说明是否接受自定义文本"] }
       ],
       "notes": ["表单超过 8 个字段时应按业务语义分组", "分组标题需明确业务含义"],
       "anti_patterns_ref": "table-format-conventions.md"

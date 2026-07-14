@@ -24,7 +24,7 @@ Judge every output by four criteria: clear boundary, explicit judgment, no guess
 
 Beyond output quality, apply one judgment disposition: **locally reasonable does not mean globally permissible.** When a PRD introduces a rule, exception, reversal, unlock, recovery, or re-submission, the agent must judge whether allowing it would erode the system's constraint structure — undermining main rules, reopening irreversible states, bypassing permission boundaries, reversing flow direction, drifting responsibility attribution, or polluting data caliber. A design that works at the current node but risks systemic erosion cannot pass without explicit constraint analysis. If constraint integrity cannot be confirmed, mark the rule as 待确认 or P1/P0 risk; do not bury the uncertainty in smooth prose.
 
-Load [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md) before writing, reviewing, or revising PRD content. When expanding PRD details, use [Global Component Conventions](05_context/writing-standards/global-component-conventions.md) as the default-value layer for reusable field, control, list, action, and feedback behavior.
+Load [PRD Quality Standard](05_context/prd-standards/prd-quality-standard.md) before writing, reviewing, or revising PRD content. When expanding PRD details, use [Global Component Conventions](05_context/writing-standards/global-component-conventions.md) as the default-value layer for reusable field, control, list, action, and feedback behavior. When a functional domain is ledger-oriented or includes batch import/export, also load [Ledger Feature Writing](05_context/writing-standards/ledger-feature-writing.md).
 
 Apply the standard across input, processing, and output. Details live in the quality reference.
 
@@ -89,7 +89,7 @@ After fixes are applied, the agent runs a Content Consistency Sweep (Node 4.5) t
 
 ### Retrospect Trigger Detector
 
-After user corrections, node completion, PRD revision, and content consistency sweep, the agent runs a Retrospect Trigger Check (see `05_context/optimization-standards/retrospect-trigger-rules.md`). The check may use `hooks/retrospect_trigger.py` as a detector — it outputs structured signals to stdout. The agent or recorder records qualified observations to `09-run-log.md`, marks retrospective candidates (T2), and triggers skill retrospect proposals (T3). The trigger check must never modify reusable Skill files without explicit per-patch user confirmation. All Skill modifications remain governed by `03_gates/gates-and-retrospective.md`.
+After user corrections, node completion, PRD revision, and content consistency sweep, the agent runs a Retrospect Trigger Check (see `05_context/optimization-standards/retrospect-trigger-rules.md`). Before marking a node complete, validate the evidence file with `scripts/validate-run-log.py`; a failed check blocks node completion. The check may use `hooks/retrospect_trigger.py` as a detector — it outputs structured signals to stdout. The agent or recorder records qualified observations to `09-run-log.md`, marks retrospective candidates (T2), and triggers skill retrospect proposals (T3). The trigger check must never modify reusable Skill files without explicit per-patch user confirmation. All Skill modifications remain governed by `03_gates/gates-and-retrospective.md`.
 
 ### Retrospect (Conditional)
 
@@ -122,3 +122,4 @@ Default order:
 6. Retrospective patch proposal (conditional)
 
 Keep final PRD language precise, structured, and traceable. Mark unknowns as `待确认`; do not hide them inside polished prose.
+

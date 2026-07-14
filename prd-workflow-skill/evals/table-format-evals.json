@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "source": "05_context/writing-standards/table-format-schemas.json",
     "purpose": "Evaluate whether Agent applies table-format-schemas.json when writing common PRD tables"
   },
@@ -48,11 +48,13 @@
         "字段类型",
         "是否必填",
         "引导文案",
-        "字段说明"
+        "字段规则",
+        "表单内容规则"
       ],
       "forbidden_patterns": [
         "查询字段",
-        "数据来源"
+        "数据来源",
+        "字段说明"
       ],
       "why": "Form/modal field tables must use the stable form_modal_field_table columns."
     },

@@ -3,7 +3,7 @@
 > Belongs to: `05_context/optimization-standards/`  
 > Purpose: Define the trigger signals, escalation levels, and boundaries for the Retrospect Trigger Detector  
 > Governed by: `../../03_gates/gates-and-retrospective.md` — all Skill file modifications still require per-patch user confirmation  
-> Version: v1.0.0
+> Version: v1.1.0
 > Machine-readable trigger config: `retrospect-trigger-rules.json` — Agent loads JSON first for trigger-signal matching, level determination, root-cause classification, and auto/human boundaries, then reads this Markdown file for core principles, integration flow, and relationship to existing mechanisms.
 
 ---
@@ -70,6 +70,9 @@ Keywords: P0, P1, 阻塞, 漏了, 没覆盖, 不一致, 前后矛盾, 旧说法,
 - T3 forces generation of the retrospect PROPOSAL, not application of patches.
 - Per-patch user confirmation is still required at every level.
 - A one-time preference must never auto-escalate to a universal rule.
+- `复盘触发状态` 以受控根因分类为聚合键，不以来源或节点为键；同根因重复出现时更新原行并累计次数。
+- 当前等级取“事件显式等级”和“累计次数等级”中的较高者：1 次 T1、2 次 T2、3 次及以上 T3。
+- 聚合行只保留最近证据；完整事件仍保留在“用户指正记录”中，避免丢失审计轨迹。
 
 ## Root Cause Classification
 
@@ -120,3 +123,4 @@ See `../../01_workflow/workflow-protocol.md` for the inline check procedure at e
 | `../../01_workflow/workflow-protocol.md` | Protocol calls the trigger check; trigger rules are defined here |
 | Content Consistency Sweep | Sweep finds PRD issues; trigger judges whether those issues are Skill defects |
 | V3.3 checklist | Still the primary quality gate. Trigger does not add a second pass/fail standard |
+

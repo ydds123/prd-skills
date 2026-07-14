@@ -125,7 +125,7 @@ Reserved headings are listed below as the expansion target. They carry NO conten
 
 ### Numeric Input Defaults
 
-> Reserved — no conventions yet. Activate when PRD evidence exposes repeated numeric-input ambiguity.
+数值字段不得只写“数值输入”。必须明确：是否允许负数、是否允许小数及小数位数、最小值/最大值、是否允许 0、单位如何展示。除非业务明确允许，输入内容不接受计算表达式或把单位写入数值；单位应作为独立展示或字段规则说明。
 
 ---
 
@@ -135,8 +135,8 @@ Reserved headings are listed below as the expansion target. They carry NO conten
 
 | 控件类型 | 默认规范 |
 |---|---|
-| 下拉单选 | 默认支持清空，除非字段必选；选项超过 7 项默认支持模糊搜索 |
-| 下拉多选 | 默认支持多选标签回显，选项超过 7 项默认支持模糊搜索；是否支持全选需单独说明 |
+| 下拉单选 | 默认支持按选项名称模糊搜索；默认支持清空，除非字段必选 |
+| 下拉多选 | 默认支持按选项名称模糊搜索和多选标签回显；是否支持全选需单独说明 |
 | 级联选择 | 必须说明层级、取值来源、默认展开层级、搜索范围 |
 | 树形选择 | 必须说明父级是否可选，勾选父级是否等于全选子级 |
 | 远程搜索 | 必须说明搜索字段、最小触发字符数、无结果反馈 |
@@ -189,7 +189,7 @@ Reserved headings are listed below as the expansion target. They carry NO conten
 
 ### Batch Operation Defaults
 
-> Reserved — no conventions yet. Activate when PRD evidence exposes repeated batch-operation ambiguity.
+批量操作必须说明处理粒度、部分成功和结果反馈。批量导入还必须说明模板结构、字段填写方式、校验顺序、覆盖策略、失败信息载体，以及按文件/按行/按字段的写入原子性。动态字典值不得硬编码到提示语或模板示例中。详细规则见 [Ledger Feature Writing](ledger-feature-writing.md)。
 
 ### State Transition Defaults
 

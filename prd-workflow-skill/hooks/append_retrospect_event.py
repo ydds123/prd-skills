@@ -20,7 +20,7 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
@@ -73,9 +73,62 @@ def find_trigger_row(lines: list[str], trigger_id: str) -> int:
     return -1
 
 
+ROOT_CAUSE_TRIGGER_IDS = {
+    '缺知识': 'TR-missing-knowledge',
+    '缺方法': 'TR-missing-method',
+    '缺模板': 'TR-missing-template',
+    '缺门禁': 'TR-missing-gate',
+    '缺案例': 'TR-missing-example',
+    '偶发': 'TR-one-off',
+}
+
+
+def trigger_id_for_root_cause(root_cause: str) -> str:
+    """Return a stable trigger ID for the governed root-cause taxonomy."""
+    return ROOT_CAUSE_TRIGGER_IDS.get(root_cause or '偶发', 'TR-other')
+
+
+def level_for_count(count: int) -> str:
+    """Escalate repeated evidence from T1 to T3 by occurrence count."""
+    if count >= 3:
+        return 'T3'
+    if count >= 2:
+        return 'T2'
+    return 'T1'
+
+
+def max_level(*levels: str) -> str:
+    """Keep an explicit high-severity level even when the count is lower."""
+    rank = {'T0': 0, 'T1': 1, 'T2': 2, 'T3': 3}
+    return max(levels, key=lambda value: rank.get(value, 0))
+
+
+def insert_table_row(lines: list[str], heading: str, row: str) -> list[str]:
+    """Insert a row at the end of the table belonging to a Markdown heading."""
+    heading_index = next(
+        (index for index, line in enumerate(lines) if heading in line), -1)
+    if heading_index < 0:
+        lines.append(row)
+        return lines
+
+    section_end = len(lines)
+    for index in range(heading_index + 1, len(lines)):
+        if lines[index].strip().startswith('## '):
+            section_end = index
+            break
+
+    table_rows = [
+        index for index in range(heading_index + 1, section_end)
+        if lines[index].strip().startswith('|')
+    ]
+    insert_at = table_rows[-1] + 1 if table_rows else section_end
+    lines.insert(insert_at, row)
+    return lines
+
+
 def generate_user_correction_row(detection: dict) -> str:
     """Generate a user correction table row from detector output."""
-    now_str = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M')
+    now_str = datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S')
     source = detection.get('source', '')
     node = detection.get('node', 'unknown')
     excerpt = detection.get('raw_text_excerpt', '')
@@ -93,7 +146,7 @@ def generate_user_correction_row(detection: dict) -> str:
     enter_candidate = '是' if level in ('T2', 'T3') else '否'
     excerpt_safe = excerpt.replace('\n', ' ').replace('|', '\\|')[:80]
 
-    return f'| {now_str} | {node} | {excerpt_safe} | {correction_type} | — | {ai_judgment} | {enter_candidate} |\n'
+    return f'| {now_str} | {node} | {excerpt_safe} | {correction_type} | — | {ai_judgment} | — | {enter_candidate} |\n'
 
 
 def generate_trigger_state_row(trigger_id: str, root_cause: str,
@@ -129,59 +182,49 @@ def infer_root_cause(detection: dict, level: str) -> str:
 def append_user_correction(lines: list[str], detection: dict) -> list[str]:
     """Append a user correction row. Creates the block header if needed."""
     row = generate_user_correction_row(detection)
-    if has_user_correction_block(lines):
-        # Insert before the next ## heading or end of table
-        inserted = False
-        in_block = False
-        for i in range(len(lines) - 1, -1, -1):
-            stripped = lines[i].strip()
-            if stripped.startswith('## 用户指正记录'):
-                in_block = True
-                continue
-            if in_block and stripped.startswith('| '):
-                # Found last data row in block
-                lines.insert(i + 1, row)
-                inserted = True
-                break
-            if in_block and stripped.startswith('## ') and not stripped.startswith('## 用户指正记录'):
-                # End of block without finding table rows - add after header
-                for j in range(i + 1, len(lines)):
-                    if lines[j].strip() == '':
-                        lines.insert(j + 3, row)
-                        inserted = True
-                        break
-                break
-        if not inserted:
-            lines.append(row)
-    else:
-        # Add new block at end
-        lines.append('\n')
-        lines.append('## 用户指正记录\n')
-        lines.append('\n')
-        lines.append('| 时间 | 所在节点 | 用户原话（摘要） | 指正类型 | 涉及内容 | AI 判断 | 是否进入复盘候选 |\n')
-        lines.append('|------|---------|---------------|---------|---------|--------|---------------|\n')
-        lines.append(row)
-        lines.append('\n')
-    return lines
-
+    if not has_user_correction_block(lines):
+        lines.extend([
+            '\n',
+            '## 用户指正记录\n',
+            '\n',
+            '| 时间 | 所在节点 | 用户原话（摘要） | 指正类型 | 关联决策编号 | AI 判断 | 处理结果 | 是否进入复盘候选 |\n',
+            '|------|---------|---------------|---------|-------------|--------|---------|------------------|\n',
+        ])
+    return insert_table_row(lines, '## 用户指正记录', row)
 
 def upsert_trigger_state(lines: list[str], detection: dict,
-                          level: str, root_cause: str) -> list[str]:
-    """Update or append a trigger state row. Uses TR-xxx matching to update existing rows."""
+                         level: str, root_cause: str) -> list[str]:
+    """Aggregate evidence by root cause and update one stable trigger row."""
     excerpt = detection.get('raw_text_excerpt', '')
-    trigger_id = f'TR-{detection.get("source", "")}-{detection.get("node", "")}'
+    trigger_id = trigger_id_for_root_cause(root_cause)
 
     if not has_trigger_state_block(lines):
-        lines.append('\n')
-        lines.append('## 复盘触发状态\n')
-        lines.append('\n')
-        lines.append('| 触发编号 | 根因分类 | 出现次数 | 最近证据 | 当前等级 | 建议动作 |\n')
-        lines.append('|---------|---------|---------|---------|---------|----------|\n')
+        lines.extend([
+            '\n',
+            '## 复盘触发状态\n',
+            '\n',
+            '| 触发编号 | 根因分类 | 出现次数 | 最近证据 | 当前等级 | 建议动作 |\n',
+            '|---------|---------|---------|---------|---------|----------|\n',
+        ])
 
-    row = generate_trigger_state_row(trigger_id, root_cause, 1, excerpt, level)
-    lines.append(row)
-    return lines
+    existing_index = find_trigger_row(lines, trigger_id)
+    count = 1
+    if existing_index >= 0:
+        cells = [cell.strip() for cell in lines[existing_index].strip().strip('|').split('|')]
+        if len(cells) >= 3:
+            try:
+                count = int(cells[2]) + 1
+            except ValueError:
+                count = 1
 
+    effective_level = max_level(level, level_for_count(count))
+    row = generate_trigger_state_row(
+        trigger_id, root_cause, count, excerpt, effective_level)
+
+    if existing_index >= 0:
+        lines[existing_index] = row
+        return lines
+    return insert_table_row(lines, '## 复盘触发状态', row)
 
 def write_run_log(path: Path, lines: list[str]):
     """Write updated lines back to run-log file."""
@@ -245,3 +288,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+

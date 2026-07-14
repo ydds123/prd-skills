@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "04_templates/run-log.md",
+    "purpose": "Evaluate run-log timestamp precision, table integrity, and root-cause aggregation",
+    "related_sources": [
+      "hooks/append_retrospect_event.py"
+    ]
+  },
+  "evals": [
+    {
+      "id": "timestamp_contract",
+      "input": "记录一次发生于任务时区的用户指正事件。",
+      "required_assertions": [
+        "时间格式为YYYY-MM-DD HH:mm:ss",
+        "使用任务所在时区",
+        "保留到秒"
+      ],
+      "forbidden_assertions": [
+        "仅日期",
+        "仅到分钟",
+        "无时区语义"
+      ],
+      "why": "Second-level local timestamps preserve event order and match human review context."
+    },
+    {
+      "id": "correction_table_integrity",
+      "input": "运行日志中不存在用户指正记录区块，首次写入一条指正。",
+      "required_assertions": [
+        "创建8列表头",
+        "数据行也是8列",
+        "包括关联决策编号和处理结果占位"
+      ],
+      "forbidden_assertions": [
+        "表头7列但数据行8列"
+      ],
+      "why": "Recorder output must conform to the run-log output contract."
+    },
+    {
+      "id": "root_cause_aggregation",
+      "input": "连续三次记录根因为缺模板的指正，事件来源和节点不同。",
+      "required_assertions": [
+        "复盘触发状态仅保留TR-missing-template一行",
+        "出现次数为3",
+        "当前等级为T3",
+        "最近证据更新为第三次事件",
+        "用户指正记录保留三条事件"
+      ],
+      "forbidden_assertions": [
+        "按来源或节点生成三条触发行"
+      ],
+      "why": "Stable aggregation makes escalation deterministic and auditable."
+    },
+    {
+      "id": "node_closure_gate",
+      "input": "节点准备完成，但运行日志中存在日期级时间和重复触发编号。",
+      "required_assertions": [
+        "validate-run-log.py 返回非零退出码",
+        "节点完成被阻断",
+        "修正为秒级时间并合并重复触发编号后才允许完成"
+      ],
+      "forbidden_assertions": [
+        "仅在审核报告中提示但仍完成节点"
+      ],
+      "why": "A deterministic gate turns run-log conventions into an enforceable output contract."
+    }
+  ]
+}

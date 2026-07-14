@@ -3,7 +3,9 @@
 > Belongs to: `04_templates/`  
 > Purpose: 跨节点的持续性运行日志 — 修订根因、痛点证据、运行时间线、用户指正、复盘触发状态  
 > Governed by: `01_workflow/workflow-protocol.md` §Run Log Checkpoints  
-> Version: v1.0.0
+> Version: v1.1.0
+
+所有时间字段统一使用任务所在时区，精确到秒，格式为 `YYYY-MM-DD HH:mm:ss`。不得只写日期或只精确到分钟；自动记录器使用运行环境本地时区，手工记录必须沿用同一口径。
 
 ---
 
@@ -27,10 +29,10 @@ PRD workflow 的五个节点分布在多次对话中。复盘时 Agent 只能靠
 
 | 时间 | 节点 | 动作 | 发现 / 决策 |
 |------|------|------|-------------|
-| 2026-06-24 11:00 | Boot | 创建任务文件夹 | — |
-| 2026-06-24 11:30 | Node 1 | 完成对齐 | 12 类消息 + Web/App 双端 |
-| 2026-06-24 13:00 | Node 2 | 输出草案 v0 | 用户确认继续 |
-| 2026-06-24 14:00 | Node 3 | Fill Details — 加载 checklist 模块 | create_form_or_modal, list_page, delete_action, approval_or_state_flow |
+| 2026-06-24 11:00:00 | Boot | 创建任务文件夹 | — |
+| 2026-06-24 11:30:18 | Node 1 | 完成对齐 | 12 类消息 + Web/App 双端 |
+| 2026-06-24 13:00:42 | Node 2 | 输出草案 v0 | 用户确认继续 |
+| 2026-06-24 14:00:09 | Node 3 | Fill Details — 加载 checklist 模块 | create_form_or_modal, list_page, delete_action, approval_or_state_flow |
 | | | | |
 
 ## 修订记录

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "source": "04_templates/table-templates/exception-handling-writing.md",
     "purpose": "Machine-readable column schema for empty, failure, duplicate, conflict, permission, upstream, and irreversible-state exception tables"
   },
@@ -101,7 +101,10 @@
   ],
   "usage_rules": [
     "必须回答：出岔子时，系统怎么处理，用户看到什么，数据怎么变化，能不能恢复",
-    "对每个核心功能至少检查八维覆盖率"
+    "仅纳入业务流程可到达且影响用户判断、业务数据状态或恢复动作的异常",
+    "一行仅描述一个触发条件；仅当处理、数据状态和提示完全一致时允许合并",
+    "纯技术错误和过细控件校验留到页面设计、接口设计或测试用例阶段",
+    "不适用维度在评审轨迹标记 N/A，不要求写入 PRD 正文"
   ],
   "anti_patterns_ref": "../exception-handling-writing.md"
 }
