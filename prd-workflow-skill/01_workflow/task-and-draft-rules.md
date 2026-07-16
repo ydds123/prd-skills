@@ -35,6 +35,14 @@ Do not create empty stage files just to look complete. A task folder should show
 
 Task artifacts are user-facing files, so use Chinese filenames by default. Keep English filenames mainly for machine-facing skill package files such as `SKILL.md`, `manifest.json`, `agents/interface.yaml`, `evals/*.json`, and code scripts.
 
+## Prototype Context Intake
+
+When a project has a prototype folder, a page screenshot, or the user gives a path such as `原型文件`, the task folder must record it during Boot instead of discovering it after writing field rules.
+
+Use [Prototype Context Intake](prototype-context-intake.md) to create or update the source-evidence section in `00-上下文证据.md`. At minimum, record the prototype path, readable files, page or function mapping, visible query conditions, list fields, form fields, operation buttons, and unclear areas.
+
+If prototype evidence exists but has not been read, do not write page fields, list fields, form fields, button names, or operation entry names as settled facts. Mark them as `待原型核对` or keep them out of the detailed PRD until the prototype is inspected.
+
 ## Content Principles
 
 Every file follows two principles:

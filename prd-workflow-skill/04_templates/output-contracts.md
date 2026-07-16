@@ -310,7 +310,7 @@ Rules:
 - Use top-level cross-domain chapters only when the rule truly applies across multiple functional domains.
 - Keep “结论先行” as the first substantive section after document information.
 - Keep acceptance criteria and self-test cases aligned by functional domain or flow.
-- Component behavior, field semantic defaults, list display, and action defaults must follow the authoritative `05_context/writing-standards/component-specifications.json` unless a higher-priority business rule is stated with evidence.
+- Component names and table structures must remain machine-checkable. Component behavior, field semantic defaults, list display, and action defaults use `05_context/writing-standards/component-specifications.json` as guidance and an evidence checklist; project evidence decides the final business rule.
 
 ## Checklist-driven Full PRD Writing
 
@@ -325,7 +325,7 @@ Full PRD writing runs on a six-file engine:
 05_context/prd-standards/checklist-v3.3.json decides what must be extracted;
 04_templates/output-contracts.md decides where extracted content lands;
 04_templates/table-templates/table-template-index.json routes each content purpose to one authoritative table schema;
-05_context/writing-standards/component-specifications.json provides the authoritative component behavior, field semantic defaults, required PRD decisions, list rules, and action defaults; its Markdown file is generated for reading only.
+05_context/writing-standards/component-specifications.json provides component-writing guidance, field semantic prompts, required evidence prompts, list rules, and action defaults; its Markdown file is generated for reading only.
 ```
 
 output-contracts.md is not a standalone template. It is the landing layer

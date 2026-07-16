@@ -16,6 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TABLE_INDEX = ROOT / "04_templates" / "table-templates" / "table-template-index.json"
 LEDGER_CONTRACT = ROOT / "05_context" / "writing-standards" / "ledger-feature-contract.json"
 COMPONENTS = ROOT / "05_context" / "writing-standards" / "component-specifications.json"
+
+WARNINGS: list[str] = []
 HEADING = re.compile(r"^(#{1,6})\s+(\d+(?:\.\d+)*)\s+(.+?)\s*$")
 NUMBERED_STEP = re.compile(r"^\s*(\d+)\.\s+\S")
 SEPARATOR_CELL = re.compile(r"^:?-{3,}:?$")
@@ -177,15 +179,22 @@ def validate_form_components(
         if not component:
             errors.append(f"line {line_number}: unknown component type {component_type!r}")
             continue
+        policy = registry.get("validation_policy", {})
+        missing_evidence_policy = policy.get("missing_component_evidence", "warning")
         for requirement in component.get("prd_evidence_requirements", []):
             if requirement["scope"] == "section":
                 evidence_text = section_text
             else:
                 evidence_text = " ".join(row.get(column, "") for column in requirement["columns"])
             if not terms_satisfied(evidence_text, requirement):
-                errors.append(
+                message = (
                     f"line {line_number}: field {row.get('字段', '')!r} using {component_type!r} "
-                    f"lacks evidence {requirement['id']!r}")
+                    f"lacks advisory evidence {requirement['id']!r}"
+                )
+                if missing_evidence_policy == "error":
+                    errors.append(message)
+                else:
+                    WARNINGS.append(message)
 
 
 def detect_atomicity(text: str) -> str | None:
@@ -327,6 +336,7 @@ def validate_module(
 
 
 def validate_prd(path: Path, section_numbers: list[str], expectations_path: Path | None = None):
+    WARNINGS.clear()
     lines = path.read_text(encoding="utf-8").splitlines()
     sections = parse_sections(lines)
     ledger = load_json(LEDGER_CONTRACT)
@@ -385,7 +395,9 @@ def main() -> int:
         print(f"[{status}] {number}: {len(module_errors)} issue(s)")
     for error in errors:
         print(f"[ERROR] {error}")
-    print(f"Summary: modules={len(results)} errors={len(errors)}")
+    for warning in WARNINGS:
+        print(f"[WARN] {warning}")
+    print(f"Summary: modules={len(results)} errors={len(errors)} warnings={len(WARNINGS)}")
     return 1 if errors else 0
 
 

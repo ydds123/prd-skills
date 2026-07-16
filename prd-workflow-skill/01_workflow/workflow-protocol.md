@@ -60,6 +60,7 @@ Required actions:
 - name it by date and PRD name
 - write every material output into a Markdown or JSON file inside the task folder
 - keep chat output as a summary or preview when files are being created
+- when a project contains prototypes or the user names a path such as `原型文件`, register that path and extracted page evidence in `00-上下文证据.md` before detailed page writing
 
 See [Task and Draft Rules](task-and-draft-rules.md).
 
@@ -121,7 +122,9 @@ Goal: expand the accepted frame into a complete PRD body.
 2. Read `09-run-log.md` — particularly 痛点日志 — to avoid repeating mistakes from prior runs.
 3. Load `05_context/prd-standards/checklist-v3.3.json` (V3.3).
 4. Identify which checklist items apply: filter by `complexity` (L1-L4 matches the PRD's complexity level) and `condition` (domain-specific conditions like "has multi-role" or "has delete action").
-5. For each applicable item, use `question`, `pass_criteria`, and `failure_signal` as the writing guide. The `suggested_format` field tells you which table contract to use. Read `table-template-index.json` first, match exactly one route, then load only its `schema_file`; load the Markdown template only for examples and boundaries. `component-specifications.json` remains authoritative for component behavior and field semantics, and `retrospect-trigger-rules.json` for trigger/escalation rules. Generated Markdown views must never be edited by hand.
+5. For each applicable item, use `question`, `pass_criteria`, and `failure_signal` as the writing guide. The `suggested_format` field tells you which table contract to use. Read `table-template-index.json` first, match exactly one route, then load only its `schema_file`; load the Markdown template only for examples and boundaries. `component-specifications.json` is a component-writing guide and evidence checklist, not an independent source of business truth. `retrospect-trigger-rules.json` remains authoritative for trigger/escalation rules. Generated Markdown views must never be edited by hand.
+
+**Prototype evidence rule:** If the task has prototype files, screenshots, wireframes, or a folder named like `原型文件`, read [Prototype Context Intake](prototype-context-intake.md) and update `00-上下文证据.md` before writing query conditions, list fields, form fields, button names, tabs, or operation entries. Prototype-visible UI facts must be used as source evidence; unclear prototype areas must be marked `待原型核对` instead of inferred from generic templates.
 
 **Table template lazy loading rule:**
 
@@ -130,7 +133,7 @@ Do not preload all table template schemas or Markdown templates. Load `table-tem
 This protects the context window and prevents unrelated table schemas from influencing the current PRD output.
 
 6. Table template reading order: (1) `table-template-index.json` for routing → (2) match route by `suggested_format` → (3) load only the matched `schema_file` → (4) use schema for fixed columns and required fields → (5) load only the matched Markdown template when examples, anti-patterns, or boundary rules are needed. Do not load unrelated schemas or templates.
-7. Load `05_context/writing-standards/component-specifications.json`. For each form field: match exactly one component; match a field semantic profile when the component supports one; fill every `must_specify` item; combine component behavior and semantic defaults into the final `表单内容规则`; then apply any higher-priority evidence-based override. Run `scripts/generate-component-specifications.py --check` before relying on the Markdown view. If the domain is ledger-oriented or includes batch import/export, also load `05_context/writing-standards/ledger-feature-writing.md` and run its completion check.
+7. Load `05_context/writing-standards/component-specifications.json`. For each form field: match exactly one component; match a field semantic profile when the component supports one; use `must_specify` as a prompt for what evidence to seek. Write the final `表单内容规则` from project evidence first: user confirmation, real system/prototype evidence, and current project decisions. Use component behavior and semantic defaults only as fallback guidance, and mark unconfirmed length, requiredness, option values, default values, or business meanings as `待业务复核` instead of hard-filling them from the component file. Run `scripts/generate-component-specifications.py --check` before relying on the Markdown view. If the domain is ledger-oriented or includes batch import/export, also load `05_context/writing-standards/ledger-feature-writing.md` and run its completion check.
 8. Every gate item (`hierarchy: "gate"`) must either be addressed in the PRD or explicitly marked as not applicable with a reason.
 9. Do not dump the checklist into the PRD. Use it as a silent writing guide.
 

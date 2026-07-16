@@ -1,23 +1,28 @@
 {
   "meta": {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "source": "05_context/writing-standards/component-specifications.md",
-    "purpose": "Authoritative component and field-behavior specifications for PRD writing",
-    "authoritative_file": true,
+    "purpose": "Advisory component and field-behavior guidance for PRD writing, used as an evidence checklist rather than a business-rule source",
+    "canonical_source_file": true,
     "generated_view": "05_context/writing-standards/component-specifications.md"
   },
   "principles": [
-    "组件规则定义输入和交互行为，字段语义规则定义默认长度和值域；两者组合形成最终表单内容规则。",
-    "只有用户最新确认、真实系统或原型证据、当前项目已确认规则可以覆盖默认规范。",
-    "PRD必须写最终业务规则，不向研发暴露组件编号，也不得把默认值写成未经判断的业务事实。",
+    "组件规则用于提示输入和交互行为的常见写法，字段语义规则用于提示可能需要核对的长度和值域；两者不能替代项目证据。",
+    "用户最新确认、真实系统或原型证据、当前项目已确认规则优先于本组件规范；缺少证据时标记待业务复核，不为满足模板硬填。",
+    "PRD必须写最终业务规则，不向研发暴露组件编号，也不得把默认值、长度、必填、选项值写成未经判断的业务事实。",
     "纯视觉参数不进入本规范；只有影响输入、保存、数据结果、恢复方式或验收的行为才进入。"
   ],
   "override_priority": [
     "用户最新确认",
     "真实系统和原型证据",
     "当前项目已确认规则",
-    "本组件规范默认值"
+    "本组件规范引导值"
   ],
+  "validation_policy": {
+    "unknown_component": "error",
+    "missing_component_evidence": "warning",
+    "note": "组件名称必须可识别；组件证据缺口默认输出警告，避免把通用模板强制成业务规则。"
+  },
   "shared_input_rules": [
     {
       "id": "blank_after_normalize",

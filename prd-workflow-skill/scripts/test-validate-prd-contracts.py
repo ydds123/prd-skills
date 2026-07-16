@@ -36,6 +36,11 @@ def assert_rejected(errors: list[str], expected: str, case: str) -> None:
         raise AssertionError(f"{case} was not rejected as expected: {errors}")
 
 
+def assert_not_rejected(errors: list[str], case: str) -> None:
+    if errors:
+        raise AssertionError(f"{case} should be advisory only, got blocking errors: {errors}")
+
+
 def replace_once(text: str, old: str, new: str, case: str) -> str:
     if old not in text:
         raise AssertionError(f"{case} fixture anchor was not found: {old!r}")
@@ -82,9 +87,8 @@ def main() -> None:
             "必填",
             "component evidence",
         )
-        assert_rejected(
+        assert_not_rejected(
             validate_text(validator, directory, "missing-evidence.md", missing_evidence),
-            "lacks evidence",
             "component evidence",
         )
 
@@ -124,7 +128,7 @@ def main() -> None:
             "batch import atomicity",
         )
 
-    print("PASS: real 8.2/8.3 PRD fixture and five negative contract cases")
+    print("PASS: real 8.2/8.3 PRD fixture, four negative cases, and advisory component evidence")
 
 
 if __name__ == "__main__":
